@@ -6,239 +6,365 @@
 <title>Kerala Game</title>
 
 <style>
-*{
-  box-sizing:border-box;
-  margin:0;
-  padding:0;
-}
+*{box-sizing:border-box;margin:0;padding:0}
 
 body{
-  font-family:Arial,sans-serif;
-  background:
-  radial-gradient(circle at top,#183b35 0,#081512 45%,#050908 100%);
-  color:#fff;
-  min-height:100vh;
+font-family:Arial,sans-serif;
+background:#06100d;
+color:#fff;
+min-height:100vh;
 }
 
+.hidden{display:none!important}
+
 .header{
-  padding:22px 20px;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
+height:65px;
+padding:0 18px;
+display:flex;
+align-items:center;
+justify-content:space-between;
+background:#0b1915;
+border-bottom:1px solid #18352c;
+position:sticky;
+top:0;
+z-index:10;
 }
 
 .logo{
-  font-size:24px;
-  font-weight:800;
+font-size:20px;
+font-weight:900;
 }
 
-.online{
-  font-size:13px;
-  color:#67ffc0;
+.live{
+color:#65ffc0;
+font-size:12px;
+font-weight:bold;
 }
 
 .container{
-  width:100%;
-  max-width:520px;
-  margin:auto;
-  padding:10px 20px 40px;
+width:100%;
+max-width:520px;
+margin:auto;
+padding:22px 16px 40px;
 }
 
 .hero{
-  text-align:center;
-  padding:35px 10px 25px;
+text-align:center;
+padding:35px 5px 25px;
 }
 
 .badge{
-  display:inline-block;
-  background:rgba(39,220,145,.12);
-  border:1px solid rgba(39,220,145,.3);
-  color:#67ffc0;
-  padding:8px 14px;
-  border-radius:30px;
-  font-size:12px;
-  font-weight:bold;
-  margin-bottom:18px;
+display:inline-block;
+padding:7px 13px;
+border-radius:30px;
+background:#10271f;
+border:1px solid #20533f;
+color:#67ffc0;
+font-size:11px;
+font-weight:bold;
+margin-bottom:16px;
 }
 
 h1{
-  font-size:48px;
-  line-height:1;
-  margin-bottom:14px;
+font-size:46px;
+margin-bottom:12px;
 }
 
 .hero p{
-  color:#a9b9b4;
-  font-size:16px;
-  line-height:1.5;
+color:#91a79e;
+line-height:1.5;
 }
 
 .card{
-  background:rgba(18,30,27,.9);
-  border:1px solid rgba(255,255,255,.08);
-  border-radius:24px;
-  padding:22px;
-  box-shadow:0 20px 50px rgba(0,0,0,.35);
+background:#0d1b17;
+border:1px solid #19382e;
+border-radius:22px;
+padding:22px;
+box-shadow:0 15px 45px #0008;
 }
 
 label{
-  display:block;
-  font-size:13px;
-  color:#a9b9b4;
-  margin-bottom:8px;
+display:block;
+font-size:12px;
+color:#91a79e;
+margin-bottom:8px;
 }
 
 input,select{
-  width:100%;
-  padding:16px;
-  border-radius:13px;
-  border:1px solid rgba(255,255,255,.1);
-  background:#0b1512;
-  color:#fff;
-  font-size:16px;
-  outline:none;
-  margin-bottom:18px;
-}
-
-select option{
-  background:#0b1512;
+width:100%;
+padding:15px;
+border-radius:12px;
+border:1px solid #23483b;
+background:#07110e;
+color:white;
+font-size:16px;
+margin-bottom:16px;
+outline:none;
 }
 
 button{
-  width:100%;
-  padding:17px;
-  border:0;
-  border-radius:14px;
-  background:linear-gradient(135deg,#20e394,#10b878);
-  color:#03130d;
-  font-size:17px;
-  font-weight:800;
-  cursor:pointer;
+width:100%;
+padding:16px;
+border:0;
+border-radius:13px;
+background:#20df91;
+color:#03130d;
+font-size:16px;
+font-weight:900;
+cursor:pointer;
 }
 
 button:active{
-  transform:scale(.98);
+transform:scale(.98);
+}
+
+.message{
+text-align:center;
+margin-top:14px;
+font-size:13px;
+min-height:18px;
 }
 
 .stats{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:12px;
-  margin-top:15px;
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:12px;
+margin-top:14px;
 }
 
 .stat{
-  background:#0c1714;
-  border:1px solid rgba(255,255,255,.06);
-  border-radius:16px;
-  padding:18px;
-  text-align:center;
+background:#0d1b17;
+border:1px solid #19382e;
+border-radius:16px;
+padding:17px;
+text-align:center;
 }
 
 .stat strong{
-  display:block;
-  font-size:24px;
-  margin-bottom:5px;
+font-size:23px;
+display:block;
 }
 
 .stat span{
-  font-size:12px;
-  color:#8fa19b;
+font-size:11px;
+color:#71877e;
 }
 
 .leaderboard{
-  margin-top:18px;
-  background:rgba(18,30,27,.9);
-  border:1px solid rgba(255,255,255,.08);
-  border-radius:24px;
-  padding:22px;
+margin-top:14px;
+background:#0d1b17;
+border:1px solid #19382e;
+border-radius:22px;
+padding:20px;
 }
 
 .title{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  margin-bottom:15px;
+display:flex;
+justify-content:space-between;
+margin-bottom:12px;
 }
 
 .title h2{
-  font-size:19px;
+font-size:18px;
 }
 
 .title span{
-  font-size:12px;
-  color:#67ffc0;
+font-size:10px;
+color:#67ffc0;
 }
 
 .player{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  padding:13px 0;
-  border-bottom:1px solid rgba(255,255,255,.06);
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:13px 0;
+border-bottom:1px solid #183229;
 }
 
 .player:last-child{
-  border-bottom:0;
+border-bottom:0;
 }
 
-.left{
-  display:flex;
-  align-items:center;
-  gap:12px;
+.playerLeft{
+display:flex;
+align-items:center;
+gap:11px;
 }
 
 .rank{
-  width:30px;
-  height:30px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  border-radius:50%;
-  background:#14241f;
-  font-weight:bold;
-  font-size:13px;
+width:30px;
+height:30px;
+border-radius:50%;
+background:#142a22;
+display:flex;
+align-items:center;
+justify-content:center;
+font-weight:bold;
+font-size:12px;
 }
 
-.name{
-  font-size:14px;
-  font-weight:bold;
+.playerName{
+font-size:13px;
+font-weight:bold;
 }
 
-.district{
-  font-size:11px;
-  color:#82958e;
-  margin-top:3px;
+.playerDistrict{
+font-size:10px;
+color:#71877e;
+margin-top:3px;
 }
 
 .score{
-  font-weight:bold;
-  color:#67ffc0;
-}
-
-#message{
-  text-align:center;
-  margin-top:16px;
-  font-size:14px;
-  min-height:20px;
+color:#67ffc0;
+font-weight:bold;
 }
 
 .footer{
-  text-align:center;
-  color:#52635e;
-  font-size:11px;
-  margin-top:30px;
+text-align:center;
+font-size:10px;
+color:#465b53;
+margin-top:25px;
+}
+
+/* GAME ROOM */
+
+.gameRoom{
+min-height:calc(100vh - 65px);
+padding:20px 16px 40px;
+}
+
+.gameTop{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:18px;
+}
+
+.back{
+width:auto;
+padding:10px 14px;
+background:#10221c;
+color:#fff;
+font-size:12px;
+}
+
+.roomCode{
+font-size:11px;
+color:#71877e;
+}
+
+.playerBox{
+background:#0d1b17;
+border:1px solid #19382e;
+border-radius:20px;
+padding:18px;
+margin-bottom:15px;
+}
+
+.playerInfo{
+display:flex;
+justify-content:space-between;
+align-items:center;
+}
+
+.playerInfo small{
+display:block;
+color:#71877e;
+font-size:10px;
+margin-bottom:4px;
+}
+
+.playerInfo strong{
+font-size:18px;
+}
+
+.districtTag{
+color:#67ffc0;
+font-size:12px;
+}
+
+.arena{
+background:
+radial-gradient(circle at center,#123d2d,#07110e 70%);
+border:1px solid #1c4939;
+border-radius:25px;
+padding:25px 18px;
+text-align:center;
+min-height:350px;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+}
+
+.arenaBadge{
+font-size:11px;
+color:#67ffc0;
+margin-bottom:15px;
+}
+
+.question{
+font-size:25px;
+font-weight:900;
+line-height:1.25;
+margin-bottom:25px;
+}
+
+.answers{
+width:100%;
+display:grid;
+gap:10px;
+}
+
+.answer{
+background:#10231c;
+color:white;
+border:1px solid #275341;
+padding:15px;
+border-radius:13px;
+font-weight:bold;
+font-size:14px;
+}
+
+.answer:hover{
+background:#173a2d;
+}
+
+.timer{
+margin-top:20px;
+font-size:28px;
+font-weight:900;
+color:#67ffc0;
+}
+
+.gameBottom{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:12px;
+margin-top:14px;
+}
+
+.gameStat{
+background:#0d1b17;
+border:1px solid #19382e;
+border-radius:15px;
+padding:15px;
+text-align:center;
+}
+
+.gameStat strong{
+display:block;
+font-size:20px;
+}
+
+.gameStat span{
+font-size:10px;
+color:#71877e;
 }
 
 @media(max-width:380px){
-  h1{
-    font-size:40px;
-  }
-
-  .container{
-    padding-left:14px;
-    padding-right:14px;
-  }
+h1{font-size:39px}
+.question{font-size:22px}
 }
 </style>
 </head>
@@ -246,207 +372,512 @@ button:active{
 <body>
 
 <header class="header">
-  <div class="logo">KERALA GAME</div>
-  <div class="online">● LIVE</div>
+
+<div class="logo">
+KERALA GAME
+</div>
+
+<div class="live">
+● LIVE
+</div>
+
 </header>
+
+
+<!-- HOME -->
+
+<div id="home">
 
 <main class="container">
 
 <section class="hero">
 
-  <div class="badge">
-    PLAY FOR YOUR DISTRICT
-  </div>
+<div class="badge">
+PLAY FOR YOUR DISTRICT
+</div>
 
-  <h1>Ready?</h1>
+<h1>Ready?</h1>
 
-  <p>
-    Choose your district, enter the game
-    and compete with players across Kerala.
-  </p>
+<p>
+Choose your district and enter the game.
+Compete with players across Kerala.
+</p>
 
 </section>
+
 
 <section class="card">
 
-  <label>PLAYER NAME</label>
+<label>PLAYER NAME</label>
 
-  <input
-    id="name"
-    type="text"
-    placeholder="Enter your name"
-    autocomplete="off"
-  >
+<input
+id="name"
+type="text"
+placeholder="Enter your name"
+autocomplete="off"
+>
 
-  <label>SELECT DISTRICT</label>
+<label>SELECT DISTRICT</label>
 
-  <select id="district">
+<select id="district">
 
-    <option value="">
-      Choose your district
-    </option>
+<option value="">Choose your district</option>
 
-    <option>Thiruvananthapuram</option>
-    <option>Kollam</option>
-    <option>Pathanamthitta</option>
-    <option>Alappuzha</option>
-    <option>Kottayam</option>
-    <option>Idukki</option>
-    <option>Ernakulam</option>
-    <option>Thrissur</option>
-    <option>Palakkad</option>
-    <option>Malappuram</option>
-    <option>Kozhikode</option>
-    <option>Wayanad</option>
-    <option>Kannur</option>
-    <option>Kasaragod</option>
+<option>Thiruvananthapuram</option>
+<option>Kollam</option>
+<option>Pathanamthitta</option>
+<option>Alappuzha</option>
+<option>Kottayam</option>
+<option>Idukki</option>
+<option>Ernakulam</option>
+<option>Thrissur</option>
+<option>Palakkad</option>
+<option>Malappuram</option>
+<option>Kozhikode</option>
+<option>Wayanad</option>
+<option>Kannur</option>
+<option>Kasaragod</option>
 
-  </select>
+</select>
 
-  <button onclick="playGame()">
-    PLAY NOW
-  </button>
+<button onclick="startGame()">
+PLAY NOW
+</button>
 
-  <div id="message"></div>
+<div id="message" class="message"></div>
 
 </section>
+
 
 <section class="stats">
 
-  <div class="stat">
-    <strong id="players">1,284</strong>
-    <span>PLAYERS ONLINE</span>
-  </div>
+<div class="stat">
+<strong>1,284</strong>
+<span>PLAYERS ONLINE</span>
+</div>
 
-  <div class="stat">
-    <strong>14</strong>
-    <span>DISTRICTS</span>
-  </div>
+<div class="stat">
+<strong>14</strong>
+<span>DISTRICTS</span>
+</div>
 
 </section>
 
+
 <section class="leaderboard">
 
-  <div class="title">
-    <h2>🏆 Leaderboard</h2>
-    <span>TOP PLAYERS</span>
-  </div>
+<div class="title">
+<h2>🏆 Leaderboard</h2>
+<span>TOP PLAYERS</span>
+</div>
 
-  <div class="player">
+<div class="player">
 
-    <div class="left">
+<div class="playerLeft">
 
-      <div class="rank">1</div>
+<div class="rank">1</div>
 
-      <div>
-        <div class="name">Kerala King</div>
-        <div class="district">Ernakulam</div>
-      </div>
+<div>
+<div class="playerName">Kerala King</div>
+<div class="playerDistrict">Ernakulam</div>
+</div>
 
-    </div>
+</div>
 
-    <div class="score">9,850</div>
+<div class="score">9,850</div>
 
-  </div>
+</div>
 
-  <div class="player">
 
-    <div class="left">
+<div class="player">
 
-      <div class="rank">2</div>
+<div class="playerLeft">
 
-      <div>
-        <div class="name">Malabar Boy</div>
-        <div class="district">Kozhikode</div>
-      </div>
+<div class="rank">2</div>
 
-    </div>
+<div>
+<div class="playerName">Malabar Boy</div>
+<div class="playerDistrict">Kozhikode</div>
+</div>
 
-    <div class="score">9,420</div>
+</div>
 
-  </div>
+<div class="score">9,420</div>
 
-  <div class="player">
+</div>
 
-    <div class="left">
 
-      <div class="rank">3</div>
+<div class="player">
 
-      <div>
-        <div class="name">Travancore</div>
-        <div class="district">Thiruvananthapuram</div>
-      </div>
+<div class="playerLeft">
 
-    </div>
+<div class="rank">3</div>
 
-    <div class="score">8,975</div>
+<div>
+<div class="playerName">Travancore</div>
+<div class="playerDistrict">Thiruvananthapuram</div>
+</div>
 
-  </div>
+</div>
+
+<div class="score">8,975</div>
+
+</div>
 
 </section>
 
 <div class="footer">
-  Kerala Game • More features coming soon
+Kerala Game • Free Version
 </div>
 
 </main>
 
+</div>
+
+
+<!-- GAME ROOM -->
+
+<div id="game" class="hidden">
+
+<div class="gameRoom">
+
+<div class="gameTop">
+
+<button class="back" onclick="goHome()">
+← HOME
+</button>
+
+<div class="roomCode">
+ROOM #<span id="room">7284</span>
+</div>
+
+</div>
+
+
+<div class="playerBox">
+
+<div class="playerInfo">
+
+<div>
+<small>PLAYER</small>
+<strong id="gameName">Player</strong>
+</div>
+
+<div class="districtTag" id="gameDistrict">
+Kerala
+</div>
+
+</div>
+
+</div>
+
+
+<div class="arena">
+
+<div class="arenaBadge">
+ROUND 1 • KERALA QUIZ
+</div>
+
+<div class="question" id="question">
+Which is the capital of Kerala?
+</div>
+
+
+<div class="answers">
+
+<button class="answer" onclick="answer(this,'Thiruvananthapuram')">
+A. Thiruvananthapuram
+</button>
+
+<button class="answer" onclick="answer(this,'Kochi')">
+B. Kochi
+</button>
+
+<button class="answer" onclick="answer(this,'Kozhikode')">
+C. Kozhikode
+</button>
+
+<button class="answer" onclick="answer(this,'Thrissur')">
+D. Thrissur
+</button>
+
+</div>
+
+
+<div class="timer" id="timer">
+15
+</div>
+
+</div>
+
+
+<div class="gameBottom">
+
+<div class="gameStat">
+
+<strong id="points">
+0
+</strong>
+
+<span>YOUR POINTS</span>
+
+</div>
+
+<div class="gameStat">
+
+<strong id="playersGame">
+1,284
+</strong>
+
+<span>PLAYERS</span>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+
 <script>
 
-function playGame(){
+let time = 15;
 
-  const name =
-    document.getElementById("name").value.trim();
+let timerInterval;
 
-  const district =
-    document.getElementById("district").value;
+let points = 0;
 
-  const message =
-    document.getElementById("message");
 
-  if(!name){
+function startGame(){
 
-    message.style.color="#ff7777";
+const name =
+document.getElementById("name").value.trim();
 
-    message.innerText=
-      "Please enter your name.";
+const district =
+document.getElementById("district").value;
 
-    return;
-  }
+const message =
+document.getElementById("message");
 
-  if(!district){
 
-    message.style.color="#ff7777";
+if(!name){
 
-    message.innerText=
-      "Please select your district.";
+message.style.color="#ff7777";
 
-    return;
-  }
+message.innerText=
+"Please enter your name.";
 
-  localStorage.setItem(
-    "playerName",
-    name
-  );
-
-  localStorage.setItem(
-    "district",
-    district
-  );
-
-  message.style.color="#67ffc0";
-
-  message.innerText=
-    "Welcome "+name+
-    " from "+district+"! 🎮";
-
-  /*
-    Next step:
-    PLAY NOW will open the
-    multiplayer game room.
-  */
+return;
 
 }
+
+
+if(!district){
+
+message.style.color="#ff7777";
+
+message.innerText=
+"Please select your district.";
+
+return;
+
+}
+
+
+localStorage.setItem(
+"playerName",
+name
+);
+
+localStorage.setItem(
+"district",
+district
+);
+
+
+document.getElementById(
+"gameName"
+).innerText=name;
+
+document.getElementById(
+"gameDistrict"
+).innerText=district;
+
+
+document.getElementById(
+"home"
+).classList.add("hidden");
+
+document.getElementById(
+"game"
+).classList.remove("hidden");
+
+
+startTimer();
+
+}
+
+
+function startTimer(){
+
+clearInterval(timerInterval);
+
+time=15;
+
+document.getElementById(
+"timer"
+).innerText=time;
+
+
+timerInterval=setInterval(function(){
+
+time--;
+
+document.getElementById(
+"timer"
+).innerText=time;
+
+
+if(time<=0){
+
+clearInterval(timerInterval);
+
+document.getElementById(
+"timer"
+).innerText="TIME!";
+
+}
+
+},1000);
+
+}
+
+
+function answer(button,value){
+
+clearInterval(timerInterval);
+
+
+const buttons=
+document.querySelectorAll(".answer");
+
+
+buttons.forEach(function(btn){
+btn.disabled=true;
+});
+
+
+if(value==="Thiruvananthapuram"){
+
+points+=100;
+
+button.innerText="✓ Correct! +100";
+
+button.style.background="#145d40";
+
+}else{
+
+button.innerText="✕ Wrong";
+
+button.style.background="#5d2222";
+
+}
+
+
+document.getElementById(
+"points"
+).innerText=points;
+
+
+setTimeout(function(){
+
+buttons.forEach(function(btn){
+
+btn.disabled=false;
+btn.style.background="";
+});
+
+nextQuestion();
+
+},1200);
+
+}
+
+
+function nextQuestion(){
+
+document.getElementById(
+"question"
+).innerText=
+"Which district is known as the Queen of Arabian Sea?";
+
+
+const buttons=
+document.querySelectorAll(".answer");
+
+
+buttons[0].innerText="A. Ernakulam";
+buttons[1].innerText="B. Kollam";
+buttons[2].innerText="C. Kannur";
+buttons[3].innerText="D. Idukki";
+
+
+buttons[0].onclick=function(){
+answer(buttons[0],"Ernakulam");
+};
+
+buttons[1].onclick=function(){
+answer(buttons[1],"Kollam");
+};
+
+buttons[2].onclick=function(){
+answer(buttons[2],"Kannur");
+};
+
+buttons[3].onclick=function(){
+answer(buttons[3],"Idukki");
+};
+
+
+startTimer();
+
+}
+
+
+function goHome(){
+
+clearInterval(timerInterval);
+
+document.getElementById(
+"game"
+).classList.add("hidden");
+
+document.getElementById(
+"home"
+).classList.remove("hidden");
+
+}
+
+
+window.onload=function(){
+
+const savedName=
+localStorage.getItem("playerName");
+
+const savedDistrict=
+localStorage.getItem("district");
+
+
+if(savedName){
+document.getElementById("name").value=savedName;
+}
+
+if(savedDistrict){
+document.getElementById("district").value=savedDistrict;
+}
+
+};
 
 </script>
 
