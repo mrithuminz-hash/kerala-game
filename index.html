@@ -32,15 +32,16 @@ button{font-weight:bold;color:#fff;background:#19c37d}
 }
 
 #hud{
- position:fixed;top:10px;left:10px;z-index:10;min-width:205px;
+ position:fixed;top:10px;left:10px;z-index:10;min-width:210px;
  padding:10px 12px;border-radius:14px;background:rgba(0,0,0,.65);
- font-size:13px;line-height:1.55
+ font-size:13px;line-height:1.52
 }
 .hudTitle{font-weight:bold;font-size:15px}
 #health{color:#55ff72}
 #ammo{color:#ffd43b}
 #wanted{color:#ffd43b}
 #weaponLevel{color:#ff8c42}
+#vehicleLevel{color:#55c7ff}
 
 #mission{
  position:fixed;top:10px;left:50%;transform:translateX(-50%);
@@ -91,7 +92,6 @@ button{font-weight:bold;color:#fff;background:#19c37d}
  color:#fff;font-size:11px
 }
 .ctrl.green{background:rgba(0,150,80,.75)}
-.ctrl.red{background:rgba(190,30,30,.8)}
 .ctrl.yellow{background:rgba(180,130,0,.8)}
 .ctrl.blue{background:rgba(20,90,210,.8)}
 .ctrl.purple{background:rgba(120,40,190,.85)}
@@ -102,34 +102,34 @@ button{font-weight:bold;color:#fff;background:#19c37d}
  background:rgba(210,25,25,.82);font-size:13px;
  border:3px solid rgba(255,255,255,.35)
 }
-
 #reloadBtn{
  position:fixed;right:108px;bottom:120px;z-index:21;
  width:76px;height:42px;background:rgba(0,0,0,.7);font-size:11px
 }
 
-#talkBtn,#missionBtn,#shopBtn{
+#talkBtn,#missionBtn,#shopBtn,#garageBtn{
  position:fixed;left:50%;transform:translateX(-50%);
  z-index:22;display:none;width:190px
 }
 #talkBtn{bottom:145px;background:#157efb}
 #missionBtn{bottom:200px;background:#19c37d}
 #shopBtn{bottom:255px;background:#8e44ad}
+#garageBtn{bottom:310px;background:#1769aa}
 
 #damageFlash{
  position:fixed;inset:0;z-index:29;pointer-events:none;
  background:rgba(255,0,0,.28);display:none
 }
 
-/* SHOP */
+/* SHOP / GARAGE */
 
-#shop{
+#shop,#garage{
  position:fixed;inset:0;z-index:45;display:none;
  align-items:center;justify-content:center;
  background:rgba(0,0,0,.72)
 }
 
-.shopBox{
+.panelBox{
  width:min(92%,390px);
  max-height:90vh;
  overflow:auto;
@@ -139,19 +139,19 @@ button{font-weight:bold;color:#fff;background:#19c37d}
  box-shadow:0 10px 40px rgba(0,0,0,.6)
 }
 
-.shopBox h2{
+.panelBox h2{
  margin:0 0 5px;
  text-align:center;
  color:#61ff9a
 }
 
-.shopMoney{
+.panelMoney{
  text-align:center;
  color:#ffd43b;
  margin-bottom:12px
 }
 
-.shopItem{
+.panelItem{
  background:rgba(255,255,255,.07);
  border:1px solid rgba(255,255,255,.12);
  border-radius:14px;
@@ -159,32 +159,39 @@ button{font-weight:bold;color:#fff;background:#19c37d}
  margin-top:9px
 }
 
-.shopItem strong{
+.panelItem strong{
  display:block;
  font-size:15px;
  margin-bottom:4px
 }
 
-.shopItem small{
+.panelItem small{
  color:#aaa;
  display:block;
  margin-bottom:8px
 }
 
-.shopItem button{
+.panelItem button{
  width:100%;
  background:#19c37d
 }
 
-.shopItem button:disabled{
+.panelItem button:disabled{
  background:#555;
  color:#aaa
 }
 
-#closeShop{
+.closePanel{
  width:100%;
  margin-top:14px;
  background:#a52b2b
+}
+
+.statRow{
+ display:flex;
+ justify-content:space-between;
+ padding:5px 0;
+ color:#ddd
 }
 </style>
 </head>
@@ -197,6 +204,7 @@ button{font-weight:bold;color:#fff;background:#19c37d}
  <div class="loginBox">
   <h1>🌴 Kerala Open World</h1>
   <p>Enter the world</p>
+
   <input id="playerName" placeholder="Your name" maxlength="18">
 
   <select id="district">
@@ -231,6 +239,8 @@ button{font-weight:bold;color:#fff;background:#19c37d}
  🔫 Ammo: <span id="ammo">30</span>/<span id="ammoCapacity">30</span><br>
  ⚡ Damage: <span id="weaponDamage">25</span><br>
  🟣 Weapon Lv: <span id="weaponLevel">1</span><br>
+ 🚗 Vehicle Lv: <span id="vehicleLevel">1</span><br>
+ 💨 Vehicle Speed: <span id="vehicleSpeed">20</span><br>
  💰 ₹<span id="money">500</span><br>
  ⭐ XP: <span id="xp">0/100</span><br>
  🏆 Level: <span id="level">1</span><br>
@@ -254,25 +264,26 @@ button{font-weight:bold;color:#fff;background:#19c37d}
 <button id="talkBtn" onclick="talkToNPC()">TALK</button>
 <button id="missionBtn" onclick="startCurrentMission()">START MISSION</button>
 <button id="shopBtn" onclick="openShop()">🏪 SHOP</button>
+<button id="garageBtn" onclick="openGarage()">🚗 GARAGE</button>
 
-<!-- SHOP WINDOW -->
+<!-- WEAPON SHOP -->
 
 <div id="shop">
- <div class="shopBox">
+ <div class="panelBox">
 
   <h2>🔫 WEAPON SHOP</h2>
 
-  <div class="shopMoney">
+  <div class="panelMoney">
    Balance: ₹<span id="shopMoney">500</span>
   </div>
 
-  <div class="shopItem">
+  <div class="panelItem">
    <strong>📦 Ammo +30</strong>
-   <small>Buy 30 additional rounds.</small>
+   <small>Buy additional rounds.</small>
    <button onclick="buyAmmo()">BUY • ₹50</button>
   </div>
 
-  <div class="shopItem">
+  <div class="panelItem">
    <strong>🔫 Weapon Upgrade Lv 2</strong>
    <small>Damage 25 → 40</small>
    <button id="upgrade2" onclick="buyWeaponUpgrade(2)">
@@ -280,7 +291,7 @@ button{font-weight:bold;color:#fff;background:#19c37d}
    </button>
   </div>
 
-  <div class="shopItem">
+  <div class="panelItem">
    <strong>💥 Weapon Upgrade Lv 3</strong>
    <small>Damage 40 → 65</small>
    <button id="upgrade3" onclick="buyWeaponUpgrade(3)">
@@ -288,15 +299,78 @@ button{font-weight:bold;color:#fff;background:#19c37d}
    </button>
   </div>
 
-  <div class="shopItem">
-   <strong>⚡ Ammo Capacity Lv 2</strong>
+  <div class="panelItem">
+   <strong>⚡ Ammo Capacity</strong>
    <small>Maximum ammo 30 → 50</small>
    <button id="capacity2" onclick="buyCapacityUpgrade()">
     UPGRADE • ₹400
    </button>
   </div>
 
-  <button id="closeShop" onclick="closeShop()">CLOSE SHOP</button>
+  <button class="closePanel" onclick="closeShop()">CLOSE SHOP</button>
+
+ </div>
+</div>
+
+<!-- GARAGE -->
+
+<div id="garage">
+ <div class="panelBox">
+
+  <h2>🚗 VEHICLE GARAGE</h2>
+
+  <div class="panelMoney">
+   Balance: ₹<span id="garageMoney">500</span>
+  </div>
+
+  <div class="panelItem">
+
+   <div class="statRow">
+    <span>Vehicle Owned</span>
+    <strong id="vehicleOwnedText">YES</strong>
+   </div>
+
+   <div class="statRow">
+    <span>Vehicle Level</span>
+    <strong id="vehicleLevelText">1</strong>
+   </div>
+
+   <div class="statRow">
+    <span>Vehicle Speed</span>
+    <strong id="vehicleSpeedText">20</strong>
+   </div>
+
+  </div>
+
+  <div class="panelItem">
+   <strong>🚗 Vehicle Upgrade</strong>
+   <small>
+    Level 1 → 2 → 3<br>
+    Higher level = faster vehicle
+   </small>
+
+   <button id="vehicleUpgrade"
+           onclick="buyVehicleUpgrade()">
+    UPGRADE • ₹700
+   </button>
+  </div>
+
+  <div class="panelItem">
+   <strong>🏎️ Buy Personal Vehicle</strong>
+   <small>
+    Purchase your own vehicle.
+   </small>
+
+   <button id="buyVehicleBtn"
+           onclick="buyVehicle()">
+    BUY • ₹2500
+   </button>
+  </div>
+
+  <button class="closePanel"
+          onclick="closeGarage()">
+   CLOSE GARAGE
+  </button>
 
  </div>
 </div>
@@ -348,6 +422,10 @@ let weaponLevel=1;
 let weaponDamage=25;
 let ammoCapacity=30;
 
+let vehicleLevel=1;
+let vehicleSpeed=20;
+let vehicleOwned=1;
+
 let scene,camera,renderer,clock;
 let player,playerMesh;
 
@@ -370,6 +448,9 @@ let policeUnits=[];
 
 let activeMission=null;
 let missionMarker=null;
+
+let nearWeaponShop=false;
+let nearGarage=false;
 
 let escapeTimer=0;
 let lastCaught=0;
@@ -407,9 +488,12 @@ async function startGame(){
    .select()
    .single();
 
-  playerId=r.error?crypto.randomUUID():r.data.id;
+  playerId=r.error?
+   crypto.randomUUID():
+   r.data.id;
 
   await loadStats();
+  await loadVehicleStats();
 
   initThree();
   createWorld();
@@ -478,11 +562,9 @@ async function loadStats(){
   await sb.from("player_stats").insert({
 
    id:playerId,
-
    money:500,
    xp:0,
    level:1,
-
    missions_completed:0,
 
    wanted:0,
@@ -502,7 +584,6 @@ async function loadStats(){
   money=500;
   xp=0;
   level=1;
-
   missionsCompleted=0;
 
   wanted=0;
@@ -521,7 +602,36 @@ async function loadStats(){
 }
 
 
-/* SAVE */
+/* VEHICLE STATS */
+
+async function loadVehicleStats(){
+
+ const r=await sb.from("player_stats")
+  .select(
+   "vehicle_level,vehicle_speed,vehicle_owned"
+  )
+  .eq("id",playerId)
+  .maybeSingle();
+
+ if(r.data){
+
+  vehicleLevel=
+   Number(r.data.vehicle_level)||1;
+
+  vehicleSpeed=
+   Number(r.data.vehicle_speed)||20;
+
+  vehicleOwned=
+   Number(r.data.vehicle_owned)||1;
+
+ }else{
+
+  vehicleLevel=1;
+  vehicleSpeed=20;
+  vehicleOwned=1;
+ }
+}
+
 
 async function saveStats(){
 
@@ -538,8 +648,7 @@ async function saveStats(){
     missionsCompleted,
 
    wanted,
-   fines_paid:
-    finesPaid,
+   fines_paid:finesPaid,
 
    health,
    ammo,
@@ -554,7 +663,16 @@ async function saveStats(){
     weaponDamage,
 
    ammo_capacity:
-    ammoCapacity
+    ammoCapacity,
+
+   vehicle_level:
+    vehicleLevel,
+
+   vehicle_speed:
+    vehicleSpeed,
+
+   vehicle_owned:
+    vehicleOwned
 
   })
   .eq("id",playerId);
@@ -617,9 +735,7 @@ function initThree(){
   );
 
  sun.position.set(
-  100,
-  180,
-  80
+  100,180,80
  );
 
  sun.castShadow=true;
@@ -648,8 +764,7 @@ function createWorld(){
  const ground=
   new THREE.Mesh(
    new THREE.PlaneGeometry(
-    260,
-    260
+    260,260
    ),
    new THREE.MeshLambertMaterial({
     color:0x459447
@@ -660,13 +775,8 @@ function createWorld(){
 
  scene.add(ground);
 
- createRoad(
-  0,0,260,14,0
- );
-
- createRoad(
-  0,0,260,12,Math.PI/2
- );
+ createRoad(0,0,260,14,0);
+ createRoad(0,0,260,12,Math.PI/2);
 
  createRiver();
 
@@ -694,32 +804,228 @@ function createWorld(){
   );
  }
 
- createShop(
-  35,18,
-  "TEA SHOP"
- );
+ createShop(35,18,"TEA SHOP");
+ createShop(-35,-18,"KERALA STORE");
+ createShop(55,-40,"HOTEL");
 
- createShop(
-  -35,-18,
-  "KERALA STORE"
- );
+ createWeaponShop(-15,45);
+ createGarage(65,20);
 
- createShop(
-  55,-40,
-  "HOTEL"
- );
-
- createWeaponShop(
-  -15,45
- );
-
- createTemple(
-  -65,55
- );
+ createTemple(-65,55);
 }
 
 
-/* WEAPON SHOP BUILDING */
+/* ROAD */
+
+function createRoad(
+ x,z,length,width,rotation
+){
+
+ const road=
+  new THREE.Mesh(
+   new THREE.BoxGeometry(
+    length,.12,width
+   ),
+   new THREE.MeshLambertMaterial({
+    color:0x333333
+   })
+  );
+
+ road.position.set(x,.06,z);
+ road.rotation.y=rotation;
+
+ scene.add(road);
+
+ for(
+  let i=-length/2;
+  i<length/2;
+  i+=12
+ ){
+
+  const line=
+   new THREE.Mesh(
+    new THREE.BoxGeometry(
+     5,.14,.35
+    ),
+    new THREE.MeshBasicMaterial({
+     color:0xffdf4d
+    })
+   );
+
+  if(rotation===0)
+   line.position.set(x+i,.14,z);
+  else
+   line.position.set(x,.14,z+i);
+
+  scene.add(line);
+ }
+}
+
+
+/* RIVER */
+
+function createRiver(){
+
+ const river=
+  new THREE.Mesh(
+   new THREE.PlaneGeometry(
+    220,25
+   ),
+   new THREE.MeshLambertMaterial({
+    color:0x238bd0,
+    transparent:true,
+    opacity:.8
+   })
+  );
+
+ river.rotation.x=-Math.PI/2;
+ river.position.set(0,.08,95);
+
+ scene.add(river);
+}
+
+
+/* HOUSE */
+
+function createHouse(x,z){
+
+ const g=new THREE.Group();
+
+ const body=
+  new THREE.Mesh(
+   new THREE.BoxGeometry(
+    10,6,8
+   ),
+   new THREE.MeshLambertMaterial({
+    color:0xe9d7b4
+   })
+  );
+
+ body.position.y=3;
+ g.add(body);
+
+ const roof=
+  new THREE.Mesh(
+   new THREE.ConeGeometry(
+    7,4,4
+   ),
+   new THREE.MeshLambertMaterial({
+    color:0x9c3b2f
+   })
+  );
+
+ roof.position.y=8;
+ roof.rotation.y=Math.PI/4;
+
+ g.add(roof);
+
+ g.position.set(x,0,z);
+
+ scene.add(g);
+}
+
+
+/* PALM */
+
+function createPalm(x,z){
+
+ const g=new THREE.Group();
+
+ const trunk=
+  new THREE.Mesh(
+   new THREE.CylinderGeometry(
+    .35,.55,7,8
+   ),
+   new THREE.MeshLambertMaterial({
+    color:0x704b2a
+   })
+  );
+
+ trunk.position.y=3.5;
+ g.add(trunk);
+
+ for(let i=0;i<7;i++){
+
+  const leaf=
+   new THREE.Mesh(
+    new THREE.BoxGeometry(
+     .35,5,.7
+    ),
+    new THREE.MeshLambertMaterial({
+     color:0x18752b
+    })
+   );
+
+  leaf.position.y=7;
+  leaf.rotation.z=.5;
+  leaf.rotation.y=
+   i*Math.PI*2/7;
+
+  g.add(leaf);
+ }
+
+ g.position.set(x,0,z);
+
+ scene.add(g);
+}
+
+
+/* SHOP BUILDING */
+
+function createShop(x,z,text){
+
+ const g=new THREE.Group();
+
+ const body=
+  new THREE.Mesh(
+   new THREE.BoxGeometry(
+    12,7,9
+   ),
+   new THREE.MeshLambertMaterial({
+    color:0xd9d1ad
+   })
+  );
+
+ body.position.y=3.5;
+ g.add(body);
+
+ const c=document.createElement("canvas");
+
+ c.width=512;
+ c.height=128;
+
+ const ctx=c.getContext("2d");
+
+ ctx.fillStyle="#063b24";
+ ctx.fillRect(0,0,512,128);
+
+ ctx.fillStyle="#fff";
+ ctx.font="bold 45px Arial";
+ ctx.textAlign="center";
+
+ ctx.fillText(text,256,82);
+
+ const sign=
+  new THREE.Mesh(
+   new THREE.PlaneGeometry(
+    10,2.5
+   ),
+   new THREE.MeshBasicMaterial({
+    map:new THREE.CanvasTexture(c)
+   })
+  );
+
+ sign.position.set(0,7,4.55);
+
+ g.add(sign);
+
+ g.position.set(x,0,z);
+
+ scene.add(g);
+}
+
+
+/* WEAPON SHOP */
 
 function createWeaponShop(x,z){
 
@@ -736,11 +1042,9 @@ function createWeaponShop(x,z){
   );
 
  body.position.y=3.5;
-
  g.add(body);
 
- const c=
-  document.createElement("canvas");
+ const c=document.createElement("canvas");
 
  c.width=512;
  c.height=128;
@@ -748,15 +1052,10 @@ function createWeaponShop(x,z){
  const ctx=c.getContext("2d");
 
  ctx.fillStyle="#351342";
- ctx.fillRect(
-  0,0,512,128
- );
+ ctx.fillRect(0,0,512,128);
 
- ctx.fillStyle="#ffffff";
-
- ctx.font=
-  "bold 44px Arial";
-
+ ctx.fillStyle="#fff";
+ ctx.font="bold 44px Arial";
  ctx.textAlign="center";
 
  ctx.fillText(
@@ -787,206 +1086,41 @@ function createWeaponShop(x,z){
 }
 
 
-function createRoad(
- x,z,length,width,rotation
-){
+/* GARAGE */
 
- const road=
-  new THREE.Mesh(
-   new THREE.BoxGeometry(
-    length,.12,width
-   ),
-   new THREE.MeshLambertMaterial({
-    color:0x333333
-   })
-  );
-
- road.position.set(
-  x,.06,z
- );
-
- road.rotation.y=rotation;
-
- scene.add(road);
-
- for(
-  let i=-length/2;
-  i<length/2;
-  i+=12
- ){
-
-  const line=
-   new THREE.Mesh(
-    new THREE.BoxGeometry(
-     5,.14,.35
-    ),
-    new THREE.MeshBasicMaterial({
-     color:0xffdf4d
-    })
-   );
-
-  if(rotation===0)
-   line.position.set(
-    x+i,.14,z
-   );
-  else
-   line.position.set(
-    x,.14,z+i
-   );
-
-  scene.add(line);
- }
-}
-
-
-function createRiver(){
-
- const river=
-  new THREE.Mesh(
-   new THREE.PlaneGeometry(
-    220,25
-   ),
-   new THREE.MeshLambertMaterial({
-    color:0x238bd0,
-    transparent:true,
-    opacity:.8
-   })
-  );
-
- river.rotation.x=-Math.PI/2;
-
- river.position.set(
-  0,.08,95
- );
-
- scene.add(river);
-}
-
-
-function createHouse(x,z){
+function createGarage(x,z){
 
  const g=new THREE.Group();
 
  const body=
   new THREE.Mesh(
    new THREE.BoxGeometry(
-    10,6,8
+    16,7,12
    ),
    new THREE.MeshLambertMaterial({
-    color:0xe9d7b4
-   })
-  );
-
- body.position.y=3;
-
- g.add(body);
-
- const roof=
-  new THREE.Mesh(
-   new THREE.ConeGeometry(
-    7,4,4
-   ),
-   new THREE.MeshLambertMaterial({
-    color:0x9c3b2f
-   })
-  );
-
- roof.position.y=8;
- roof.rotation.y=Math.PI/4;
-
- g.add(roof);
-
- g.position.set(x,0,z);
-
- scene.add(g);
-}
-
-
-function createPalm(x,z){
-
- const g=new THREE.Group();
-
- const trunk=
-  new THREE.Mesh(
-   new THREE.CylinderGeometry(
-    .35,.55,7,8
-   ),
-   new THREE.MeshLambertMaterial({
-    color:0x704b2a
-   })
-  );
-
- trunk.position.y=3.5;
-
- g.add(trunk);
-
- for(let i=0;i<7;i++){
-
-  const leaf=
-   new THREE.Mesh(
-    new THREE.BoxGeometry(
-     .35,5,.7
-    ),
-    new THREE.MeshLambertMaterial({
-     color:0x18752b
-    })
-   );
-
-  leaf.position.y=7;
-  leaf.rotation.z=.5;
-  leaf.rotation.y=
-   i*Math.PI*2/7;
-
-  g.add(leaf);
- }
-
- g.position.set(x,0,z);
-
- scene.add(g);
-}
-
-
-function createShop(x,z,text){
-
- const g=new THREE.Group();
-
- const body=
-  new THREE.Mesh(
-   new THREE.BoxGeometry(
-    12,7,9
-   ),
-   new THREE.MeshLambertMaterial({
-    color:0xd9d1ad
+    color:0x28527a
    })
   );
 
  body.position.y=3.5;
-
  g.add(body);
 
- const c=
-  document.createElement("canvas");
+ const c=document.createElement("canvas");
 
  c.width=512;
  c.height=128;
 
  const ctx=c.getContext("2d");
 
- ctx.fillStyle="#063b24";
-
- ctx.fillRect(
-  0,0,512,128
- );
+ ctx.fillStyle="#102f4d";
+ ctx.fillRect(0,0,512,128);
 
  ctx.fillStyle="#fff";
-
- ctx.font=
-  "bold 45px Arial";
-
+ ctx.font="bold 48px Arial";
  ctx.textAlign="center";
 
  ctx.fillText(
-  text,
+  "GARAGE",
   256,
   82
  );
@@ -994,7 +1128,7 @@ function createShop(x,z,text){
  const sign=
   new THREE.Mesh(
    new THREE.PlaneGeometry(
-    10,2.5
+    12,2.7
    ),
    new THREE.MeshBasicMaterial({
     map:new THREE.CanvasTexture(c)
@@ -1002,7 +1136,7 @@ function createShop(x,z,text){
   );
 
  sign.position.set(
-  0,7,4.55
+  0,7.2,6.05
  );
 
  g.add(sign);
@@ -1012,6 +1146,8 @@ function createShop(x,z,text){
  scene.add(g);
 }
 
+
+/* TEMPLE */
 
 function createTemple(x,z){
 
@@ -1028,7 +1164,6 @@ function createTemple(x,z){
   );
 
  base.position.y=3;
-
  g.add(base);
 
  const roof=
@@ -1078,7 +1213,6 @@ function createPlayer(){
   );
 
  body.position.y=1.5;
-
  g.add(body);
 
  const head=
@@ -1092,12 +1226,9 @@ function createPlayer(){
   );
 
  head.position.y=2.8;
-
  g.add(head);
 
- g.position.set(
-  0,0,35
- );
+ g.position.set(0,0,35);
 
  playerMesh=g;
 
@@ -1109,23 +1240,9 @@ function createPlayer(){
 
 function createNPCs(){
 
- createNPC(
-  "Rajan",
-  "Tea Shop",
-  35,70,100
- );
-
- createNPC(
-  "Anu",
-  "Kerala Store",
-  -40,-70,200
- );
-
- createNPC(
-  "Shafi",
-  "Hotel",
-  80,70,300
- );
+ createNPC("Rajan","Tea Shop",35,70,100);
+ createNPC("Anu","Kerala Store",-40,-70,200);
+ createNPC("Shafi","Hotel",80,70,300);
 }
 
 
@@ -1146,7 +1263,6 @@ function createNPC(
   );
 
  body.position.y=1.5;
-
  g.add(body);
 
  const head=
@@ -1160,7 +1276,6 @@ function createNPC(
   );
 
  head.position.y=2.8;
-
  g.add(head);
 
  g.position.set(x,0,z);
@@ -1168,12 +1283,7 @@ function createNPC(
  scene.add(g);
 
  npcs.push({
-  name,
-  job,
-  x,
-  z,
-  reward,
-  mesh:g
+  name,job,x,z,reward,mesh:g
  });
 }
 
@@ -1182,21 +1292,15 @@ function createNPC(
 
 function createCars(){
 
- createCar(
-  10,5,0,false
- );
+ createCar(10,5,0,false);
+ createCar(-18,5,Math.PI,false);
+ createCar(35,-8,Math.PI/2,false);
+ createCar(-40,18,Math.PI/2,false);
 
- createCar(
-  -18,5,Math.PI,false
- );
+ /* extra vehicles */
 
- createCar(
-  35,-8,Math.PI/2,false
- );
-
- createCar(
-  -40,18,Math.PI/2,false
- );
+ createCar(75,35,0,false);
+ createCar(-70,-25,Math.PI/2,false);
 }
 
 
@@ -1235,7 +1339,6 @@ function createCar(
   );
 
  body.position.y=1.2;
-
  g.add(body);
 
  const roof=
@@ -1252,16 +1355,11 @@ function createCar(
   );
 
  roof.position.y=2;
-
  g.add(roof);
 
- for(
-  const sx of [-1.8,1.8]
- ){
+ for(const sx of [-1.8,1.8]){
 
-  for(
-   const sz of [-1.1,1.1]
-  ){
+  for(const sz of [-1.1,1.1]){
 
    const w=
     new THREE.Mesh(
@@ -1274,10 +1372,7 @@ function createCar(
     );
 
    w.rotation.z=Math.PI/2;
-
-   w.position.set(
-    sx,.55,sz
-   );
+   w.position.set(sx,.55,sz);
 
    g.add(w);
   }
@@ -1295,10 +1390,7 @@ function createCar(
     })
    );
 
-  a.position.set(
-   -.45,2.6,0
-  );
-
+  a.position.set(-.45,2.6,0);
   g.add(a);
 
   const b=a.clone();
@@ -1313,10 +1405,7 @@ function createCar(
   g.add(b);
  }
 
- g.position.set(
-  x,0,z
- );
-
+ g.position.set(x,0,z);
  g.rotation.y=rot;
 
  scene.add(g);
@@ -1355,8 +1444,7 @@ function createPolice(){
 
   policeUnits.push({
    car,
-   speed:
-    7+Math.random()*2,
+   speed:7+Math.random()*2,
    caughtDistance:5.5
   });
  });
@@ -1372,51 +1460,31 @@ function updateMovement(dt){
  let dx=joyX;
  let dz=joyY;
 
- if(keys.w||keys.ArrowUp)
-  dz-=1;
+ if(keys.w||keys.ArrowUp)dz-=1;
+ if(keys.s||keys.ArrowDown)dz+=1;
+ if(keys.a||keys.ArrowLeft)dx-=1;
+ if(keys.d||keys.ArrowRight)dx+=1;
 
- if(keys.s||keys.ArrowDown)
-  dz+=1;
-
- if(keys.a||keys.ArrowLeft)
-  dx-=1;
-
- if(keys.d||keys.ArrowRight)
-  dx+=1;
-
- const len=
-  Math.hypot(dx,dz);
+ const len=Math.hypot(dx,dz);
 
  if(len>0){
 
   dx/=len;
   dz/=len;
 
-  const speed=
-   running?13:7;
+  const speed=running?13:7;
 
-  player.x+=
-   dx*speed*dt;
+  player.x+=dx*speed*dt;
+  player.z+=dz*speed*dt;
 
-  player.z+=
-   dz*speed*dt;
-
-  player.rot=
-   Math.atan2(dx,dz);
-
-  playerMesh.rotation.y=
-   player.rot;
+  player.rot=Math.atan2(dx,dz);
+  playerMesh.rotation.y=player.rot;
  }
 
- if(
-  player.y>0||
-  !player.onGround
- ){
+ if(player.y>0||!player.onGround){
 
   player.vy-=20*dt;
-
-  player.y+=
-   player.vy*dt;
+  player.y+=player.vy*dt;
 
   if(player.y<=0){
 
@@ -1444,6 +1512,7 @@ function updateMovement(dt){
 
  checkNPC();
  checkWeaponShop();
+ checkGarage();
  checkMission();
 
  broadcastPosition();
@@ -1482,17 +1551,13 @@ function updateCamera(){
 
  camera.position.lerp(
   new THREE.Vector3(
-   x,
-   14,
-   z+18
+   x,14,z+18
   ),
   .08
  );
 
  camera.lookAt(
-  x,
-  1.5,
-  z
+  x,1.5,z
  );
 }
 
@@ -1537,16 +1602,23 @@ function toggleVehicle(){
 
 function enterCar(car){
 
+ if(!vehicleOwned){
+
+  addChat(
+   "GARAGE",
+   "You need to own a vehicle."
+  );
+
+  return;
+ }
+
  currentCar=car;
-
  inCar=true;
-
  car.occupied=true;
 
  addWanted(1);
 
- $("carBtn").textContent=
-  "EXIT";
+ $("carBtn").textContent="EXIT";
 
  addChat(
   "SYSTEM",
@@ -1566,48 +1638,30 @@ function exitCar(){
   currentCar.mesh.position.z+3;
 
  currentCar.occupied=false;
-
  currentCar=null;
-
  inCar=false;
 
- $("carBtn").textContent=
-  "CAR";
+ $("carBtn").textContent="CAR";
 }
 
 
 function updateCar(dt){
 
- if(
-  !inCar||
-  !currentCar
- )return;
+ if(!inCar||!currentCar)return;
 
  let throttle=0;
  let steer=0;
 
- if(
-  keys.w||
-  keys.ArrowUp
- )
+ if(keys.w||keys.ArrowUp)
   throttle=1;
 
- if(
-  keys.s||
-  keys.ArrowDown
- )
+ if(keys.s||keys.ArrowDown)
   throttle=-1;
 
- if(
-  keys.a||
-  keys.ArrowLeft
- )
+ if(keys.a||keys.ArrowLeft)
   steer=1;
 
- if(
-  keys.d||
-  keys.ArrowRight
- )
+ if(keys.d||keys.ArrowRight)
   steer=-1;
 
  currentCar.speed+=
@@ -1616,11 +1670,16 @@ function updateCar(dt){
  currentCar.speed*=
   Math.pow(.12,dt);
 
+ const maxSpeed=
+  running?
+   vehicleSpeed+8:
+   vehicleSpeed;
+
  currentCar.speed=
   THREE.MathUtils.clamp(
    currentCar.speed,
    -10,
-   running?28:20
+   maxSpeed
   );
 
  currentCar.mesh.rotation.y+=
@@ -1647,15 +1706,13 @@ function updateCar(dt){
  currentCar.mesh.position.x=
   THREE.MathUtils.clamp(
    currentCar.mesh.position.x,
-   -125,
-   125
+   -125,125
   );
 
  currentCar.mesh.position.z=
   THREE.MathUtils.clamp(
    currentCar.mesh.position.z,
-   -125,
-   125
+   -125,125
   );
 
  player.x=
@@ -1668,7 +1725,7 @@ function updateCar(dt){
 }
 
 
-/* NPC MISSIONS */
+/* MISSIONS */
 
 function checkNPC(){
 
@@ -1705,11 +1762,8 @@ function talkToNPC(){
 
  if(!currentNPC)return;
 
- $("talkBtn").style.display=
-  "none";
-
- $("missionBtn").style.display=
-  "block";
+ $("talkBtn").style.display="none";
+ $("missionBtn").style.display="block";
 
  $("missionTitle").textContent=
   currentNPC.name+
@@ -1720,8 +1774,7 @@ function talkToNPC(){
   "Mission reward ₹"+
   currentNPC.reward;
 
- $("mission").style.display=
-  "block";
+ $("mission").style.display="block";
 }
 
 
@@ -1735,8 +1788,7 @@ function startCurrentMission(){
   Shafi:{x:80,z:70}
  };
 
- const t=
-  map[currentNPC.name];
+ const t=map[currentNPC.name];
 
  activeMission={
   npc:currentNPC,
@@ -1746,12 +1798,10 @@ function startCurrentMission(){
  };
 
  createMissionMarker(
-  t.x,
-  t.z
+  t.x,t.z
  );
 
- $("missionBtn").style.display=
-  "none";
+ $("missionBtn").style.display="none";
 
  $("missionTitle").textContent=
   "📍 "+
@@ -1815,8 +1865,7 @@ function updateMissionText(){
   )
  );
 
- $("mission").style.display=
-  "block";
+ $("mission").style.display="block";
 
  $("missionText").textContent=
   "Go to destination • "+
@@ -1832,7 +1881,6 @@ async function completeMission(){
   activeMission.reward;
 
  money+=reward;
-
  missionsCompleted++;
 
  await addXP(
@@ -1855,8 +1903,7 @@ async function completeMission(){
   missionMarker=null;
  }
 
- $("mission").style.display=
-  "none";
+ $("mission").style.display="none";
 
  updateHUD();
 
@@ -1873,7 +1920,6 @@ async function addXP(amount){
  ){
 
   xp-=level*100;
-
   level++;
 
   addChat(
@@ -1890,9 +1936,7 @@ async function addXP(amount){
 }
 
 
-/* WEAPON SHOP DETECTION */
-
-let nearWeaponShop=false;
+/* WEAPON SHOP */
 
 function checkWeaponShop(){
 
@@ -1900,12 +1944,11 @@ function checkWeaponShop(){
 
  const d=
   Math.hypot(
-   player.x-(-15),
+   player.x+15,
    player.z-45
   );
 
- nearWeaponShop=
-  d<10;
+ nearWeaponShop=d<10;
 
  $("shopBtn").style.display=
   nearWeaponShop&&!inCar?
@@ -1914,23 +1957,19 @@ function checkWeaponShop(){
 }
 
 
-/* SHOP */
-
 function openShop(){
 
  if(!nearWeaponShop)return;
 
  updateShop();
 
- $("shop").style.display=
-  "flex";
+ $("shop").style.display="flex";
 }
 
 
 function closeShop(){
 
- $("shop").style.display=
-  "none";
+ $("shop").style.display="none";
 }
 
 
@@ -1949,27 +1988,16 @@ function updateShop(){
  $("capacity2").disabled=
   ammoCapacity>=50;
 
- if(weaponLevel>=2){
+ if(weaponLevel>=2)
+  $("upgrade2").textContent="✓ PURCHASED";
 
-  $("upgrade2").textContent=
-   "✓ PURCHASED";
- }
+ if(weaponLevel>=3)
+  $("upgrade3").textContent="✓ PURCHASED";
 
- if(weaponLevel>=3){
-
-  $("upgrade3").textContent=
-   "✓ PURCHASED";
- }
-
- if(ammoCapacity>=50){
-
-  $("capacity2").textContent=
-   "✓ PURCHASED";
- }
+ if(ammoCapacity>=50)
+  $("capacity2").textContent="✓ PURCHASED";
 }
 
-
-/* BUY AMMO */
 
 async function buyAmmo(){
 
@@ -2005,8 +2033,6 @@ async function buyAmmo(){
 }
 
 
-/* WEAPON UPGRADE */
-
 async function buyWeaponUpgrade(targetLevel){
 
  if(
@@ -2015,15 +2041,8 @@ async function buyWeaponUpgrade(targetLevel){
  )
   return;
 
- if(weaponLevel>=targetLevel){
-
-  addChat(
-   "SHOP",
-   "Already upgraded."
-  );
-
+ if(weaponLevel>=targetLevel)
   return;
- }
 
  let price=0;
  let damage=weaponDamage;
@@ -2062,17 +2081,13 @@ async function buyWeaponUpgrade(targetLevel){
 
  money-=price;
 
- weaponLevel=
-  targetLevel;
-
- weaponDamage=
-  damage;
+ weaponLevel=targetLevel;
+ weaponDamage=damage;
 
  addChat(
   "SHOP",
   "🔫 Weapon upgraded to Level "+
-  weaponLevel+
-  "!"
+  weaponLevel+"!"
  );
 
  updateHUD();
@@ -2082,21 +2097,12 @@ async function buyWeaponUpgrade(targetLevel){
 }
 
 
-/* AMMO CAPACITY */
-
 async function buyCapacityUpgrade(){
 
  const price=400;
 
- if(ammoCapacity>=50){
-
-  addChat(
-   "SHOP",
-   "Already upgraded."
-  );
-
+ if(ammoCapacity>=50)
   return;
- }
 
  if(money<price){
 
@@ -2130,6 +2136,175 @@ async function buyCapacityUpgrade(){
 }
 
 
+/* GARAGE */
+
+function checkGarage(){
+
+ if(!player)return;
+
+ const d=
+  Math.hypot(
+   player.x-65,
+   player.z-20
+  );
+
+ nearGarage=d<11;
+
+ $("garageBtn").style.display=
+  nearGarage&&!inCar?
+   "block":
+   "none";
+}
+
+
+function openGarage(){
+
+ if(!nearGarage)return;
+
+ updateGarage();
+
+ $("garage").style.display="flex";
+}
+
+
+function closeGarage(){
+
+ $("garage").style.display="none";
+}
+
+
+function updateGarage(){
+
+ $("garageMoney").textContent=
+  Math.floor(money);
+
+ $("vehicleLevelText").textContent=
+  vehicleLevel;
+
+ $("vehicleSpeedText").textContent=
+  vehicleSpeed;
+
+ $("vehicleOwnedText").textContent=
+  vehicleOwned?
+   "YES":
+   "NO";
+
+ $("vehicleUpgrade").disabled=
+  vehicleLevel>=3;
+
+ if(vehicleLevel>=3){
+
+  $("vehicleUpgrade").textContent=
+   "✓ MAX LEVEL";
+ }else{
+
+  $("vehicleUpgrade").textContent=
+   vehicleLevel===1?
+    "UPGRADE • ₹700":
+    "UPGRADE • ₹1200";
+ }
+
+ $("buyVehicleBtn").disabled=
+  vehicleOwned===1;
+
+ if(vehicleOwned)
+  $("buyVehicleBtn").textContent=
+   "✓ OWNED";
+}
+
+
+async function buyVehicle(){
+
+ if(vehicleOwned){
+
+  addChat(
+   "GARAGE",
+   "You already own a vehicle."
+  );
+
+  return;
+ }
+
+ const price=2500;
+
+ if(money<price){
+
+  addChat(
+   "GARAGE",
+   "❌ You need ₹2500."
+  );
+
+  return;
+ }
+
+ money-=price;
+ vehicleOwned=1;
+
+ addChat(
+  "GARAGE",
+  "🚗 Vehicle purchased!"
+ );
+
+ updateHUD();
+ updateGarage();
+
+ await saveStats();
+}
+
+
+async function buyVehicleUpgrade(){
+
+ if(vehicleLevel>=3){
+
+  addChat(
+   "GARAGE",
+   "🚗 Vehicle already max level."
+  );
+
+  return;
+ }
+
+ let price=0;
+
+ if(vehicleLevel===1)
+  price=700;
+
+ if(vehicleLevel===2)
+  price=1200;
+
+ if(money<price){
+
+  addChat(
+   "GARAGE",
+   "❌ Not enough money."
+  );
+
+  return;
+ }
+
+ money-=price;
+
+ vehicleLevel++;
+
+ if(vehicleLevel===2)
+  vehicleSpeed=28;
+
+ if(vehicleLevel===3)
+  vehicleSpeed=36;
+
+ addChat(
+  "GARAGE",
+  "🚗 Vehicle upgraded to Level "+
+  vehicleLevel+"!"
+ );
+
+ updateHUD();
+ updateGarage();
+
+ await saveStats();
+}
+
+
 /* WANTED */
 
 async function addWanted(amount){
@@ -2137,13 +2312,11 @@ async function addWanted(amount){
  wanted=
   THREE.MathUtils.clamp(
    wanted+amount,
-   0,
-   5
+   0,5
   );
 
  if(wanted>0)
-  $("policeAlert").style.display=
-   "block";
+  $("policeAlert").style.display="block";
 
  updateHUD();
 
@@ -2159,8 +2332,7 @@ async function reduceWanted(){
 
  if(wanted===0){
 
-  $("policeAlert").style.display=
-   "none";
+  $("policeAlert").style.display="none";
 
   addChat(
    "POLICE",
@@ -2187,19 +2359,16 @@ function updatePolice(dt){
   const car=unit.car;
 
   const dx=
-   player.x-
-   car.mesh.position.x;
+   player.x-car.mesh.position.x;
 
   const dz=
-   player.z-
-   car.mesh.position.z;
+   player.z-car.mesh.position.z;
 
   const dist=
    Math.hypot(dx,dz);
 
   if(
-   dist<
-   unit.caughtDistance
+   dist<unit.caughtDistance
   ){
 
    caughtByPolice();
@@ -2219,25 +2388,21 @@ function updatePolice(dt){
 
   car.mesh.position.x+=
    Math.sin(angle)*
-   speed*
-   dt;
+   speed*dt;
 
   car.mesh.position.z+=
    Math.cos(angle)*
-   speed*
-   dt;
+   speed*dt;
  });
 }
 
 
 async function caughtByPolice(){
 
- const now=
-  performance.now();
+ const now=performance.now();
 
  if(
-  now-lastCaught<
-  4000
+  now-lastCaught<4000
  )
   return;
 
@@ -2250,13 +2415,10 @@ async function caughtByPolice(){
   );
 
  money-=fine;
-
  finesPaid++;
-
  wanted=0;
 
- $("policeAlert").style.display=
-  "none";
+ $("policeAlert").style.display="none";
 
  addChat(
   "POLICE",
@@ -2297,12 +2459,10 @@ function shoot(){
 
  if(!player)return;
 
- const now=
-  performance.now();
+ const now=performance.now();
 
  if(
-  now-lastShot<
-  350
+  now-lastShot<350
  )
   return;
 
@@ -2336,16 +2496,13 @@ function shoot(){
 
   const car=unit.car;
 
-  if(!car.mesh.visible)
-   return;
+  if(!car.mesh.visible)return;
 
   const dx=
-   car.mesh.position.x-
-   player.x;
+   car.mesh.position.x-player.x;
 
   const dz=
-   car.mesh.position.z-
-   player.z;
+   car.mesh.position.z-player.z;
 
   const distance=
    Math.hypot(dx,dz);
@@ -2373,7 +2530,6 @@ function shoot(){
  if(target){
 
   damagePolice(target);
-
   addWanted(1);
 
  }else{
@@ -2426,10 +2582,7 @@ async function takeDamage(amount){
  health-=amount;
 
  health=
-  Math.max(
-   0,
-   health
-  );
+  Math.max(0,health);
 
  showDamage();
 
@@ -2442,15 +2595,12 @@ async function takeDamage(amount){
 
 function showDamage(){
 
- const f=
-  $("damageFlash");
+ const f=$("damageFlash");
 
- f.style.display=
-  "block";
+ f.style.display="block";
 
  setTimeout(()=>{
-  f.style.display=
-   "none";
+  f.style.display="none";
  },120);
 }
 
@@ -2466,8 +2616,7 @@ async function playerDeath(){
 
  health=100;
 
- ammo=
-  ammoCapacity;
+ ammo=ammoCapacity;
 
  wanted=
   Math.max(
@@ -2485,12 +2634,9 @@ async function playerDeath(){
 }
 
 
-/* RELOAD */
-
 function reloadAmmo(){
 
- ammo=
-  ammoCapacity;
+ ammo=ammoCapacity;
 
  addChat(
   "WEAPON",
@@ -2517,18 +2663,12 @@ function updateWantedEscape(dt){
 
   const d=
    Math.hypot(
-    unit.car.mesh.position.x-
-    player.x,
-
-    unit.car.mesh.position.z-
-    player.z
+    unit.car.mesh.position.x-player.x,
+    unit.car.mesh.position.z-player.z
    );
 
   nearest=
-   Math.min(
-    nearest,
-    d
-   );
+   Math.min(nearest,d);
  });
 
  if(nearest>45){
@@ -2538,7 +2678,6 @@ function updateWantedEscape(dt){
   if(escapeTimer>8){
 
    escapeTimer=0;
-
    reduceWanted();
   }
 
@@ -2568,17 +2707,13 @@ async function connectMultiplayer(){
  channel
   .on(
    "presence",
-   {
-    event:"sync"
-   },
+   {event:"sync"},
    updatePresence
   )
 
   .on(
    "presence",
-   {
-    event:"join"
-   },
+   {event:"join"},
    ({newPresences})=>{
 
     newPresences.forEach(
@@ -2591,38 +2726,29 @@ async function connectMultiplayer(){
 
   .on(
    "presence",
-   {
-    event:"leave"
-   },
+   {event:"leave"},
    ({key})=>{
 
     removeRemotePlayer(key);
-
     updateOnline();
    }
   )
 
   .on(
    "broadcast",
-   {
-    event:"move"
-   },
+   {event:"move"},
    ({payload})=>{
 
     if(
      payload.id!==playerId
     )
-     updateRemotePlayer(
-      payload
-     );
+     updateRemotePlayer(payload);
    }
   )
 
   .on(
    "broadcast",
-   {
-    event:"chat"
-   },
+   {event:"chat"},
    ({payload})=>{
 
     if(
@@ -2638,9 +2764,7 @@ async function connectMultiplayer(){
  await channel.subscribe(
   async status=>{
 
-   if(
-    status==="SUBSCRIBED"
-   ){
+   if(status==="SUBSCRIBED"){
 
     await channel.track({
 
@@ -2665,8 +2789,7 @@ function updatePresence(){
  Object.keys(state).forEach(
   key=>{
 
-   if(key===playerId)
-    return;
+   if(key===playerId)return;
 
    const p=
     state[key]?.[0];
@@ -2688,9 +2811,7 @@ function createRemotePlayer(p){
  )
   return;
 
- if(
-  remotePlayers[p.id]
- )
+ if(remotePlayers[p.id])
   return;
 
  const g=
@@ -2707,7 +2828,6 @@ function createRemotePlayer(p){
   );
 
  body.position.y=1.5;
-
  g.add(body);
 
  const head=
@@ -2721,7 +2841,6 @@ function createRemotePlayer(p){
   );
 
  head.position.y=2.8;
-
  g.add(head);
 
  g.position.set(
@@ -2743,12 +2862,9 @@ function createRemotePlayer(p){
 
 function updateRemotePlayer(p){
 
- if(
-  !remotePlayers[p.id]
- ){
+ if(!remotePlayers[p.id]){
 
   createRemotePlayer(p);
-
   return;
  }
 
@@ -2762,9 +2878,7 @@ function updateRemotePlayer(p){
 
 function removeRemotePlayer(id){
 
- if(
-  !remotePlayers[id]
- )
+ if(!remotePlayers[id])
   return;
 
  scene.remove(
@@ -2804,12 +2918,10 @@ function broadcastPosition(){
 
  if(!channel)return;
 
- const now=
-  performance.now();
+ const now=performance.now();
 
  if(
-  now-lastBroadcast<
-  80
+  now-lastBroadcast<80
  )
   return;
 
@@ -2818,7 +2930,6 @@ function broadcastPosition(){
  channel.send({
 
   type:"broadcast",
-
   event:"move",
 
   payload:{
@@ -2845,7 +2956,6 @@ function updateOnline(){
  if(!channel){
 
   $("online").textContent=1;
-
   return;
  }
 
@@ -2854,36 +2964,26 @@ function updateOnline(){
 
  let count=1;
 
- Object.keys(state).forEach(
-  k=>{
+ Object.keys(state).forEach(k=>{
 
-   if(k!==playerId)
-    count++;
-  }
- );
+  if(k!==playerId)
+   count++;
+ });
 
- $("online").textContent=
-  count;
+ $("online").textContent=count;
 }
 
 
 /* CHAT */
 
-function addChat(
- name,
- message
-){
+function addChat(name,message){
 
- const box=
-  $("chat");
+ const box=$("chat");
 
  const div=
-  document.createElement(
-   "div"
-  );
+  document.createElement("div");
 
- div.className=
-  "chatLine";
+ div.className="chatLine";
 
  div.textContent=
   name+": "+message;
@@ -2926,7 +3026,6 @@ function sendChat(){
   channel.send({
 
    type:"broadcast",
-
    event:"chat",
 
    payload:{
@@ -2938,9 +3037,7 @@ function sendChat(){
  }
 
  input.value="";
-
- input.style.display=
-  "none";
+ input.style.display="none";
 }
 
 
@@ -2965,6 +3062,12 @@ function updateHUD(){
 
  $("weaponLevel").textContent=
   weaponLevel;
+
+ $("vehicleLevel").textContent=
+  vehicleLevel;
+
+ $("vehicleSpeed").textContent=
+  vehicleSpeed;
 
  $("money").textContent=
   Math.max(
@@ -3028,11 +3131,8 @@ function handleJoy(e){
 
  if(len>max){
 
-  x=
-   x/len*max;
-
-  y=
-   y/len*max;
+  x=x/len*max;
+  y=y/len*max;
  }
 
  joyX=x/max;
@@ -3093,63 +3193,49 @@ joystick.addEventListener(
 
 /* BUTTONS */
 
-$("runBtn")
- .addEventListener(
-  "pointerdown",
-  ()=>running=true
- );
+$("runBtn").addEventListener(
+ "pointerdown",
+ ()=>running=true
+);
 
-$("runBtn")
- .addEventListener(
-  "pointerup",
-  ()=>running=false
- );
+$("runBtn").addEventListener(
+ "pointerup",
+ ()=>running=false
+);
 
-$("runBtn")
- .addEventListener(
-  "pointercancel",
-  ()=>running=false
- );
+$("runBtn").addEventListener(
+ "pointercancel",
+ ()=>running=false
+);
 
-$("jumpBtn").onclick=
- jump;
-
-$("carBtn").onclick=
- toggleVehicle;
-
-$("shootBtn").onclick=
- shoot;
-
-$("reloadBtn").onclick=
- reloadAmmo;
+$("jumpBtn").onclick=jump;
+$("carBtn").onclick=toggleVehicle;
+$("shootBtn").onclick=shoot;
+$("reloadBtn").onclick=reloadAmmo;
 
 
 $("chatBtn").onclick=()=>{
 
- const i=
-  $("chatInput");
+ const i=$("chatInput");
 
  i.style.display=
   i.style.display==="block"?
    "none":
    "block";
 
- if(
-  i.style.display==="block"
- )
+ if(i.style.display==="block")
   i.focus();
 };
 
 
-$("chatInput")
- .addEventListener(
-  "keydown",
-  e=>{
+$("chatInput").addEventListener(
+ "keydown",
+ e=>{
 
-   if(e.key==="Enter")
-    sendChat();
-  }
- );
+  if(e.key==="Enter")
+   sendChat();
+ }
+);
 
 
 /* KEYBOARD */
@@ -3163,24 +3249,16 @@ addEventListener(
   if(e.key===" ")
    jump();
 
-  if(
-   e.key.toLowerCase()==="e"
-  )
+  if(e.key.toLowerCase()==="e")
    toggleVehicle();
 
-  if(
-   e.key.toLowerCase()==="f"
-  )
+  if(e.key.toLowerCase()==="f")
    shoot();
 
-  if(
-   e.key.toLowerCase()==="r"
-  )
+  if(e.key.toLowerCase()==="r")
    reloadAmmo();
 
-  if(
-   e.key.toLowerCase()==="t"
-  ){
+  if(e.key.toLowerCase()==="t"){
 
    $("chatInput").style.display=
     "block";
@@ -3188,11 +3266,12 @@ addEventListener(
    $("chatInput").focus();
   }
 
-  if(
-   e.key.toLowerCase()==="g"
-  ){
+  if(e.key.toLowerCase()==="g"){
 
-   if(nearWeaponShop)
+   if(nearGarage)
+    openGarage();
+
+   else if(nearWeaponShop)
     openShop();
   }
  });
@@ -3209,8 +3288,7 @@ addEventListener(
 
 function updateMissionMarker(){
 
- if(!missionMarker)
-  return;
+ if(!missionMarker)return;
 
  missionMarker.rotation.y+=.03;
 
@@ -3237,17 +3315,11 @@ function animate(){
   );
 
  updateMovement(dt);
-
  updateCar(dt);
-
  updatePolice(dt);
-
  updateWantedEscape(dt);
-
  updateRemoteMovement(dt);
-
  updateMissionMarker();
-
  updateCamera();
 
  renderer.render(
@@ -3257,6 +3329,5 @@ function animate(){
 }
 
 </script>
-
 </body>
 </html>
