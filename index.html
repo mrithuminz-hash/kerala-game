@@ -2,193 +2,304 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-<title>Kerala World</title>
+<meta name="viewport"
+      content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
+<title>Kerala Open World</title>
+
 <style>
 *{box-sizing:border-box}
-html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#87ceeb;font-family:Arial,sans-serif;touch-action:none}
-canvas{position:fixed;inset:0}
+html,body{
+  margin:0;
+  width:100%;
+  height:100%;
+  overflow:hidden;
+  font-family:Arial,sans-serif;
+  background:#111;
+  color:#fff;
+  touch-action:none;
+}
+#game{position:fixed;inset:0}
+canvas{display:block}
 
 #login{
- position:fixed;inset:0;z-index:20;display:flex;align-items:center;
- justify-content:center;
- background:linear-gradient(rgba(0,0,0,.4),rgba(0,0,0,.65)),
- linear-gradient(135deg,#168b52,#07543d)
+  position:fixed;
+  inset:0;
+  z-index:50;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:linear-gradient(135deg,#063b24,#075e38,#10251d);
 }
-.box{
- width:min(90%,390px);padding:28px;border-radius:24px;background:#fff;
- text-align:center;box-shadow:0 20px 60px #0008
+.loginBox{
+  width:min(92%,380px);
+  padding:28px;
+  border-radius:20px;
+  background:rgba(0,0,0,.72);
+  box-shadow:0 10px 40px rgba(0,0,0,.5);
+  text-align:center;
 }
-.box h1{margin:0;color:#087443;font-size:32px}
-.box p{color:#555}
-input,select{
- width:100%;padding:14px;margin:7px 0;border:1px solid #ddd;
- border-radius:12px;font-size:16px
+.loginBox h1{
+  margin:0 0 8px;
+  font-size:30px;
 }
-button{border:0;border-radius:14px;padding:12px;font-weight:bold}
-#enter{width:100%;background:#087443;color:white;font-size:17px}
-#status{color:#d33;font-size:13px;min-height:20px}
+.loginBox p{
+  color:#bbb;
+  margin:0 0 20px;
+}
+input,select,button{
+  width:100%;
+  border:0;
+  border-radius:12px;
+  padding:13px;
+  margin-top:10px;
+  font-size:16px;
+}
+button{
+  background:#19c37d;
+  color:#fff;
+  font-weight:bold;
+}
+button:active{transform:scale(.97)}
+#loginMsg{margin-top:12px;color:#ffcc66}
 
-#hud{display:none;position:fixed;inset:0;z-index:10;pointer-events:none}
+#hud{
+  position:fixed;
+  top:10px;
+  left:10px;
+  z-index:10;
+  min-width:175px;
+  padding:10px 12px;
+  border-radius:14px;
+  background:rgba(0,0,0,.62);
+  font-size:13px;
+  line-height:1.65;
+}
+.hudTitle{
+  font-weight:bold;
+  font-size:15px;
+  margin-bottom:3px;
+}
+#wanted{
+  color:#ffd43b;
+}
 
-#top{
- position:absolute;top:12px;left:12px;right:12px;
- display:flex;justify-content:space-between;gap:8px
+#mission{
+  position:fixed;
+  top:10px;
+  left:50%;
+  transform:translateX(-50%);
+  width:min(82%,380px);
+  z-index:11;
+  padding:10px 14px;
+  border-radius:14px;
+  background:rgba(0,0,0,.68);
+  text-align:center;
+  display:none;
 }
-.panel{
- background:#0008;color:white;padding:9px 13px;border-radius:13px
+#missionTitle{
+  font-weight:bold;
+  color:#61ff9a;
 }
-#location{font-size:12px;opacity:.8}
-
-#stats{
- position:absolute;top:68px;left:12px;
- background:#0009;color:white;padding:8px 12px;
- border-radius:12px;font-size:13px
+#missionText{
+  font-size:13px;
+  margin-top:3px;
 }
-#money{color:#ffd43b}
-#xp{color:#7ee787}
 
 #chat{
- position:absolute;top:120px;left:12px;width:300px;
- max-height:150px;overflow:hidden
+  position:fixed;
+  left:10px;
+  bottom:110px;
+  z-index:12;
+  width:min(75%,330px);
+  pointer-events:none;
 }
-.msg{
- background:#0008;color:white;padding:6px 9px;margin:4px;
- border-radius:9px;font-size:12px
+.chatLine{
+  background:rgba(0,0,0,.55);
+  padding:5px 8px;
+  border-radius:7px;
+  margin-top:4px;
+  font-size:12px;
 }
 
-#chatForm{
- position:absolute;bottom:15px;left:12px;width:340px;
- display:flex;gap:5px;pointer-events:auto
+#chatInput{
+  position:fixed;
+  left:50%;
+  bottom:65px;
+  transform:translateX(-50%);
+  width:60%;
+  max-width:320px;
+  z-index:20;
+  display:none;
 }
-#chatInput{margin:0;flex:1;border:0}
-.send{background:#087443;color:white}
 
 #joystick{
- position:absolute;left:20px;bottom:80px;width:125px;height:125px;
- border-radius:50%;background:#fff3;border:2px solid #fff5;
- pointer-events:auto
+  position:fixed;
+  left:22px;
+  bottom:25px;
+  width:120px;
+  height:120px;
+  z-index:20;
+  border-radius:50%;
+  background:rgba(255,255,255,.12);
+  border:2px solid rgba(255,255,255,.2);
 }
 #stick{
- position:absolute;width:55px;height:55px;left:33px;top:33px;
- border-radius:50%;background:#fffc
+  position:absolute;
+  width:54px;
+  height:54px;
+  left:31px;
+  top:31px;
+  border-radius:50%;
+  background:rgba(255,255,255,.35);
 }
 
 .controls{
- position:absolute;right:18px;bottom:78px;
- display:flex;gap:10px;pointer-events:auto
+  position:fixed;
+  right:18px;
+  bottom:22px;
+  z-index:20;
+  display:flex;
+  flex-direction:column;
+  gap:9px;
+  align-items:flex-end;
 }
-.control{
- width:65px;height:65px;border-radius:50%;
- background:#0009;color:white
+.ctrl{
+  width:68px;
+  height:48px;
+  border-radius:15px;
+  background:rgba(0,0,0,.6);
+  border:1px solid rgba(255,255,255,.2);
+  color:#fff;
+  font-size:12px;
+  font-weight:bold;
 }
-#drive{background:#a56b19}
-.active{box-shadow:0 0 0 4px #fff}
+.ctrl.green{background:rgba(0,150,80,.72)}
+.ctrl.red{background:rgba(190,30,30,.75)}
+.ctrl.yellow{background:rgba(180,130,0,.75)}
 
-#mission{
- position:absolute;top:68px;right:12px;
- background:#0009;color:white;padding:10px 13px;
- border-radius:12px;display:none;font-size:13px;
- max-width:240px
+#talkBtn{
+  position:fixed;
+  left:50%;
+  bottom:145px;
+  transform:translateX(-50%);
+  width:170px;
+  z-index:22;
+  display:none;
+  background:#157efb;
 }
 
-#interact{
- position:absolute;left:50%;bottom:165px;
- transform:translateX(-50%);
- display:none;background:#087443;color:#fff;
- pointer-events:auto
+#missionBtn{
+  position:fixed;
+  left:50%;
+  bottom:205px;
+  transform:translateX(-50%);
+  width:200px;
+  z-index:22;
+  display:none;
+  background:#19c37d;
 }
 
-#missionButton{
- position:absolute;left:50%;bottom:215px;
- transform:translateX(-50%);
- display:none;background:#f4b400;color:#111;
- pointer-events:auto
+#policeAlert{
+  position:fixed;
+  top:80px;
+  left:50%;
+  transform:translateX(-50%);
+  z-index:30;
+  display:none;
+  padding:10px 18px;
+  border-radius:14px;
+  background:#a40000;
+  color:white;
+  font-weight:bold;
+  box-shadow:0 0 20px rgba(255,0,0,.45);
+  animation:pulse .8s infinite alternate;
+}
+@keyframes pulse{
+  from{transform:translateX(-50%) scale(1)}
+  to{transform:translateX(-50%) scale(1.05)}
 }
 
 #loading{
- position:fixed;inset:0;z-index:30;display:none;
- align-items:center;justify-content:center;
- background:#0008;color:#fff;font-size:18px
+  position:fixed;
+  inset:0;
+  z-index:40;
+  background:#111;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  font-size:20px;
 }
 </style>
 </head>
 
 <body>
 
+<div id="game"></div>
+
 <div id="login">
-<div class="box">
-<h1>🌴 Kerala World</h1>
-<p>Multiplayer Open World</p>
+  <div class="loginBox">
+    <h1>🌴 Kerala Open World</h1>
+    <p>Enter the world</p>
 
-<input id="name" placeholder="Enter your name" maxlength="20">
+    <input id="playerName" placeholder="Your name" maxlength="18">
 
-<select id="district">
-<option>Ernakulam</option>
-<option>Thiruvananthapuram</option>
-<option>Kozhikode</option>
-<option>Thrissur</option>
-<option>Malappuram</option>
-<option>Kollam</option>
-<option>Alappuzha</option>
-<option>Kottayam</option>
-<option>Kannur</option>
-<option>Palakkad</option>
-<option>Idukki</option>
-<option>Wayanad</option>
-<option>Pathanamthitta</option>
-<option>Kasaragod</option>
-</select>
+    <select id="district">
+      <option value="Ernakulam">Ernakulam</option>
+      <option value="Kozhikode">Kozhikode</option>
+      <option value="Malappuram">Malappuram</option>
+      <option value="Thrissur">Thrissur</option>
+      <option value="Kollam">Kollam</option>
+      <option value="Thiruvananthapuram">Thiruvananthapuram</option>
+      <option value="Kannur">Kannur</option>
+      <option value="Alappuzha">Alappuzha</option>
+      <option value="Palakkad">Palakkad</option>
+      <option value="Kottayam">Kottayam</option>
+      <option value="Idukki">Idukki</option>
+      <option value="Wayanad">Wayanad</option>
+      <option value="Pathanamthitta">Pathanamthitta</option>
+      <option value="Kasaragod">Kasaragod</option>
+    </select>
 
-<button id="enter">ENTER KERALA WORLD</button>
-<div id="status"></div>
+    <button onclick="startGame()">ENTER WORLD</button>
+    <div id="loginMsg"></div>
+  </div>
 </div>
-</div>
 
-<div id="loading">Loading Kerala World...</div>
+<div id="loading">Loading Kerala...</div>
 
 <div id="hud">
-
-<div id="top">
-<div class="panel">
-<b>🌴 Kerala World</b>
-<div id="location"></div>
+  <div class="hudTitle">🌴 KERALA WORLD</div>
+  👤 <span id="hudName">Player</span><br>
+  🌐 Online: <span id="online">1</span><br>
+  💰 ₹<span id="money">500</span><br>
+  ⭐ XP: <span id="xp">0</span><br>
+  🏆 Level: <span id="level">1</span><br>
+  🚨 Wanted: <span id="wanted">0</span><br>
+  💸 Fines: <span id="fines">0</span>
 </div>
 
-<div class="panel">
-👥 <span id="online">1</span>
-</div>
-</div>
-
-<div id="stats">
-💰 ₹<span id="money">500</span>
-&nbsp; | &nbsp;
-⭐ XP <span id="xp">0</span>
-&nbsp; | &nbsp;
-Lv.<span id="level">1</span>
+<div id="mission">
+  <div id="missionTitle">MISSION</div>
+  <div id="missionText"></div>
 </div>
 
-<div id="mission"></div>
+<div id="policeAlert">🚔 POLICE ARE CHASING YOU!</div>
+
 <div id="chat"></div>
+<input id="chatInput" placeholder="Type message...">
+
+<button id="talkBtn" onclick="talkToNPC()">TALK</button>
+<button id="missionBtn" onclick="startCurrentMission()">START MISSION</button>
 
 <div id="joystick">
-<div id="stick"></div>
+  <div id="stick"></div>
 </div>
 
 <div class="controls">
-<button class="control" id="drive">🚗</button>
-<button class="control" id="run">RUN</button>
-<button class="control" id="jump">JUMP</button>
-</div>
-
-<button id="missionButton">🎯 START MISSION</button>
-<button id="interact">🚗 ENTER VEHICLE</button>
-
-<form id="chatForm">
-<input id="chatInput" placeholder="Chat..." maxlength="100">
-<button class="send">SEND</button>
-</form>
-
+  <button class="ctrl green" id="runBtn">RUN</button>
+  <button class="ctrl" id="jumpBtn">JUMP</button>
+  <button class="ctrl yellow" id="carBtn">CAR</button>
+  <button class="ctrl" id="chatBtn">CHAT</button>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
@@ -200,267 +311,253 @@ const SUPABASE_URL="https://putlvisgkmjtiqmxkdda.supabase.co";
 const SUPABASE_KEY="sb_publishable_P_a8u-8fi3GPBplKJeKNog_lp0ElC_S";
 
 const sb=supabase.createClient(
- SUPABASE_URL,
- SUPABASE_KEY
+  SUPABASE_URL,
+  SUPABASE_KEY
 );
 
-let scene,camera,renderer,player,channel;
-
-let playerId="";
+let playerId=null;
 let playerName="";
 let district="";
-
-let remotes={};
-let vehicles=[];
-let nearVehicle=null;
-let currentVehicle=null;
-
-let nearNPC=null;
-let activeMission=null;
-
-let keys={};
-let joy={x:0,y:0};
-
-let velocity=0;
-let onGround=true;
-let running=false;
-
-let lastSend=0;
 
 let money=500;
 let xp=0;
 let level=1;
 let missionsCompleted=0;
+let wanted=0;
+let finesPaid=0;
 
-const clock=new THREE.Clock();
+let scene,camera,renderer;
+let clock;
+let player;
+let playerMesh;
+
+let keys={};
+let joyX=0;
+let joyY=0;
+let running=false;
+
+let remotePlayers={};
+let channel=null;
+
+let cars=[];
+let currentCar=null;
+let inCar=false;
+
+let npcs=[];
+let currentNPC=null;
+
+let policeUnits=[];
+let policeSpawned=false;
+
+let activeMission=null;
+let missionMarker=null;
+
+const worldSize=260;
 
 const $=id=>document.getElementById(id);
-
-$("enter").onclick=start;
 
 
 /* =========================
    LOGIN
 ========================= */
 
-async function start(){
+async function startGame(){
 
- playerName=$("name").value.trim();
- district=$("district").value;
+  const name=$("playerName").value.trim();
 
- if(!playerName){
-  $("status").textContent="Enter your name";
-  return;
- }
+  if(!name){
+    $("loginMsg").textContent="Enter your name";
+    return;
+  }
 
- $("loading").style.display="flex";
-
- try{
-
-  const r=await sb.from("players")
-   .insert({
-    name:playerName,
-    district:district,
-    score:0,
-    room:"kerala-world"
-   })
-   .select()
-   .single();
-
-  if(r.error)throw r.error;
-
-  playerId=r.data.id;
-
-  localStorage.setItem("kerala_name",playerName);
-  localStorage.setItem("kerala_district",district);
-
-  await loadStats();
+  playerName=name;
+  district=$("district").value;
 
   $("login").style.display="none";
-  $("hud").style.display="block";
+  $("loading").style.display="flex";
 
-  $("location").textContent=district;
+  try{
 
-  init();
-  world();
-  makePlayer();
-  makeVehicles();
-  makeNPCs();
-  multiplayer();
+    const r=await sb
+      .from("players")
+      .insert({
+        name:playerName,
+        district:district,
+        score:0,
+        room:"kerala-world"
+      })
+      .select()
+      .single();
 
-  updateStatsUI();
+    if(r.error){
+      console.log(r.error);
+      playerId=crypto.randomUUID();
+    }else{
+      playerId=r.data.id;
+    }
 
-  $("loading").style.display="none";
+    await loadStats();
 
- }catch(e){
+    initThree();
+    createWorld();
+    createPlayer();
+    createNPCs();
+    createCars();
+    createPolice();
 
-  $("loading").style.display="none";
-  $("status").textContent=e.message;
+    await connectMultiplayer();
 
- }
+    updateHUD();
 
+    $("loading").style.display="none";
+
+    animate();
+
+  }catch(e){
+
+    console.log(e);
+
+    $("loading").style.display="none";
+    $("login").style.display="flex";
+    $("loginMsg").textContent="Connection error";
+
+  }
 }
 
 
 /* =========================
-   PLAYER STATS
+   STATS
 ========================= */
 
 async function loadStats(){
 
- const r=await sb.from("player_stats")
-  .select("*")
-  .eq("id",playerId)
-  .maybeSingle();
+  const r=await sb
+    .from("player_stats")
+    .select("*")
+    .eq("id",playerId)
+    .maybeSingle();
 
- if(r.error){
-  console.log(r.error);
-  return;
- }
-
- if(r.data){
-
-  money=Number(r.data.money)||0;
-  xp=Number(r.data.xp)||0;
-  level=Number(r.data.level)||1;
-  missionsCompleted=
-   Number(r.data.missions_completed)||0;
-
- }else{
-
-  const newStats={
-   id:playerId,
-   money:500,
-   xp:0,
-   level:1,
-   missions_completed:0
-  };
-
-  const ins=await sb.from("player_stats")
-   .insert(newStats);
-
-  if(ins.error){
-   console.log(ins.error);
+  if(r.error){
+    console.log(r.error);
+    return;
   }
 
-  money=500;
-  xp=0;
-  level=1;
-  missionsCompleted=0;
- }
+  if(r.data){
 
+    money=Number(r.data.money)||0;
+    xp=Number(r.data.xp)||0;
+    level=Number(r.data.level)||1;
+    missionsCompleted=Number(r.data.missions_completed)||0;
+    wanted=Number(r.data.wanted)||0;
+    finesPaid=Number(r.data.fines_paid)||0;
+
+  }else{
+
+    await sb.from("player_stats").insert({
+      id:playerId,
+      money:500,
+      xp:0,
+      level:1,
+      missions_completed:0,
+      wanted:0,
+      fines_paid:0
+    });
+
+    money=500;
+    xp=0;
+    level=1;
+    missionsCompleted=0;
+    wanted=0;
+    finesPaid=0;
+  }
 }
 
 async function saveStats(){
 
- await sb.from("player_stats")
- .update({
-  money:money,
-  xp:xp,
-  level:level,
-  missions_completed:missionsCompleted
- })
- .eq("id",playerId);
-
-}
-
-function updateStatsUI(){
-
- $("money").textContent=money;
- $("xp").textContent=xp;
- $("level").textContent=level;
-
-}
-
-function addXP(amount){
-
- xp+=amount;
-
- const required=level*100;
-
- if(xp>=required){
-
-  xp-=required;
-  level++;
-
-  showMissionMessage(
-   "🎉 LEVEL UP! You reached Level "+level
-  );
-
- }
-
- updateStatsUI();
- saveStats();
-
+  await sb
+    .from("player_stats")
+    .update({
+      money:money,
+      xp:xp,
+      level:level,
+      missions_completed:missionsCompleted,
+      wanted:wanted,
+      fines_paid:finesPaid
+    })
+    .eq("id",playerId);
 }
 
 
 /* =========================
-   THREE INIT
+   THREE
 ========================= */
 
-function init(){
+function initThree(){
 
- scene=new THREE.Scene();
+  scene=new THREE.Scene();
 
- scene.background=new THREE.Color(0x87ceeb);
+  scene.background=new THREE.Color(0x86c9ee);
 
- scene.fog=new THREE.Fog(
-  0x87ceeb,
-  180,
-  700
- );
+  scene.fog=new THREE.Fog(
+    0x86c9ee,
+    120,
+    340
+  );
 
- camera=new THREE.PerspectiveCamera(
-  65,
-  innerWidth/innerHeight,
-  .1,
-  1200
- );
+  camera=new THREE.PerspectiveCamera(
+    65,
+    innerWidth/innerHeight,
+    .1,
+    600
+  );
 
- renderer=new THREE.WebGLRenderer({
-  antialias:true,
-  powerPreference:"high-performance"
- });
+  renderer=new THREE.WebGLRenderer({
+    antialias:true
+  });
 
- renderer.setPixelRatio(
-  Math.min(devicePixelRatio,1.5)
- );
+  renderer.setPixelRatio(
+    Math.min(devicePixelRatio,1.5)
+  );
 
- renderer.setSize(
-  innerWidth,
-  innerHeight
- );
+  renderer.setSize(
+    innerWidth,
+    innerHeight
+  );
 
- renderer.shadowMap.enabled=true;
+  renderer.shadowMap.enabled=true;
 
- document.body.appendChild(renderer.domElement);
+  $("game").appendChild(renderer.domElement);
 
- scene.add(
-  new THREE.HemisphereLight(
-   0xffffff,
-   0x507d40,
-   1.6
-  )
- );
+  clock=new THREE.Clock();
 
- const sun=new THREE.DirectionalLight(
-  0xffffff,
-  2
- );
+  const hemi=new THREE.HemisphereLight(
+    0xbfeaff,
+    0x426044,
+    2
+  );
 
- sun.position.set(
-  150,
-  250,
-  100
- );
+  scene.add(hemi);
 
- sun.castShadow=true;
+  const sun=new THREE.DirectionalLight(
+    0xffffff,
+    2.5
+  );
 
- scene.add(sun);
+  sun.position.set(
+    100,
+    180,
+    80
+  );
 
- animate();
+  sun.castShadow=true;
 
+  scene.add(sun);
+
+  addEventListener("resize",()=>{
+    camera.aspect=innerWidth/innerHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(innerWidth,innerHeight);
+  });
 }
 
 
@@ -468,486 +565,347 @@ function init(){
    WORLD
 ========================= */
 
-function world(){
-
- const ground=new THREE.Mesh(
-  new THREE.PlaneGeometry(900,900),
-  new THREE.MeshStandardMaterial({
-   color:0x43983d
-  })
- );
-
- ground.rotation.x=-Math.PI/2;
-
- scene.add(ground);
-
-
- road(0,0,900,22,0);
- road(0,0,900,22,Math.PI/2);
-
- for(let i=-400;i<=400;i+=100){
-
-  road(i,0,90,10,Math.PI/2);
-  road(0,i,90,10,0);
-
- }
-
-
- const water=new THREE.Mesh(
-  new THREE.PlaneGeometry(100,900),
-  new THREE.MeshStandardMaterial({
-   color:0x389bd3,
-   roughness:.2
-  })
- );
-
- water.rotation.x=-Math.PI/2;
-
- water.position.set(
-  280,
-  .02,
-  0
- );
-
- scene.add(water);
-
-
- for(let i=0;i<70;i++){
-
-  let x=(Math.random()-.5)*760;
-  let z=(Math.random()-.5)*760;
-
-  if(
-   Math.abs(x)<50||
-   Math.abs(z)<50||
-   Math.abs(x-280)<70
-  )continue;
-
-  house(x,z);
- }
-
-
- for(let i=0;i<140;i++){
-
-  let x=(Math.random()-.5)*820;
-  let z=(Math.random()-.5)*820;
-
-  if(
-   Math.abs(x)<45||
-   Math.abs(z)<45||
-   Math.abs(x-280)<70
-  )continue;
-
-  palm(x,z);
- }
-
-
- shop(-75,-70,"TEA SHOP");
- shop(75,70,"KERALA STORE");
- shop(-75,70,"HOTEL");
- shop(75,-70,"JUICE");
-
- temple(0,0);
-
-}
-
-
-/* =========================
-   ROAD
-========================= */
-
-function road(x,z,len,w,rot){
-
- const r=new THREE.Mesh(
-  new THREE.PlaneGeometry(w,len),
-  new THREE.MeshStandardMaterial({
-   color:0x303030
-  })
- );
-
- r.rotation.x=-Math.PI/2;
- r.rotation.z=rot;
- r.position.set(x,.03,z);
-
- scene.add(r);
-
-
- for(
-  let i=-len/2;
-  i<len/2;
-  i+=18
- ){
-
-  const l=new THREE.Mesh(
-   new THREE.PlaneGeometry(1,8),
-   new THREE.MeshBasicMaterial({
-    color:0xffd84a
-   })
-  );
-
-  l.rotation.x=-Math.PI/2;
-  l.rotation.z=rot;
-
-  if(rot===0)
-   l.position.set(x,.04,z+i);
-  else
-   l.position.set(x+i,.04,z);
-
-  scene.add(l);
-
- }
-
-}
-
-
-/* =========================
-   HOUSE
-========================= */
-
-function house(x,z){
-
- const g=new THREE.Group();
-
- const body=new THREE.Mesh(
-  new THREE.BoxGeometry(18,9,15),
-  new THREE.MeshStandardMaterial({
-   color:[
-    0xffe1a8,
-    0xffffff,
-    0xf0c38a,
-    0xc9e7d1
-   ][Math.floor(Math.random()*4)]
-  })
- );
-
- body.position.y=4.5;
- g.add(body);
-
-
- const roof=new THREE.Mesh(
-  new THREE.ConeGeometry(13,7,4),
-  new THREE.MeshStandardMaterial({
-   color:0x9d3b27
-  })
- );
-
- roof.rotation.y=Math.PI/4;
- roof.position.y=12;
-
- g.add(roof);
-
-
- const door=new THREE.Mesh(
-  new THREE.BoxGeometry(2.7,5,.4),
-  new THREE.MeshStandardMaterial({
-   color:0x55331d
-  })
- );
-
- door.position.set(0,2.5,7.7);
-
- g.add(door);
-
- g.position.set(x,0,z);
-
- scene.add(g);
-
-}
-
-
-/* =========================
-   PALM
-========================= */
-
-function palm(x,z){
-
- const g=new THREE.Group();
-
- const t=new THREE.Mesh(
-  new THREE.CylinderGeometry(
-   .7,
-   1.1,
-   12,
-   8
-  ),
-  new THREE.MeshStandardMaterial({
-   color:0x76502c
-  })
- );
-
- t.position.y=6;
-
- g.add(t);
-
-
- for(let i=0;i<7;i++){
-
-  const leaf=new THREE.Mesh(
-   new THREE.BoxGeometry(
-    .5,.3,7
-   ),
-   new THREE.MeshStandardMaterial({
-    color:0x147b32
-   })
-  );
-
-  let a=i/7*Math.PI*2;
-
-  leaf.position.set(
-   Math.sin(a)*2,
-   12,
-   Math.cos(a)*2
-  );
-
-  leaf.rotation.y=a;
-
-  g.add(leaf);
-
- }
-
- g.position.set(x,0,z);
-
- g.scale.setScalar(
-  .75+Math.random()*.6
- );
-
- scene.add(g);
-
-}
-
-
-/* =========================
-   SHOP
-========================= */
-
-function shop(x,z,title){
-
- const g=new THREE.Group();
-
- const b=new THREE.Mesh(
-  new THREE.BoxGeometry(20,9,15),
-  new THREE.MeshStandardMaterial({
-   color:0xf0dfa0
-  })
- );
-
- b.position.y=4.5;
-
- g.add(b);
-
-
- const r=new THREE.Mesh(
-  new THREE.BoxGeometry(23,1.5,18),
-  new THREE.MeshStandardMaterial({
-   color:0x17663d
-  })
- );
-
- r.position.y=10;
-
- g.add(r);
-
-
- const s=textSprite(title);
-
- s.position.set(
-  0,
-  8,
-  7.7
- );
-
- s.scale.set(
-  10,
-  2.5,
-  1
- );
-
- g.add(s);
-
- g.position.set(x,0,z);
-
- scene.add(g);
-
-}
-
-
-/* =========================
-   TEMPLE
-========================= */
-
-function temple(x,z){
-
- const g=new THREE.Group();
-
- const b=new THREE.Mesh(
-  new THREE.CylinderGeometry(
-   14,16,2,32
-  ),
-  new THREE.MeshStandardMaterial({
-   color:0xd4a33b
-  })
- );
-
- b.position.y=1;
- g.add(b);
-
-
- const t=new THREE.Mesh(
-  new THREE.ConeGeometry(10,20,6),
-  new THREE.MeshStandardMaterial({
-   color:0xb86a2b
-  })
- );
-
- t.position.y=12;
- g.add(t);
-
-
- const s=textSprite("KERALA TEMPLE");
-
- s.position.y=23;
- s.scale.set(13,3,1);
-
- g.add(s);
-
- g.position.set(x,0,z);
-
- scene.add(g);
-
-}
-
-
-/* =========================
-   TEXT SPRITE
-========================= */
-
-function textSprite(txt){
-
- const c=document.createElement("canvas");
-
- c.width=512;
- c.height=128;
-
- const x=c.getContext("2d");
-
- x.fillStyle="#fff";
- x.fillRect(0,0,512,128);
-
- x.fillStyle="#075b38";
-
- x.font="bold 48px Arial";
-
- x.textAlign="center";
- x.textBaseline="middle";
-
- x.fillText(
-  txt,
-  256,
-  64
- );
-
- return new THREE.Sprite(
-  new THREE.SpriteMaterial({
-   map:new THREE.CanvasTexture(c)
-  })
- );
-
-}
-
-
-/* =========================
-   VEHICLES
-========================= */
-
-function makeVehicles(){
-
- [
-  [-35,12,0x1976d2],
-  [35,-12,0xd84315],
-  [-120,20,0xeeeeee],
-  [120,-20,0x222222]
-
- ].forEach(v=>
-  makeCar(
-   v[0],
-   v[1],
-   v[2]
-  )
- );
-
-}
-
-
-function makeCar(x,z,color){
-
- const g=new THREE.Group();
-
-
- const body=new THREE.Mesh(
-  new THREE.BoxGeometry(5,1.5,8),
-  new THREE.MeshStandardMaterial({
-   color
-  })
- );
-
- body.position.y=1.5;
- body.castShadow=true;
-
- g.add(body);
-
-
- const top=new THREE.Mesh(
-  new THREE.BoxGeometry(4,1.5,4),
-  new THREE.MeshStandardMaterial({
-   color:0x333333
-  })
- );
-
- top.position.y=2.8;
-
- g.add(top);
-
-
- for(let sx of [-2.6,2.6]){
-
-  for(let sz of [-2.4,2.4]){
-
-   const w=new THREE.Mesh(
-    new THREE.CylinderGeometry(
-     .7,.7,.5,16
+function createWorld(){
+
+  const ground=new THREE.Mesh(
+    new THREE.PlaneGeometry(
+      worldSize,
+      worldSize
     ),
-    new THREE.MeshStandardMaterial({
-     color:0x111111
+    new THREE.MeshLambertMaterial({
+      color:0x459447
     })
-   );
+  );
 
-   w.rotation.z=Math.PI/2;
+  ground.rotation.x=-Math.PI/2;
+  ground.receiveShadow=true;
+  scene.add(ground);
 
-   w.position.set(
-    sx,
-    1,
-    sz
-   );
+  createRoad(
+    0,0,
+    worldSize,
+    14,
+    0
+  );
 
-   g.add(w);
+  createRoad(
+    0,0,
+    worldSize,
+    12,
+    Math.PI/2
+  );
 
+  createRiver();
+
+  for(let i=0;i<30;i++){
+
+    const x=(Math.random()-.5)*220;
+    const z=(Math.random()-.5)*220;
+
+    if(Math.abs(x)<14 || Math.abs(z)<14) continue;
+
+    createHouse(x,z);
   }
 
- }
+  for(let i=0;i<35;i++){
+
+    const x=(Math.random()-.5)*230;
+    const z=(Math.random()-.5)*230;
+
+    createPalm(x,z);
+  }
+
+  createShop(35,18,"TEA SHOP");
+  createShop(-35,-18,"KERALA STORE");
+  createShop(55,-40,"HOTEL");
+
+  createTemple(-65,55);
+
+  createStreetLights();
+}
 
 
- g.position.set(x,0,z);
+function createRoad(x,z,length,width,rotation){
 
- scene.add(g);
+  const road=new THREE.Mesh(
+    new THREE.BoxGeometry(
+      length,
+      .12,
+      width
+    ),
+    new THREE.MeshLambertMaterial({
+      color:0x333333
+    })
+  );
+
+  road.position.set(x,.06,z);
+  road.rotation.y=rotation;
+
+  scene.add(road);
+
+  for(let i=-length/2;i<length/2;i+=12){
+
+    const line=new THREE.Mesh(
+      new THREE.BoxGeometry(
+        5,.14,.35
+      ),
+      new THREE.MeshBasicMaterial({
+        color:0xffdf4d
+      })
+    );
+
+    if(rotation===0){
+      line.position.set(
+        x+i,
+        .14,
+        z
+      );
+    }else{
+      line.position.set(
+        x,
+        .14,
+        z+i
+      );
+    }
+
+    scene.add(line);
+  }
+}
 
 
- vehicles.push({
-  mesh:g,
-  speed:0,
-  rotation:0,
-  driver:null
- });
+function createRiver(){
 
+  const river=new THREE.Mesh(
+    new THREE.PlaneGeometry(
+      220,
+      25
+    ),
+    new THREE.MeshLambertMaterial({
+      color:0x238bd0,
+      transparent:true,
+      opacity:.8
+    })
+  );
+
+  river.rotation.x=-Math.PI/2;
+  river.position.set(0,.08,95);
+
+  scene.add(river);
+}
+
+
+function createHouse(x,z){
+
+  const group=new THREE.Group();
+
+  const body=new THREE.Mesh(
+    new THREE.BoxGeometry(
+      10,
+      6,
+      8
+    ),
+    new THREE.MeshLambertMaterial({
+      color:0xe9d7b4
+    })
+  );
+
+  body.position.y=3;
+  body.castShadow=true;
+
+  group.add(body);
+
+  const roof=new THREE.Mesh(
+    new THREE.ConeGeometry(
+      7,
+      4,
+      4
+    ),
+    new THREE.MeshLambertMaterial({
+      color:0x9c3b2f
+    })
+  );
+
+  roof.position.y=8;
+  roof.rotation.y=Math.PI/4;
+
+  group.add(roof);
+
+  group.position.set(x,0,z);
+
+  scene.add(group);
+}
+
+
+function createPalm(x,z){
+
+  const group=new THREE.Group();
+
+  const trunk=new THREE.Mesh(
+    new THREE.CylinderGeometry(
+      .35,.55,7,8
+    ),
+    new THREE.MeshLambertMaterial({
+      color:0x704b2a
+    })
+  );
+
+  trunk.position.y=3.5;
+
+  group.add(trunk);
+
+  for(let i=0;i<7;i++){
+
+    const leaf=new THREE.Mesh(
+      new THREE.BoxGeometry(
+        .35,5,.7
+      ),
+      new THREE.MeshLambertMaterial({
+        color:0x18752b
+      })
+    );
+
+    leaf.position.y=7;
+
+    leaf.rotation.z=.5;
+    leaf.rotation.y=i*Math.PI*2/7;
+
+    group.add(leaf);
+  }
+
+  group.position.set(x,0,z);
+
+  scene.add(group);
+}
+
+
+function createShop(x,z,text){
+
+  const group=new THREE.Group();
+
+  const body=new THREE.Mesh(
+    new THREE.BoxGeometry(
+      12,7,9
+    ),
+    new THREE.MeshLambertMaterial({
+      color:0xd9d1ad
+    })
+  );
+
+  body.position.y=3.5;
+  group.add(body);
+
+  const signCanvas=document.createElement("canvas");
+  signCanvas.width=512;
+  signCanvas.height=128;
+
+  const ctx=signCanvas.getContext("2d");
+
+  ctx.fillStyle="#063b24";
+  ctx.fillRect(0,0,512,128);
+
+  ctx.fillStyle="#ffffff";
+  ctx.font="bold 45px Arial";
+  ctx.textAlign="center";
+  ctx.fillText(text,256,82);
+
+  const texture=new THREE.CanvasTexture(
+    signCanvas
+  );
+
+  const sign=new THREE.Mesh(
+    new THREE.PlaneGeometry(
+      10,2.5
+    ),
+    new THREE.MeshBasicMaterial({
+      map:texture
+    })
+  );
+
+  sign.position.set(0,7,4.55);
+
+  group.add(sign);
+
+  group.position.set(x,0,z);
+
+  scene.add(group);
+}
+
+
+function createTemple(x,z){
+
+  const group=new THREE.Group();
+
+  const base=new THREE.Mesh(
+    new THREE.BoxGeometry(
+      14,6,12
+    ),
+    new THREE.MeshLambertMaterial({
+      color:0xf0c75e
+    })
+  );
+
+  base.position.y=3;
+  group.add(base);
+
+  const roof=new THREE.Mesh(
+    new THREE.ConeGeometry(
+      9,7,4
+    ),
+    new THREE.MeshLambertMaterial({
+      color:0xb52c1f
+    })
+  );
+
+  roof.position.y=9;
+
+  roof.rotation.y=Math.PI/4;
+
+  group.add(roof);
+
+  group.position.set(x,0,z);
+
+  scene.add(group);
+}
+
+
+function createStreetLights(){
+
+  for(let i=-100;i<=100;i+=30){
+
+    const pole=new THREE.Mesh(
+      new THREE.CylinderGeometry(
+        .15,.2,7,8
+      ),
+      new THREE.MeshLambertMaterial({
+        color:0x555555
+      })
+    );
+
+    pole.position.set(
+      i,
+      3.5,
+      9
+    );
+
+    scene.add(pole);
+
+    const lamp=new THREE.Mesh(
+      new THREE.SphereGeometry(
+        .45,8,8
+      ),
+      new THREE.MeshBasicMaterial({
+        color:0xffffaa
+      })
+    );
+
+    lamp.position.set(
+      i,
+      7,
+      9
+    );
+
+    scene.add(lamp);
+  }
 }
 
 
@@ -955,462 +913,294 @@ function makeCar(x,z,color){
    PLAYER
 ========================= */
 
-function makePlayer(){
+function createPlayer(){
 
- player=new THREE.Group();
+  player={
+    x:0,
+    y:0,
+    z:35,
+    rot:0,
+    vy:0,
+    onGround:true
+  };
 
+  const group=new THREE.Group();
 
- const body=new THREE.Mesh(
-  new THREE.CapsuleGeometry(
-   1.25,
-   2.8,
-   5,
-   10
-  ),
-  new THREE.MeshStandardMaterial({
-   color:0x1266a0
-  })
- );
+  const body=new THREE.Mesh(
+    new THREE.CylinderGeometry(
+      .65,.8,1.8,10
+    ),
+    new THREE.MeshLambertMaterial({
+      color:0x1769aa
+    })
+  );
 
- body.position.y=2.5;
+  body.position.y=1.5;
+  body.castShadow=true;
 
- player.add(body);
+  group.add(body);
 
+  const head=new THREE.Mesh(
+    new THREE.SphereGeometry(
+      .65,16,16
+    ),
+    new THREE.MeshLambertMaterial({
+      color:0xb8794c
+    })
+  );
 
- const head=new THREE.Mesh(
-  new THREE.SphereGeometry(
-   1.15,
-   16,
-   16
-  ),
-  new THREE.MeshStandardMaterial({
-   color:0xb87952
-  })
- );
+  head.position.y=2.8;
 
- head.position.y=5;
+  group.add(head);
 
- player.add(head);
+  group.position.set(
+    player.x,
+    0,
+    player.z
+  );
 
+  playerMesh=group;
 
- const label=textSprite(playerName);
-
- label.position.y=7;
-
- label.scale.set(
-  7,
-  1.8,
-  1
- );
-
- player.add(label);
-
- player.position.set(
-  0,
-  0,
-  35
- );
-
- scene.add(player);
-
+  scene.add(group);
 }
 
 
 /* =========================
-   NPC SYSTEM
+   NPC
 ========================= */
 
-let npcs=[];
+function createNPCs(){
 
+  createNPC(
+    "Rajan",
+    "Tea Shop",
+    35,
+    70,
+    100
+  );
 
-function makeNPCs(){
+  createNPC(
+    "Anu",
+    "Kerala Store",
+    -40,
+    -70,
+    200
+  );
 
- createNPC(
-  -75,
-  -60,
-  "Rajan",
-  "Tea Shop",
-  100,
-  40,
-  70
- );
-
- createNPC(
-  75,
-  60,
-  "Anu",
-  "Kerala Store",
-  200,
-  -40,
-  -70
- );
-
- createNPC(
-  -75,
-  60,
-  "Shafi",
-  "Hotel",
-  300,
-  80,
-  70
- );
-
+  createNPC(
+    "Shafi",
+    "Hotel",
+    80,
+    70,
+    300
+  );
 }
 
 
-function createNPC(
- x,
- z,
- name,
- place,
- reward,
- tx,
- tz
-){
+function createNPC(name,job,x,z,reward){
 
- const g=new THREE.Group();
+  const group=new THREE.Group();
 
+  const body=new THREE.Mesh(
+    new THREE.CylinderGeometry(
+      .6,.7,1.8,10
+    ),
+    new THREE.MeshLambertMaterial({
+      color:Math.random()*0xffffff
+    })
+  );
 
- const body=new THREE.Mesh(
-  new THREE.CapsuleGeometry(
-   1.15,
-   2.5,
-   5,
-   10
-  ),
-  new THREE.MeshStandardMaterial({
-   color:0x9b3d8b
-  })
- );
+  body.position.y=1.5;
+  group.add(body);
 
- body.position.y=2.3;
+  const head=new THREE.Mesh(
+    new THREE.SphereGeometry(
+      .6,12,12
+    ),
+    new THREE.MeshLambertMaterial({
+      color:0xb8794c
+    })
+  );
 
- g.add(body);
+  head.position.y=2.8;
+  group.add(head);
 
+  group.position.set(x,0,z);
 
- const head=new THREE.Mesh(
-  new THREE.SphereGeometry(
-   1.05,
-   16,
-   16
-  ),
-  new THREE.MeshStandardMaterial({
-   color:0xb87952
-  })
- );
+  scene.add(group);
 
- head.position.y=4.7;
-
- g.add(head);
-
-
- const label=textSprite(
-  name+" • "+place
- );
-
- label.position.y=6.8;
-
- label.scale.set(
-  9,
-  2,
-  1
- );
-
- g.add(label);
-
-
- const marker=new THREE.Mesh(
-  new THREE.CylinderGeometry(
-   1.8,
-   1.8,
-   .3,
-   20
-  ),
-  new THREE.MeshBasicMaterial({
-   color:0x00e676,
-   transparent:true,
-   opacity:.7
-  })
- );
-
- marker.position.y=.2;
-
- g.add(marker);
-
-
- g.position.set(
-  x,
-  0,
-  z
- );
-
- scene.add(g);
-
-
- npcs.push({
-  mesh:g,
-  name:name,
-  place:place,
-  reward:reward,
-  targetX:tx,
-  targetZ:tz,
-  active:false,
-  completed:false
- });
-
+  npcs.push({
+    name,
+    job,
+    x,
+    z,
+    reward,
+    mesh:group
+  });
 }
 
 
 /* =========================
-   NPC CHECK
+   CARS
 ========================= */
 
-function checkNPC(){
+function createCars(){
 
- if(!player)return;
+  createCar(10,5,0,false);
+  createCar(-18,5,Math.PI,false);
+  createCar(35,-8,Math.PI/2,false);
+  createCar(-40,18,Math.PI/2,false);
+}
 
- nearNPC=null;
 
- let closest=999;
+function createCar(x,z,rot,isPolice){
 
- npcs.forEach(npc=>{
+  const group=new THREE.Group();
 
-  if(npc.completed)return;
+  const body=new THREE.Mesh(
+    new THREE.BoxGeometry(
+      5.2,1.2,2.5
+    ),
+    new THREE.MeshLambertMaterial({
+      color:isPolice?0xffffff:randomCarColor()
+    })
+  );
 
-  const d=
-   npc.mesh.position.distanceTo(
-    player.position
-   );
+  body.position.y=1.2;
+  body.castShadow=true;
+  group.add(body);
 
-  if(d<10 && d<closest){
+  const roof=new THREE.Mesh(
+    new THREE.BoxGeometry(
+      2.8,1,2
+    ),
+    new THREE.MeshLambertMaterial({
+      color:isPolice?0xeeeeee:0x222222
+    })
+  );
 
-   closest=d;
-   nearNPC=npc;
+  roof.position.y=2;
 
+  group.add(roof);
+
+  for(const sx of [-1.8,1.8]){
+    for(const sz of [-1.1,1.1]){
+
+      const wheel=new THREE.Mesh(
+        new THREE.CylinderGeometry(
+          .45,.45,.35,12
+        ),
+        new THREE.MeshLambertMaterial({
+          color:0x111111
+        })
+      );
+
+      wheel.rotation.z=Math.PI/2;
+
+      wheel.position.set(
+        sx,
+        .55,
+        sz
+      );
+
+      group.add(wheel);
+    }
   }
 
- });
+  if(isPolice){
 
- if(
-  nearNPC &&
-  !activeMission
- ){
+    const light1=new THREE.Mesh(
+      new THREE.BoxGeometry(
+        .8,.25,.5
+      ),
+      new THREE.MeshBasicMaterial({
+        color:0xff2222
+      })
+    );
 
-  $("missionButton").style.display="block";
+    light1.position.set(-.45,2.6,0);
+    group.add(light1);
 
-  $("missionButton").textContent=
-   "🎯 TALK TO "+nearNPC.name;
+    const light2=new THREE.Mesh(
+      new THREE.BoxGeometry(
+        .8,.25,.5
+      ),
+      new THREE.MeshBasicMaterial({
+        color:0x2255ff
+      })
+    );
 
- }else{
-
-  $("missionButton").style.display="none";
-
- }
-
-}
-
-
-/* =========================
-   START MISSION
-========================= */
-
-function startMission(){
-
- if(!nearNPC || activeMission)return;
-
- activeMission=nearNPC;
- activeMission.active=true;
-
- $("missionButton").style.display="none";
-
- $("mission").style.display="block";
-
- $("mission").innerHTML=
-  "🎯 <b>"+activeMission.name+
-  "</b><br>Go to the green target<br>"+
-  "Reward: ₹"+activeMission.reward+
-  " + XP";
-
- showMissionMessage(
-  "Mission started: "+
-  activeMission.place
- );
-
-}
-
-
-/* =========================
-   MISSION TARGET
-========================= */
-
-function checkActiveMission(){
-
- if(!activeMission)return;
-
- const target=new THREE.Vector3(
-  activeMission.targetX,
-  0,
-  activeMission.targetZ
- );
-
- const d=player.position.distanceTo(target);
-
- if(d<10){
-
-  completeMission();
-
- }
-
-}
-
-
-function completeMission(){
-
- const m=activeMission;
-
- money+=m.reward;
-
- missionsCompleted++;
-
- addXP(
-  Math.floor(m.reward/2)
- );
-
- m.completed=true;
- m.active=false;
-
- activeMission=null;
-
- updateStatsUI();
-
- saveStats();
-
- $("mission").style.display="block";
-
- $("mission").innerHTML=
-  "✅ <b>MISSION COMPLETE!</b><br>"+
-  "💰 +₹"+m.reward+
-  "<br>⭐ XP earned";
-
- setTimeout(()=>{
-
-  if(!activeMission)
-   $("mission").style.display="none";
-
- },5000);
-
-}
-
-
-/* =========================
-   MISSION MESSAGE
-========================= */
-
-function showMissionMessage(message){
-
- $("mission").style.display="block";
- $("mission").innerHTML=message;
-
- setTimeout(()=>{
-
-  if(!activeMission)
-   $("mission").style.display="none";
-
- },4000);
-
-}
-
-
-/* =========================
-   VEHICLE ENTER / EXIT
-========================= */
-
-function nearestVehicle(){
-
- if(!player)return null;
-
- let best=null;
- let dist=999;
-
- vehicles.forEach(v=>{
-
-  if(v.driver)return;
-
-  const d=
-   v.mesh.position.distanceTo(
-    player.position
-   );
-
-  if(d<dist){
-
-   dist=d;
-   best=v;
-
+    light2.position.set(.45,2.6,0);
+    group.add(light2);
   }
 
- });
+  group.position.set(x,0,z);
+  group.rotation.y=rot;
 
- return dist<10?best:null;
+  scene.add(group);
 
+  const car={
+    mesh:group,
+    x,
+    z,
+    rot,
+    speed:0,
+    police:!!isPolice,
+    occupied:false
+  };
+
+  cars.push(car);
+
+  return car;
 }
 
 
-function toggleVehicle(){
+function randomCarColor(){
 
- if(currentVehicle){
+  const colors=[
+    0xd62828,
+    0x1565c0,
+    0xf9c74f,
+    0xeeeeee,
+    0x222222,
+    0x00897b
+  ];
 
-  exitVehicle();
-  return;
-
- }
-
- const v=nearestVehicle();
-
- if(v){
-
-  currentVehicle=v;
-  v.driver=playerId;
-
-  player.visible=false;
-
-  $("drive").classList.add("active");
-
-  $("interact").textContent=
-   "EXIT VEHICLE";
-
- }
-
+  return colors[
+    Math.floor(Math.random()*colors.length)
+  ];
 }
 
 
-function exitVehicle(){
+/* =========================
+   POLICE
+========================= */
 
- if(!currentVehicle)return;
+function createPolice(){
 
- player.visible=true;
+  const locations=[
+    [90,90],
+    [-90,40],
+    [70,-80]
+  ];
 
- player.position.copy(
-  currentVehicle.mesh.position
- );
+  locations.forEach(p=>{
 
- player.position.x+=5;
+    const car=createCar(
+      p[0],
+      p[1],
+      Math.random()*Math.PI*2,
+      true
+    );
 
- currentVehicle.driver=null;
- currentVehicle.speed=0;
-
- currentVehicle=null;
-
- $("drive").classList.remove("active");
-
- $("interact").textContent=
-  "ENTER VEHICLE";
-
+    policeUnits.push({
+      car,
+      speed:7+Math.random()*2,
+      active:false,
+      caughtDistance:5.5
+    });
+  });
 }
-
-
-$("drive").onclick=toggleVehicle;
-$("interact").onclick=toggleVehicle;
-$("missionButton").onclick=startMission;
 
 
 /* =========================
@@ -1419,744 +1209,83 @@ $("missionButton").onclick=startMission;
 
 function updateMovement(dt){
 
- if(!player)return;
+  if(!player || inCar) return;
 
- if(currentVehicle){
+  let dx=joyX;
+  let dz=joyY;
 
-  driveVehicle(dt);
-  return;
+  if(keys["w"]||keys["ArrowUp"]) dz-=1;
+  if(keys["s"]||keys["ArrowDown"]) dz+=1;
+  if(keys["a"]||keys["ArrowLeft"]) dx-=1;
+  if(keys["d"]||keys["ArrowRight"]) dx+=1;
 
- }
+  const len=Math.hypot(dx,dz);
 
+  if(len>0){
 
- let f=0,s=0;
+    dx/=len;
+    dz/=len;
 
- if(keys.w||keys.arrowup)f++;
- if(keys.s||keys.arrowdown)f--;
+    const speed=running?13:7;
 
- if(keys.a||keys.arrowleft)s--;
- if(keys.d||keys.arrowright)s++;
+    player.x+=dx*speed*dt;
+    player.z+=dz*speed*dt;
 
- f+=joy.y;
- s+=joy.x;
+    player.rot=Math.atan2(dx,dz);
 
- let len=Math.hypot(f,s);
+    playerMesh.rotation.y=player.rot;
+  }
 
- if(len>1){
+  if(player.y>0 || !player.onGround){
 
-  f/=len;
-  s/=len;
+    player.vy-=20*dt;
+    player.y+=player.vy*dt;
 
- }
+    if(player.y<=0){
 
- const speed=
-  running?17:9;
+      player.y=0;
+      player.vy=0;
+      player.onGround=true;
+    }
+  }
 
- player.position.x+=
-  s*speed*dt;
-
- player.position.z-=
-  f*speed*dt;
-
-
- if(len>.05){
-
-  player.rotation.y=
-   Math.atan2(s,-f);
-
- }
-
-
- velocity-=28*dt;
-
- player.position.y+=
-  velocity*dt;
-
-
- if(player.position.y<=0){
-
-  player.position.y=0;
-  velocity=0;
-  onGround=true;
-
- }
-
- boundPlayer();
-
- broadcast();
-
- checkNPC();
-
- checkActiveMission();
-
-}
-
-
-/* =========================
-   VEHICLE DRIVING
-========================= */
-
-function driveVehicle(dt){
-
- const v=currentVehicle;
-
- let f=0,s=0;
-
- if(keys.w||keys.arrowup)f++;
- if(keys.s||keys.arrowdown)f--;
-
- if(keys.a||keys.arrowleft)s--;
- if(keys.d||keys.arrowright)s++;
-
- f+=joy.y;
- s+=joy.x;
-
- v.speed+=
-  f*30*dt;
-
- v.speed*=.94;
-
- v.speed=
-  Math.max(
-   -15,
-   Math.min(35,v.speed)
+  player.x=THREE.MathUtils.clamp(
+    player.x,-125,125
   );
 
- v.rotation-=
-  s*v.speed*.012*dt;
-
- v.mesh.rotation.y=
-  v.rotation;
-
- v.mesh.position.x+=
-  Math.sin(v.rotation)*
-  v.speed*dt;
-
- v.mesh.position.z+=
-  Math.cos(v.rotation)*
-  v.speed*dt;
-
- boundCar(v);
-
- broadcastVehicle(v);
-
-}
-
-
-function boundPlayer(){
-
- player.position.x=
-  Math.max(
-   -420,
-   Math.min(
-    420,
-    player.position.x
-   )
+  player.z=THREE.MathUtils.clamp(
+    player.z,-125,125
   );
 
- player.position.z=
-  Math.max(
-   -420,
-   Math.min(
-    420,
-    player.position.z
-   )
+  playerMesh.position.set(
+    player.x,
+    player.y,
+    player.z
   );
 
-}
+  checkNPC();
 
+  checkMission();
 
-function boundCar(v){
-
- v.mesh.position.x=
-  Math.max(
-   -420,
-   Math.min(
-    420,
-    v.mesh.position.x
-   )
-  );
-
- v.mesh.position.z=
-  Math.max(
-   -420,
-   Math.min(
-    420,
-    v.mesh.position.z
-   )
-  );
-
+  broadcastPosition();
 }
 
 
 function jump(){
 
- if(
-  onGround &&
-  !currentVehicle
- ){
+  if(!player || inCar) return;
 
-  velocity=11;
-  onGround=false;
+  if(player.onGround){
 
- }
-
+    player.vy=9;
+    player.onGround=false;
+  }
 }
 
 
-/* =========================
-   CONTROLS
-========================= */
+function toggleRun(state){
 
-addEventListener(
- "keydown",
- e=>{
-
-  keys[e.key.toLowerCase()]=true;
-
-  if(e.key==="Shift")
-   running=true;
-
-  if(e.key===" ")
-   jump();
-
- }
-);
-
-
-addEventListener(
- "keyup",
- e=>{
-
-  keys[e.key.toLowerCase()]=false;
-
-  if(e.key==="Shift")
-   running=false;
-
- }
-);
-
-
-$("run").onpointerdown=
- ()=>{
-  running=true;
- };
-
-$("run").onpointerup=
- ()=>{
-  running=false;
- };
-
-$("jump").onpointerdown=jump;
-
-
-const base=$("joystick");
-const stick=$("stick");
-
-let active=false;
-
-
-function joyMove(x,y){
-
- const r=
-  base.getBoundingClientRect();
-
- let dx=
-  x-(r.left+r.width/2);
-
- let dy=
-  y-(r.top+r.height/2);
-
- const max=45;
-
- const d=
-  Math.hypot(dx,dy);
-
- if(d>max){
-
-  dx=dx/d*max;
-  dy=dy/d*max;
-
- }
-
- stick.style.transform=
-  `translate(${dx}px,${dy}px)`;
-
- joy.x=dx/max;
- joy.y=-dy/max;
-
-}
-
-
-base.onpointerdown=e=>{
-
- active=true;
-
- joyMove(
-  e.clientX,
-  e.clientY
- );
-
-};
-
-
-addEventListener(
- "pointermove",
- e=>{
-
-  if(active)
-   joyMove(
-    e.clientX,
-    e.clientY
-   );
-
- }
-);
-
-
-addEventListener(
- "pointerup",
- ()=>{
-
-  active=false;
-
-  joy.x=0;
-  joy.y=0;
-
-  stick.style.transform=
-   "translate(0,0)";
-
- }
-);
-
-
-/* =========================
-   MULTIPLAYER
-========================= */
-
-async function multiplayer(){
-
- channel=sb.channel(
-  "kerala-world-main",
-  {
-   config:{
-    presence:{
-     key:playerId
-    },
-    broadcast:{
-     self:false
-    }
-   }
-  }
- );
-
-
- channel
- .on(
-  "presence",
-  {event:"sync"},
-  presenceSync
- )
-
- .on(
-  "presence",
-  {event:"join"},
-  presenceSync
- )
-
- .on(
-  "presence",
-  {event:"leave"},
-  presenceSync
- )
-
-
- .on(
-  "broadcast",
-  {event:"position"},
-  p=>{
-
-   const d=p.payload;
-
-   if(
-    !d||
-    d.id===playerId
-   )return;
-
-   const r=makeRemote(d);
-
-   r.position.set(
-    d.x,
-    d.y,
-    d.z
-   );
-
-   r.rotation.y=
-    d.rotation||0;
-
-  }
- )
-
-
- .on(
-  "broadcast",
-  {event:"vehicle"},
-  p=>{
-
-   const d=p.payload;
-
-   if(
-    !d||
-    d.id===playerId
-   )return;
-
-   const v=
-    vehicles[d.index];
-
-   if(v){
-
-    v.mesh.position.set(
-     d.x,
-     0,
-     d.z
-    );
-
-    v.mesh.rotation.y=
-     d.rotation;
-
-   }
-
-  }
- )
-
-
- .on(
-  "broadcast",
-  {event:"chat"},
-  p=>{
-
-   if(p.payload){
-
-    addChat(
-     p.payload.name,
-     p.payload.message
-    );
-
-   }
-
-  }
- );
-
-
- channel.subscribe(
-  async status=>{
-
-   if(status==="SUBSCRIBED"){
-
-    await channel.track({
-
-     id:playerId,
-     name:playerName,
-
-     x:player.position.x,
-     y:player.position.y,
-     z:player.position.z,
-
-     rotation:
-      player.rotation.y
-
-    });
-
-   }
-
-  }
- );
-
-}
-
-
-/* =========================
-   PRESENCE
-========================= */
-
-function presenceSync(){
-
- const state=
-  channel.presenceState();
-
- const active={};
-
- Object.keys(state)
- .forEach(id=>{
-
-  if(id===playerId)return;
-
-  const d=
-   state[id][0];
-
-  active[id]=true;
-
-  makeRemote(d);
-
- });
-
-
- Object.keys(remotes)
- .forEach(id=>{
-
-  if(!active[id]){
-
-   scene.remove(
-    remotes[id]
-   );
-
-   delete remotes[id];
-
-  }
-
- });
-
-
- $("online").textContent=
-  Object.keys(remotes).length+1;
-
-}
-
-
-/* =========================
-   REMOTE PLAYER
-========================= */
-
-function makeRemote(d){
-
- if(remotes[d.id])
-  return remotes[d.id];
-
-
- const g=new THREE.Group();
-
-
- const b=new THREE.Mesh(
-  new THREE.CapsuleGeometry(
-   1.25,
-   2.8,
-   5,
-   10
-  ),
-  new THREE.MeshStandardMaterial({
-   color:0x9b3d8b
-  })
- );
-
- b.position.y=2.5;
-
- g.add(b);
-
-
- const h=new THREE.Mesh(
-  new THREE.SphereGeometry(
-   1.15,
-   16,
-   16
-  ),
-  new THREE.MeshStandardMaterial({
-   color:0xb87952
-  })
- );
-
- h.position.y=5;
-
- g.add(h);
-
-
- const l=textSprite(
-  d.name||"Player"
- );
-
- l.position.y=7;
-
- l.scale.set(
-  7,
-  1.8,
-  1
- );
-
- g.add(l);
-
-
- g.position.set(
-  d.x||0,
-  d.y||0,
-  d.z||0
- );
-
- scene.add(g);
-
- remotes[d.id]=g;
-
- return g;
-
-}
-
-
-/* =========================
-   BROADCAST PLAYER
-========================= */
-
-function broadcast(){
-
- if(!channel||!player)
-  return;
-
- const now=
-  performance.now();
-
- if(
-  now-lastSend<70
- )return;
-
- lastSend=now;
-
-
- channel.send({
-
-  type:"broadcast",
-
-  event:"position",
-
-  payload:{
-
-   id:playerId,
-   name:playerName,
-
-   x:player.position.x,
-   y:player.position.y,
-   z:player.position.z,
-
-   rotation:
-    player.rotation.y
-
-  }
-
- });
-
-}
-
-
-/* =========================
-   BROADCAST VEHICLE
-========================= */
-
-function broadcastVehicle(v){
-
- if(!channel)return;
-
- channel.send({
-
-  type:"broadcast",
-
-  event:"vehicle",
-
-  payload:{
-
-   id:playerId,
-
-   index:
-    vehicles.indexOf(v),
-
-   x:v.mesh.position.x,
-   z:v.mesh.position.z,
-
-   rotation:
-    v.mesh.rotation.y
-
-  }
-
- });
-
-}
-
-
-/* =========================
-   CHAT
-========================= */
-
-$("chatForm").onsubmit=
- async e=>{
-
-  e.preventDefault();
-
-  const input=
-   $("chatInput");
-
-  const message=
-   input.value.trim();
-
-  if(!message)return;
-
-  addChat(
-   playerName,
-   message
-  );
-
-
-  if(channel){
-
-   await channel.send({
-
-    type:"broadcast",
-
-    event:"chat",
-
-    payload:{
-     name:playerName,
-     message:message
-    }
-
-   });
-
-  }
-
-  input.value="";
-
- };
-
-
-function addChat(
- name,
- message
-){
-
- const d=
-  document.createElement("div");
-
- d.className="msg";
-
- d.textContent=
-  name+": "+message;
-
- $("chat").appendChild(d);
-
-
- while(
-  $("chat").children.length>7
- ){
-
-  $("chat")
-   .firstChild
-   .remove();
-
- }
-
-
- setTimeout(
-  ()=>{
-   if(d.parentNode)
-    d.remove();
-  },
-  10000
- );
-
+  running=state;
 }
 
 
@@ -2164,152 +1293,1142 @@ function addChat(
    CAMERA
 ========================= */
 
-function cameraUpdate(){
+function updateCamera(){
 
- if(!player)return;
+  if(!player) return;
 
- const target=
-  currentVehicle?
-  currentVehicle.mesh.position.clone():
-  player.position.clone();
+  let targetX=player.x;
+  let targetZ=player.z;
 
- target.y+=4;
+  if(inCar && currentCar){
 
+    targetX=currentCar.mesh.position.x;
+    targetZ=currentCar.mesh.position.z;
+  }
 
- const offset=
-  new THREE.Vector3(
-   0,
-   8,
-   16
+  const desired=new THREE.Vector3(
+    targetX,
+    14,
+    targetZ+18
   );
 
-
- if(currentVehicle){
-
-  offset.applyAxisAngle(
-   new THREE.Vector3(
-    0,1,0
-   ),
-   currentVehicle.rotation
+  camera.position.lerp(
+    desired,
+    .08
   );
 
- }else{
-
-  offset.applyAxisAngle(
-   new THREE.Vector3(
-    0,1,0
-   ),
-   player.rotation.y
+  camera.lookAt(
+    targetX,
+    1.5,
+    targetZ
   );
-
- }
-
-
- const desired=
-  target.clone().add(offset);
-
-
- camera.position.lerp(
-  desired,
-  .12
- );
-
- camera.lookAt(target);
-
 }
 
 
 /* =========================
-   GAME LOOP
+   CAR
 ========================= */
 
-function animate(){
+function toggleVehicle(){
 
- requestAnimationFrame(
-  animate
- );
+  if(!player) return;
 
- const dt=
-  Math.min(
-   clock.getDelta(),
-   .05
+  if(inCar){
+
+    exitCar();
+    return;
+  }
+
+  let nearest=null;
+  let dist=999;
+
+  cars.forEach(car=>{
+
+    if(car.police) return;
+
+    const dx=car.mesh.position.x-player.x;
+    const dz=car.mesh.position.z-player.z;
+
+    const d=Math.hypot(dx,dz);
+
+    if(d<dist && d<6){
+
+      nearest=car;
+      dist=d;
+    }
+  });
+
+  if(nearest){
+
+    enterCar(nearest);
+  }
+}
+
+
+function enterCar(car){
+
+  currentCar=car;
+  inCar=true;
+  car.occupied=true;
+
+  addWanted(1);
+
+  $("carBtn").textContent="EXIT";
+
+  addChat(
+    "SYSTEM",
+    "You entered a vehicle. 🚗"
+  );
+}
+
+
+function exitCar(){
+
+  if(!currentCar) return;
+
+  player.x=
+    currentCar.mesh.position.x+3;
+
+  player.z=
+    currentCar.mesh.position.z+3;
+
+  currentCar.occupied=false;
+
+  currentCar=null;
+  inCar=false;
+
+  $("carBtn").textContent="CAR";
+}
+
+
+function updateCar(dt){
+
+  if(!inCar || !currentCar) return;
+
+  let throttle=0;
+  let steer=0;
+
+  if(keys["w"]||keys["ArrowUp"]) throttle=1;
+  if(keys["s"]||keys["ArrowDown"]) throttle=-1;
+
+  if(keys["a"]||keys["ArrowLeft"]) steer=1;
+  if(keys["d"]||keys["ArrowRight"]) steer=-1;
+
+  const maxSpeed=running?28:20;
+
+  currentCar.speed+=throttle*25*dt;
+
+  currentCar.speed*=Math.pow(.12,dt);
+
+  currentCar.speed=THREE.MathUtils.clamp(
+    currentCar.speed,
+    -10,
+    maxSpeed
   );
 
- updateMovement(dt);
+  currentCar.mesh.rotation.y+=
+    steer*.8*dt*
+    (Math.abs(currentCar.speed)/10);
 
- nearVehicle=
-  nearestVehicle();
+  const dir=new THREE.Vector3(
+    Math.sin(currentCar.mesh.rotation.y),
+    0,
+    Math.cos(currentCar.mesh.rotation.y)
+  );
 
+  currentCar.mesh.position.addScaledVector(
+    dir,
+    currentCar.speed*dt
+  );
 
- if(
-  nearVehicle &&
-  !currentVehicle
- ){
+  currentCar.mesh.position.x=
+    THREE.MathUtils.clamp(
+      currentCar.mesh.position.x,
+      -125,125
+    );
 
-  $("interact").style.display=
-   "block";
+  currentCar.mesh.position.z=
+    THREE.MathUtils.clamp(
+      currentCar.mesh.position.z,
+      -125,125
+    );
 
-  $("interact").textContent=
-   "🚗 ENTER VEHICLE";
+  player.x=currentCar.mesh.position.x;
+  player.z=currentCar.mesh.position.z;
 
- }else if(!currentVehicle){
-
-  $("interact").style.display=
-   "none";
-
- }
-
-
- cameraUpdate();
-
- renderer.render(
-  scene,
-  camera
- );
-
+  broadcastPosition();
 }
 
 
 /* =========================
-   RESIZE
+   NPC INTERACTION
 ========================= */
 
-addEventListener(
- "resize",
- ()=>{
+function checkNPC(){
 
-  if(!camera)return;
+  currentNPC=null;
 
-  camera.aspect=
-   innerWidth/innerHeight;
+  let nearest=999;
 
-  camera.updateProjectionMatrix();
+  npcs.forEach(npc=>{
 
-  renderer.setSize(
-   innerWidth,
-   innerHeight
+    const d=Math.hypot(
+      npc.x-player.x,
+      npc.z-player.z
+    );
+
+    if(d<nearest && d<8){
+
+      nearest=d;
+      currentNPC=npc;
+    }
+  });
+
+  if(currentNPC && !activeMission){
+
+    $("talkBtn").style.display="block";
+
+  }else{
+
+    $("talkBtn").style.display="none";
+  }
+}
+
+
+function talkToNPC(){
+
+  if(!currentNPC) return;
+
+  $("talkBtn").style.display="none";
+
+  $("missionBtn").style.display="block";
+
+  $("missionTitle").textContent=
+    currentNPC.name+" • "+currentNPC.job;
+
+  $("missionText").textContent=
+    "Mission reward ₹"+currentNPC.reward;
+
+  $("mission").style.display="block";
+}
+
+
+function startCurrentMission(){
+
+  if(!currentNPC) return;
+
+  const targetMap={
+    Rajan:{x:40,z:70},
+    Anu:{x:-40,z:-70},
+    Shafi:{x:80,z:70}
+  };
+
+  const target=targetMap[currentNPC.name];
+
+  activeMission={
+    npc:currentNPC,
+    targetX:target.x,
+    targetZ:target.z,
+    reward:currentNPC.reward
+  };
+
+  createMissionMarker(
+    target.x,
+    target.z
   );
 
- }
+  $("missionBtn").style.display="none";
+
+  $("missionTitle").textContent=
+    "📍 "+currentNPC.name+" Mission";
+
+  updateMissionText();
+}
+
+
+function createMissionMarker(x,z){
+
+  if(missionMarker){
+
+    scene.remove(missionMarker);
+  }
+
+  missionMarker=new THREE.Mesh(
+    new THREE.CylinderGeometry(
+      3,3,.25,32
+    ),
+    new THREE.MeshBasicMaterial({
+      color:0x20ff72,
+      transparent:true,
+      opacity:.65
+    })
+  );
+
+  missionMarker.position.set(
+    x,
+    .2,
+    z
+  );
+
+  scene.add(missionMarker);
+}
+
+
+function checkMission(){
+
+  if(!activeMission) return;
+
+  const d=Math.hypot(
+    activeMission.targetX-player.x,
+    activeMission.targetZ-player.z
+  );
+
+  if(d<7){
+
+    completeMission();
+    return;
+  }
+
+  updateMissionText();
+}
+
+
+function updateMissionText(){
+
+  if(!activeMission) return;
+
+  const d=Math.round(
+    Math.hypot(
+      activeMission.targetX-player.x,
+      activeMission.targetZ-player.z
+    )
+  );
+
+  $("mission").style.display="block";
+
+  $("missionText").textContent=
+    "Go to destination • "+d+"m away • ₹"+
+    activeMission.reward;
+}
+
+
+async function completeMission(){
+
+  const reward=activeMission.reward;
+
+  money+=reward;
+  missionsCompleted++;
+
+  addXP(
+    Math.floor(reward/2)
+  );
+
+  addChat(
+    "MISSION",
+    "Completed! +₹"+reward
+  );
+
+  activeMission=null;
+
+  if(missionMarker){
+
+    scene.remove(missionMarker);
+    missionMarker=null;
+  }
+
+  $("mission").style.display="none";
+
+  updateHUD();
+
+  await saveStats();
+}
+
+
+/* =========================
+   XP
+========================= */
+
+async function addXP(amount){
+
+  xp+=amount;
+
+  let required=level*100;
+
+  while(xp>=required){
+
+    xp-=required;
+    level++;
+
+    addChat(
+      "LEVEL",
+      "🎉 Level "+level+" reached!"
+    );
+
+    required=level*100;
+  }
+
+  updateHUD();
+
+  await saveStats();
+}
+
+
+/* =========================
+   WANTED
+========================= */
+
+async function addWanted(amount){
+
+  wanted+=amount;
+
+  wanted=THREE.MathUtils.clamp(
+    wanted,
+    0,
+    5
+  );
+
+  if(wanted>0){
+
+    $("policeAlert").style.display="block";
+  }
+
+  updateHUD();
+
+  await saveStats();
+}
+
+
+async function reduceWanted(){
+
+  if(wanted<=0) return;
+
+  wanted--;
+
+  updateHUD();
+
+  if(wanted===0){
+
+    $("policeAlert").style.display="none";
+
+    addChat(
+      "POLICE",
+      "You escaped the police."
+    );
+  }
+
+  await saveStats();
+}
+
+
+/* =========================
+   POLICE AI
+========================= */
+
+function updatePolice(dt){
+
+  if(!player) return;
+
+  policeUnits.forEach(unit=>{
+
+    const car=unit.car;
+
+    if(wanted<=0){
+
+      unit.active=false;
+      return;
+    }
+
+    unit.active=true;
+
+    const dx=player.x-car.mesh.position.x;
+    const dz=player.z-car.mesh.position.z;
+
+    const dist=Math.hypot(dx,dz);
+
+    if(dist<unit.caughtDistance){
+
+      caughtByPolice();
+      return;
+    }
+
+    const angle=Math.atan2(dx,dz);
+
+    car.mesh.rotation.y=angle;
+
+    const speed=
+      unit.speed+
+      wanted*1.2;
+
+    car.mesh.position.x+=
+      Math.sin(angle)*speed*dt;
+
+    car.mesh.position.z+=
+      Math.cos(angle)*speed*dt;
+  });
+}
+
+
+let lastCaught=0;
+
+async function caughtByPolice(){
+
+  const now=performance.now();
+
+  if(now-lastCaught<4000) return;
+
+  lastCaught=now;
+
+  const fine=Math.min(
+    money,
+    100*wanted
+  );
+
+  money-=fine;
+
+  finesPaid++;
+
+  wanted=0;
+
+  $("policeAlert").style.display="none";
+
+  addChat(
+    "POLICE",
+    "🚔 Caught! Fine paid: ₹"+fine
+  );
+
+  updateHUD();
+
+  await saveStats();
+
+  respawnPlayer();
+}
+
+
+function respawnPlayer(){
+
+  player.x=0;
+  player.z=35;
+  player.y=0;
+
+  if(inCar){
+    exitCar();
+  }
+
+  playerMesh.position.set(
+    player.x,
+    player.y,
+    player.z
+  );
+}
+
+
+/* =========================
+   MULTIPLAYER
+========================= */
+
+async function connectMultiplayer(){
+
+  channel=sb.channel(
+    "kerala-world",
+    {
+      config:{
+        presence:{
+          key:playerId
+        }
+      }
+    }
+  );
+
+  channel
+    .on(
+      "presence",
+      {
+        event:"sync"
+      },
+      ()=>{
+        updatePresence();
+      }
+    )
+    .on(
+      "presence",
+      {
+        event:"join"
+      },
+      ({key,newPresences})=>{
+        newPresences.forEach(p=>{
+          createRemotePlayer(p);
+        });
+        updateOnline();
+      }
+    )
+    .on(
+      "presence",
+      {
+        event:"leave"
+      },
+      ({key})=>{
+        removeRemotePlayer(key);
+        updateOnline();
+      }
+    )
+    .on(
+      "broadcast",
+      {
+        event:"move"
+      },
+      ({payload})=>{
+        if(payload.id!==playerId){
+          updateRemotePlayer(payload);
+        }
+      }
+    )
+    .on(
+      "broadcast",
+      {
+        event:"chat"
+      },
+      ({payload})=>{
+        if(payload.id!==playerId){
+          addChat(
+            payload.name,
+            payload.message
+          );
+        }
+      }
+    );
+
+  await channel.subscribe(
+    async status=>{
+
+      if(status==="SUBSCRIBED"){
+
+        await channel.track({
+          id:playerId,
+          name:playerName,
+          district:district,
+          x:0,
+          z:35
+        });
+      }
+    }
+  );
+}
+
+
+function updatePresence(){
+
+  if(!channel) return;
+
+  const state=channel.presenceState();
+
+  Object.keys(state).forEach(key=>{
+
+    if(key===playerId) return;
+
+    const p=state[key]?.[0];
+
+    if(p) createRemotePlayer(p);
+  });
+
+  updateOnline();
+}
+
+
+function createRemotePlayer(p){
+
+  if(!p || p.id===playerId) return;
+
+  if(remotePlayers[p.id]) return;
+
+  const group=new THREE.Group();
+
+  const body=new THREE.Mesh(
+    new THREE.CylinderGeometry(
+      .6,.7,1.8,10
+    ),
+    new THREE.MeshLambertMaterial({
+      color:0xff7a18
+    })
+  );
+
+  body.position.y=1.5;
+
+  group.add(body);
+
+  const head=new THREE.Mesh(
+    new THREE.SphereGeometry(
+      .6,12,12
+    ),
+    new THREE.MeshLambertMaterial({
+      color:0xb8794c
+    })
+  );
+
+  head.position.y=2.8;
+
+  group.add(head);
+
+  group.position.set(
+    Number(p.x)||0,
+    0,
+    Number(p.z)||35
+  );
+
+  scene.add(group);
+
+  remotePlayers[p.id]={
+    mesh:group,
+    name:p.name||"Player",
+    targetX:Number(p.x)||0,
+    targetZ:Number(p.z)||35
+  };
+}
+
+
+function updateRemotePlayer(p){
+
+  if(!remotePlayers[p.id]){
+    createRemotePlayer(p);
+    return;
+  }
+
+  const r=remotePlayers[p.id];
+
+  r.targetX=Number(p.x)||0;
+  r.targetZ=Number(p.z)||0;
+}
+
+
+function removeRemotePlayer(id){
+
+  if(!remotePlayers[id]) return;
+
+  scene.remove(
+    remotePlayers[id].mesh
+  );
+
+  delete remotePlayers[id];
+}
+
+
+function updateRemoteMovement(dt){
+
+  Object.values(remotePlayers)
+    .forEach(r=>{
+
+      r.mesh.position.x=
+        THREE.MathUtils.lerp(
+          r.mesh.position.x,
+          r.targetX,
+          Math.min(1,dt*8)
+        );
+
+      r.mesh.position.z=
+        THREE.MathUtils.lerp(
+          r.mesh.position.z,
+          r.targetZ,
+          Math.min(1,dt*8)
+        );
+    });
+}
+
+
+let lastBroadcast=0;
+
+function broadcastPosition(){
+
+  if(!channel) return;
+
+  const now=performance.now();
+
+  if(now-lastBroadcast<80) return;
+
+  lastBroadcast=now;
+
+  channel.send({
+    type:"broadcast",
+    event:"move",
+    payload:{
+      id:playerId,
+      name:playerName,
+      x:inCar&&currentCar
+        ?currentCar.mesh.position.x
+        :player.x,
+      z:inCar&&currentCar
+        ?currentCar.mesh.position.z
+        :player.z
+    }
+  });
+}
+
+
+function updateOnline(){
+
+  if(!channel){
+
+    $("online").textContent="1";
+    return;
+  }
+
+  const state=channel.presenceState();
+
+  let count=1;
+
+  Object.keys(state).forEach(key=>{
+
+    if(key!==playerId) count++;
+  });
+
+  $("online").textContent=count;
+}
+
+
+/* =========================
+   CHAT
+========================= */
+
+function sendChat(){
+
+  const input=$("chatInput");
+
+  const message=input.value.trim();
+
+  if(!message) return;
+
+  addChat(
+    playerName,
+    message
+  );
+
+  if(channel){
+
+    channel.send({
+      type:"broadcast",
+      event:"chat",
+      payload:{
+        id:playerId,
+        name:playerName,
+        message
+      }
+    });
+  }
+
+  input.value="";
+  input.style.display="none";
+}
+
+
+function addChat(name,message){
+
+  const box=$("chat");
+
+  const div=document.createElement("div");
+
+  div.className="chatLine";
+
+  div.textContent=
+    name+": "+message;
+
+  box.appendChild(div);
+
+  while(box.children.length>5){
+    box.removeChild(
+      box.firstChild
+    );
+  }
+
+  setTimeout(()=>{
+
+    if(div.parentNode)
+      div.remove();
+
+  },7000);
+}
+
+
+/* =========================
+   HUD
+========================= */
+
+function updateHUD(){
+
+  $("hudName").textContent=
+    playerName||"Player";
+
+  $("money").textContent=
+    Math.max(0,Math.floor(money));
+
+  $("xp").textContent=
+    Math.floor(xp)+"/"+(level*100);
+
+  $("level").textContent=
+    level;
+
+  $("wanted").textContent=
+    wanted;
+
+  $("fines").textContent=
+    finesPaid;
+}
+
+
+/* =========================
+   JOYSTICK
+========================= */
+
+const joystick=$("joystick");
+const stick=$("stick");
+
+let joyActive=false;
+
+function handleJoy(e){
+
+  const rect=
+    joystick.getBoundingClientRect();
+
+  const cx=rect.left+rect.width/2;
+  const cy=rect.top+rect.height/2;
+
+  let x=e.clientX-cx;
+  let y=e.clientY-cy;
+
+  const max=43;
+
+  const len=Math.hypot(x,y);
+
+  if(len>max){
+
+    x=x/len*max;
+    y=y/len*max;
+  }
+
+  joyX=x/max;
+  joyY=y/max;
+
+  stick.style.transform=
+    `translate(${x}px,${y}px)`;
+}
+
+joystick.addEventListener(
+  "pointerdown",
+  e=>{
+    joyActive=true;
+    joystick.setPointerCapture(e.pointerId);
+    handleJoy(e);
+  }
+);
+
+joystick.addEventListener(
+  "pointermove",
+  e=>{
+    if(joyActive) handleJoy(e);
+  }
+);
+
+joystick.addEventListener(
+  "pointerup",
+  ()=>{
+    joyActive=false;
+    joyX=0;
+    joyY=0;
+    stick.style.transform=
+      "translate(0,0)";
+  }
+);
+
+joystick.addEventListener(
+  "pointercancel",
+  ()=>{
+    joyActive=false;
+    joyX=0;
+    joyY=0;
+    stick.style.transform=
+      "translate(0,0)";
+  }
 );
 
 
 /* =========================
-   REMEMBER LOGIN
+   BUTTONS
 ========================= */
 
-$("name").value=
- localStorage.getItem(
-  "kerala_name"
- )||"";
+$("runBtn").addEventListener(
+  "pointerdown",
+  ()=>{
+    running=true;
+  }
+);
+
+$("runBtn").addEventListener(
+  "pointerup",
+  ()=>{
+    running=false;
+  }
+);
+
+$("runBtn").addEventListener(
+  "pointercancel",
+  ()=>{
+    running=false;
+  }
+);
+
+$("jumpBtn").onclick=jump;
+
+$("carBtn").onclick=toggleVehicle;
+
+$("chatBtn").onclick=()=>{
+
+  const input=$("chatInput");
+
+  input.style.display=
+    input.style.display==="block"
+    ?"none"
+    :"block";
+
+  if(input.style.display==="block"){
+    input.focus();
+  }
+};
+
+$("chatInput").addEventListener(
+  "keydown",
+  e=>{
+    if(e.key==="Enter"){
+      sendChat();
+    }
+  }
+);
 
 
-$("district").value=
- localStorage.getItem(
-  "kerala_district"
- )||"Ernakulam";
+/* =========================
+   KEYBOARD
+========================= */
+
+addEventListener(
+  "keydown",
+  e=>{
+
+    keys[e.key]=true;
+
+    if(e.key===" "){
+      jump();
+    }
+
+    if(e.key.toLowerCase()==="e"){
+      toggleVehicle();
+    }
+
+    if(e.key.toLowerCase()==="t"){
+      $("chatInput").style.display="block";
+      $("chatInput").focus();
+    }
+  }
+);
+
+addEventListener(
+  "keyup",
+  e=>{
+    keys[e.key]=false;
+  }
+);
+
+
+/* =========================
+   MISSION MARKER ANIMATION
+========================= */
+
+function updateMissionMarker(){
+
+  if(!missionMarker) return;
+
+  missionMarker.rotation.y+=.03;
+
+  missionMarker.position.y=
+    .25+
+    Math.sin(
+      performance.now()*.004
+    )*.15;
+}
+
+
+/* =========================
+   WANTED ESCAPE
+========================= */
+
+let lastPoliceNear=0;
+let escapeTimer=0;
+
+function updateWantedEscape(dt){
+
+  if(wanted<=0) return;
+
+  let nearest=999;
+
+  policeUnits.forEach(unit=>{
+
+    const d=Math.hypot(
+      unit.car.mesh.position.x-player.x,
+      unit.car.mesh.position.z-player.z
+    );
+
+    nearest=Math.min(
+      nearest,
+      d
+    );
+  });
+
+  if(nearest>45){
+
+    escapeTimer+=dt;
+
+    if(escapeTimer>8){
+
+      escapeTimer=0;
+
+      reduceWanted();
+    }
+
+  }else{
+
+    escapeTimer=0;
+  }
+}
+
+
+/* =========================
+   MAIN LOOP
+========================= */
+
+function animate(){
+
+  requestAnimationFrame(animate);
+
+  const dt=Math.min(
+    clock.getDelta(),
+    .05
+  );
+
+  updateMovement(dt);
+
+  updateCar(dt);
+
+  updatePolice(dt);
+
+  updateWantedEscape(dt);
+
+  updateRemoteMovement(dt);
+
+  updateMissionMarker();
+
+  updateCamera();
+
+  renderer.render(
+    scene,
+    camera
+  );
+}
 
 </script>
-
 </body>
 </html>
