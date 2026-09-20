@@ -1,119 +1,372 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Kerala Game</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Kerala Game</title>
 
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
 
-    body {
-      font-family: Arial, sans-serif;
-      background: #0b1020;
-      color: white;
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 20px;
-    }
+body{
+font-family:Arial,sans-serif;
+background:
+radial-gradient(circle at top,#183b35 0,#081512 45%,#050908 100%);
+color:#fff;
+min-height:100vh;
+}
 
-    .container {
-      width: 100%;
-      max-width: 500px;
-      text-align: center;
-    }
+.header{
+padding:22px 20px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+}
 
-    h1 {
-      font-size: 38px;
-      margin-bottom: 10px;
-    }
+.logo{
+font-size:24px;
+font-weight:800;
+letter-spacing:.5px;
+}
 
-    p {
-      color: #b8c0d9;
-      margin-bottom: 30px;
-    }
+.online{
+font-size:13px;
+color:#6fffc2;
+}
 
-    .card {
-      background: #151c32;
-      border-radius: 20px;
-      padding: 25px;
-      box-shadow: 0 10px 30px rgba(0,0,0,.3);
-    }
+.container{
+max-width:520px;
+margin:auto;
+padding:10px 20px 40px;
+}
 
-    input {
-      width: 100%;
-      padding: 15px;
-      border: none;
-      border-radius: 12px;
-      margin-bottom: 15px;
-      font-size: 16px;
-    }
+.hero{
+text-align:center;
+padding:35px 10px 25px;
+}
 
-    button {
-      width: 100%;
-      padding: 15px;
-      border: none;
-      border-radius: 12px;
-      background: #16c784;
-      color: white;
-      font-size: 17px;
-      font-weight: bold;
-      cursor: pointer;
-    }
+.badge{
+display:inline-block;
+background:rgba(39,220,145,.12);
+border:1px solid rgba(39,220,145,.3);
+color:#67ffc0;
+padding:8px 14px;
+border-radius:30px;
+font-size:12px;
+font-weight:bold;
+margin-bottom:18px;
+}
 
-    button:hover {
-      opacity: .9;
-    }
+h1{
+font-size:48px;
+line-height:1;
+margin-bottom:14px;
+}
 
-    #message {
-      margin-top: 20px;
-      color: #16c784;
-    }
-  </style>
+.hero p{
+color:#a9b9b4;
+font-size:16px;
+line-height:1.5;
+}
+
+.card{
+background:rgba(18,30,27,.9);
+border:1px solid rgba(255,255,255,.08);
+border-radius:24px;
+padding:22px;
+box-shadow:0 20px 50px rgba(0,0,0,.35);
+}
+
+label{
+display:block;
+font-size:13px;
+color:#a9b9b4;
+margin-bottom:8px;
+}
+
+input,select{
+width:100%;
+padding:16px;
+border-radius:13px;
+border:1px solid rgba(255,255,255,.1);
+background:#0b1512;
+color:#fff;
+font-size:16px;
+outline:none;
+margin-bottom:18px;
+}
+
+select option{
+background:#0b1512;
+}
+
+button{
+width:100%;
+padding:17px;
+border:0;
+border-radius:14px;
+background:linear-gradient(135deg,#20e394,#10b878);
+color:#03130d;
+font-size:17px;
+font-weight:800;
+cursor:pointer;
+box-shadow:0 8px 25px rgba(20,220,140,.2);
+}
+
+button:active{
+transform:scale(.98);
+}
+
+.stats{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:12px;
+margin-top:15px;
+}
+
+.stat{
+background:#0c1714;
+border:1px solid rgba(255,255,255,.06);
+border-radius:16px;
+padding:18px;
+text-align:center;
+}
+
+.stat strong{
+display:block;
+font-size:24px;
+margin-bottom:5px;
+}
+
+.stat span{
+font-size:12px;
+color:#8fa19b;
+}
+
+.leaderboard{
+margin-top:18px;
+background:rgba(18,30,27,.9);
+border:1px solid rgba(255,255,255,.08);
+border-radius:24px;
+padding:22px;
+}
+
+.title{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:15px;
+}
+
+.title h2{
+font-size:19px;
+}
+
+.title span{
+font-size:12px;
+color:#67ffc0;
+}
+
+.player{
+display:flex;
+align-items:center;
+justify-content:space-between;
+padding:13px 0;
+border-bottom:1px solid rgba(255,255,255,.06);
+}
+
+.player:last-child{
+border-bottom:0;
+}
+
+.left{
+display:flex;
+align-items:center;
+gap:12px;
+}
+
+.rank{
+width:30px;
+height:30px;
+display:flex;
+align-items:center;
+justify-content:center;
+border-radius:50%;
+background:#14241f;
+font-weight:bold;
+font-size:13px;
+}
+
+.name{
+font-size:14px;
+font-weight:bold;
+}
+
+.district{
+font-size:11px;
+color:#82958e;
+margin-top:3px;
+}
+
+.score{
+font-weight:bold;
+color:#67ffc0;
+}
+
+#message{
+text-align:center;
+margin-top:16px;
+font-size:14px;
+min-height:20px;
+color:#67ffc0;
+}
+
+.footer{
+text-align:center;
+color:#52635e;
+font-size:11px;
+margin-top:30px;
+}
+
+@media(max-width:380px){
+h1{font-size:40px}
+.container{padding-left:14px;padding-right:14px}
+}
+</style>
 </head>
 
 <body>
 
-  <div class="container">
-    <h1>Kerala Game</h1>
-    <p>Play for your district</p>
+<header class="header">
+<div class="logo">KERALA GAME</div>
+<div class="online">● LIVE</div>
+</header>
 
-    <div class="card">
-      <input
-        type="text"
-        id="playerName"
-        placeholder="Enter your name"
-      >
+<main class="container">
 
-      <button onclick="joinGame()">
-        JOIN GAME
-      </button>
+<section class="hero">
+<div class="badge">PLAY FOR YOUR DISTRICT</div>
+<h1>Ready?</h1>
+<p>Choose your district, enter the game and compete with players across Kerala.</p>
+</section>
 
-      <div id="message"></div>
-    </div>
-  </div>
+<section class="card">
 
-  <script>
-    function joinGame() {
-      const name = document.getElementById("playerName").value.trim();
-      const message = document.getElementById("message");
+<label>PLAYER NAME</label>
+<input id="name" type="text" placeholder="Enter your name">
 
-      if (!name) {
-        message.style.color = "#ff6b6b";
-        message.innerText = "Please enter your name";
-        return;
-      }
+<label>SELECT DISTRICT</label>
+<select id="district">
+<option value="">Choose your district</option>
+<option>Thiruvananthapuram</option>
+<option>Kollam</option>
+<option>Pathanamthitta</option>
+<option>Alappuzha</option>
+<option>Kottayam</option>
+<option>Idukki</option>
+<option>Ernakulam</option>
+<option>Thrissur</option>
+<option>Palakkad</option>
+<option>Malappuram</option>
+<option>Kozhikode</option>
+<option>Wayanad</option>
+<option>Kannur</option>
+<option>Kasaragod</option>
+</select>
 
-      message.style.color = "#16c784";
-      message.innerText = "Welcome, " + name + "!";
-    }
-  </script>
+<button onclick="playGame()">PLAY NOW</button>
+
+<div id="message"></div>
+
+</section>
+
+<section class="stats">
+<div class="stat">
+<strong id="players">1,284</strong>
+<span>PLAYERS ONLINE</span>
+</div>
+
+<div class="stat">
+<strong>14</strong>
+<span>DISTRICTS</span>
+</div>
+</section>
+
+<section class="leaderboard">
+
+<div class="title">
+<h2>🏆 Leaderboard</h2>
+<span>TOP PLAYERS</span>
+</div>
+
+<div class="player">
+<div class="left">
+<div class="rank">1</div>
+<div>
+<div class="name">Kerala King</div>
+<div class="district">Ernakulam</div>
+</div>
+</div>
+<div class="score">9,850</div>
+</div>
+
+<div class="player">
+<div class="left">
+<div class="rank">2</div>
+<div>
+<div class="name">Malabar Boy</div>
+<div class="district">Kozhikode</div>
+</div>
+</div>
+<div class="score">9,420</div>
+</div>
+
+<div class="player">
+<div class="left">
+<div class="rank">3</div>
+<div>
+<div class="name">Travancore</div>
+<div class="district">Thiruvananthapuram</div>
+</div>
+</div>
+<div class="score">8,975</div>
+</div>
+
+</section>
+
+<div class="footer">
+Kerala Game • More features coming soon
+</div>
+
+</main>
+
+<script>
+function playGame(){
+
+const name=document.getElementById("name").value.trim();
+const district=document.getElementById("district").value;
+const message=document.getElementById("message");
+
+if(!name){
+message.style.color="#ff7777";
+message.innerText="Please enter your name.";
+return;
+}
+
+if(!district){
+message.style.color="#ff7777";
+message.innerText="Please select your district.";
+return;
+}
+
+localStorage.setItem("playerName",name);
+localStorage.setItem("district",district);
+
+message.style.color="#67ffc0";
+message.innerText="Welcome "+name+" from "+district+"! 🎮";
+
+}
+</script>
 
 </body>
 </html>
