@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kerala Game</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: #0b1020;
+      color: white;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 500px;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 38px;
+      margin-bottom: 10px;
+    }
+
+    p {
+      color: #b8c0d9;
+      margin-bottom: 30px;
+    }
+
+    .card {
+      background: #151c32;
+      border-radius: 20px;
+      padding: 25px;
+      box-shadow: 0 10px 30px rgba(0,0,0,.3);
+    }
+
+    input {
+      width: 100%;
+      padding: 15px;
+      border: none;
+      border-radius: 12px;
+      margin-bottom: 15px;
+      font-size: 16px;
+    }
+
+    button {
+      width: 100%;
+      padding: 15px;
+      border: none;
+      border-radius: 12px;
+      background: #16c784;
+      color: white;
+      font-size: 17px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    button:hover {
+      opacity: .9;
+    }
+
+    #message {
+      margin-top: 20px;
+      color: #16c784;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="container">
+    <h1>Kerala Game</h1>
+    <p>Play for your district</p>
+
+    <div class="card">
+      <input
+        type="text"
+        id="playerName"
+        placeholder="Enter your name"
+      >
+
+      <button onclick="joinGame()">
+        JOIN GAME
+      </button>
+
+      <div id="message"></div>
+    </div>
+  </div>
+
+  <script>
+    function joinGame() {
+      const name = document.getElementById("playerName").value.trim();
+      const message = document.getElementById("message");
+
+      if (!name) {
+        message.style.color = "#ff6b6b";
+        message.innerText = "Please enter your name";
+        return;
+      }
+
+      message.style.color = "#16c784";
+      message.innerText = "Welcome, " + name + "!";
+    }
+  </script>
+
+</body>
+</html>
