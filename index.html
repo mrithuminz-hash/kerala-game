@@ -7,13 +7,18 @@
 
 <style>
 *{box-sizing:border-box}
-html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#111;color:#fff;font-family:Arial,sans-serif;touch-action:none}
+html,body{
+ margin:0;width:100%;height:100%;overflow:hidden;
+ background:#111;color:#fff;font-family:Arial,sans-serif;
+ touch-action:none
+}
 #game{position:fixed;inset:0}
 canvas{display:block}
 
 #login{
- position:fixed;inset:0;z-index:50;display:flex;align-items:center;
- justify-content:center;background:linear-gradient(135deg,#063b24,#075e38,#10251d)
+ position:fixed;inset:0;z-index:50;display:flex;
+ align-items:center;justify-content:center;
+ background:linear-gradient(135deg,#063b24,#075e38,#10251d)
 }
 .loginBox{
  width:min(92%,380px);padding:28px;border-radius:20px;
@@ -21,19 +26,25 @@ canvas{display:block}
 }
 .loginBox h1{margin:0 0 8px;font-size:29px}
 .loginBox p{color:#bbb}
-input,select,button{border:0;border-radius:12px;padding:13px;font-size:16px}
-.loginBox input,.loginBox select,.loginBox button{width:100%;margin-top:10px}
+input,select,button{
+ border:0;border-radius:12px;padding:13px;font-size:16px
+}
+.loginBox input,.loginBox select,.loginBox button{
+ width:100%;margin-top:10px
+}
 button{font-weight:bold;color:#fff;background:#19c37d}
 #loginMsg{margin-top:10px;color:#ffcc66}
 
 #loading{
- position:fixed;inset:0;z-index:40;background:#111;display:none;
- align-items:center;justify-content:center;font-size:20px
+ position:fixed;inset:0;z-index:40;background:#111;
+ display:none;align-items:center;justify-content:center;
+ font-size:20px
 }
 
 #hud{
- position:fixed;top:10px;left:10px;z-index:10;min-width:210px;
- padding:10px 12px;border-radius:14px;background:rgba(0,0,0,.65);
+ position:fixed;top:10px;left:10px;z-index:10;
+ min-width:210px;padding:10px 12px;border-radius:14px;
+ background:rgba(0,0,0,.65);
  font-size:13px;line-height:1.52
 }
 .hudTitle{font-weight:bold;font-size:15px}
@@ -44,17 +55,22 @@ button{font-weight:bold;color:#fff;background:#19c37d}
 #vehicleLevel{color:#55c7ff}
 
 #mission{
- position:fixed;top:10px;left:50%;transform:translateX(-50%);
- width:min(82%,380px);z-index:11;padding:10px 14px;border-radius:14px;
- background:rgba(0,0,0,.68);text-align:center;display:none
+ position:fixed;top:10px;left:50%;
+ transform:translateX(-50%);
+ width:min(82%,380px);z-index:11;
+ padding:10px 14px;border-radius:14px;
+ background:rgba(0,0,0,.68);
+ text-align:center;display:none
 }
 #missionTitle{font-weight:bold;color:#61ff9a}
 #missionText{font-size:13px;margin-top:3px}
 
 #policeAlert{
- position:fixed;top:82px;left:50%;transform:translateX(-50%);
- z-index:30;display:none;padding:10px 18px;border-radius:14px;
- background:#a40000;font-weight:bold
+ position:fixed;top:82px;left:50%;
+ transform:translateX(-50%);
+ z-index:30;display:none;padding:10px 18px;
+ border-radius:14px;background:#a40000;
+ font-weight:bold
 }
 
 #chat{
@@ -62,28 +78,32 @@ button{font-weight:bold;color:#fff;background:#19c37d}
  width:min(75%,330px);pointer-events:none
 }
 .chatLine{
- background:rgba(0,0,0,.55);padding:5px 8px;border-radius:7px;
- margin-top:4px;font-size:12px
+ background:rgba(0,0,0,.55);padding:5px 8px;
+ border-radius:7px;margin-top:4px;font-size:12px
 }
 
 #chatInput{
- position:fixed;left:50%;bottom:65px;transform:translateX(-50%);
+ position:fixed;left:50%;bottom:65px;
+ transform:translateX(-50%);
  width:60%;max-width:320px;z-index:20;display:none
 }
 
 #joystick{
- position:fixed;left:22px;bottom:25px;width:120px;height:120px;z-index:20;
+ position:fixed;left:22px;bottom:25px;
+ width:120px;height:120px;z-index:20;
  border-radius:50%;background:rgba(255,255,255,.12);
  border:2px solid rgba(255,255,255,.2)
 }
 #stick{
- position:absolute;width:54px;height:54px;left:31px;top:31px;
- border-radius:50%;background:rgba(255,255,255,.35)
+ position:absolute;width:54px;height:54px;
+ left:31px;top:31px;border-radius:50%;
+ background:rgba(255,255,255,.35)
 }
 
 .controls{
  position:fixed;right:18px;bottom:18px;z-index:20;
- display:flex;flex-direction:column;gap:8px;align-items:flex-end
+ display:flex;flex-direction:column;gap:8px;
+ align-items:flex-end
 }
 .ctrl{
  width:70px;height:46px;border-radius:15px;
@@ -104,7 +124,8 @@ button{font-weight:bold;color:#fff;background:#19c37d}
 }
 #reloadBtn{
  position:fixed;right:108px;bottom:120px;z-index:21;
- width:76px;height:42px;background:rgba(0,0,0,.7);font-size:11px
+ width:76px;height:42px;background:rgba(0,0,0,.7);
+ font-size:11px
 }
 
 #talkBtn,#missionBtn,#shopBtn,#garageBtn{
@@ -117,8 +138,9 @@ button{font-weight:bold;color:#fff;background:#19c37d}
 #garageBtn{bottom:310px;background:#1769aa}
 
 #damageFlash{
- position:fixed;inset:0;z-index:29;pointer-events:none;
- background:rgba(255,0,0,.28);display:none
+ position:fixed;inset:0;z-index:29;
+ pointer-events:none;background:rgba(255,0,0,.28);
+ display:none
 }
 
 /* SHOP / GARAGE */
@@ -130,68 +152,178 @@ button{font-weight:bold;color:#fff;background:#19c37d}
 }
 
 .panelBox{
- width:min(92%,390px);
- max-height:90vh;
- overflow:auto;
- padding:20px;
- border-radius:20px;
+ width:min(92%,390px);max-height:90vh;overflow:auto;
+ padding:20px;border-radius:20px;
  background:linear-gradient(160deg,#18251f,#101512);
  box-shadow:0 10px 40px rgba(0,0,0,.6)
 }
 
 .panelBox h2{
- margin:0 0 5px;
- text-align:center;
- color:#61ff9a
+ margin:0 0 5px;text-align:center;color:#61ff9a
 }
-
 .panelMoney{
- text-align:center;
- color:#ffd43b;
- margin-bottom:12px
+ text-align:center;color:#ffd43b;margin-bottom:12px
 }
-
 .panelItem{
  background:rgba(255,255,255,.07);
  border:1px solid rgba(255,255,255,.12);
- border-radius:14px;
- padding:12px;
- margin-top:9px
+ border-radius:14px;padding:12px;margin-top:9px
 }
-
 .panelItem strong{
- display:block;
- font-size:15px;
- margin-bottom:4px
+ display:block;font-size:15px;margin-bottom:4px
 }
-
 .panelItem small{
- color:#aaa;
- display:block;
- margin-bottom:8px
+ color:#aaa;display:block;margin-bottom:8px
 }
-
-.panelItem button{
- width:100%;
- background:#19c37d
-}
-
-.panelItem button:disabled{
- background:#555;
- color:#aaa
-}
-
-.closePanel{
- width:100%;
- margin-top:14px;
- background:#a52b2b
-}
-
+.panelItem button{width:100%;background:#19c37d}
+.panelItem button:disabled{background:#555;color:#aaa}
+.closePanel{width:100%;margin-top:14px;background:#a52b2b}
 .statRow{
- display:flex;
- justify-content:space-between;
- padding:5px 0;
- color:#ddd
+ display:flex;justify-content:space-between;
+ padding:5px 0;color:#ddd
+}
+
+/* =========================
+   MAP / GPS SYSTEM
+   ========================= */
+
+#miniMap{
+ position:fixed;
+ top:10px;
+ right:10px;
+ width:150px;
+ height:150px;
+ z-index:18;
+ border-radius:50%;
+ overflow:hidden;
+ background:#173d25;
+ border:3px solid rgba(255,255,255,.45);
+ box-shadow:0 5px 22px rgba(0,0,0,.6)
+}
+
+#mapCanvas{
+ width:100%;
+ height:100%;
+ display:block
+}
+
+#mapButton{
+ position:fixed;
+ top:170px;
+ right:18px;
+ z-index:20;
+ width:64px;
+ height:42px;
+ border-radius:12px;
+ background:rgba(0,0,0,.75);
+ border:1px solid rgba(255,255,255,.25);
+ color:#fff;
+ font-weight:bold;
+ font-size:11px
+}
+
+#mapPanel{
+ position:fixed;
+ inset:0;
+ z-index:46;
+ display:none;
+ align-items:center;
+ justify-content:center;
+ background:rgba(0,0,0,.84)
+}
+
+#bigMapBox{
+ position:relative;
+ width:min(94vw,560px);
+ height:min(86vh,560px);
+ background:#07130c;
+ border:2px solid rgba(255,255,255,.25);
+ border-radius:22px;
+ padding:10px;
+ box-shadow:0 15px 50px rgba(0,0,0,.8)
+}
+
+#bigMapCanvas{
+ width:100%;
+ height:calc(100% - 45px);
+ display:block;
+ border-radius:15px;
+ background:#173d25
+}
+
+#mapTitle{
+ height:35px;
+ line-height:35px;
+ font-size:15px;
+ font-weight:bold;
+ color:#61ff9a;
+ text-align:left;
+ padding-left:5px
+}
+
+#closeMap{
+ position:absolute;
+ right:14px;
+ top:10px;
+ z-index:2;
+ width:65px;
+ height:34px;
+ padding:5px;
+ background:#a52b2b;
+ font-size:10px
+}
+
+#mapLegend{
+ position:absolute;
+ left:18px;
+ top:50px;
+ z-index:2;
+ padding:7px 9px;
+ border-radius:10px;
+ background:rgba(0,0,0,.72);
+ font-size:10px;
+ line-height:1.55;
+ pointer-events:none
+}
+
+#compass{
+ position:absolute;
+ top:52px;
+ right:20px;
+ z-index:2;
+ width:30px;
+ height:30px;
+ border-radius:50%;
+ background:rgba(0,0,0,.65);
+ text-align:center;
+ line-height:30px;
+ font-size:12px;
+ font-weight:bold;
+ color:#fff;
+ pointer-events:none
+}
+
+@media(max-width:600px){
+
+ #miniMap{
+  width:125px;
+  height:125px
+ }
+
+ #mapButton{
+  top:145px;
+  right:12px
+ }
+
+ #hud{
+  min-width:195px;
+  font-size:11px
+ }
+
+ #mission{
+  width:58%;
+  left:44%
+ }
 }
 </style>
 </head>
@@ -202,10 +334,15 @@ button{font-weight:bold;color:#fff;background:#19c37d}
 
 <div id="login">
  <div class="loginBox">
+
   <h1>🌴 Kerala Open World</h1>
   <p>Enter the world</p>
 
-  <input id="playerName" placeholder="Your name" maxlength="18">
+  <input
+   id="playerName"
+   placeholder="Your name"
+   maxlength="18"
+  >
 
   <select id="district">
    <option>Ernakulam</option>
@@ -224,183 +361,405 @@ button{font-weight:bold;color:#fff;background:#19c37d}
    <option>Kasaragod</option>
   </select>
 
-  <button onclick="startGame()">ENTER WORLD</button>
+  <button onclick="startGame()">
+   ENTER WORLD
+  </button>
+
   <div id="loginMsg"></div>
+
  </div>
 </div>
 
-<div id="loading">Loading Kerala...</div>
+<div id="loading">
+ Loading Kerala...
+</div>
 
 <div id="hud">
- <div class="hudTitle">🌴 KERALA WORLD</div>
+
+ <div class="hudTitle">
+  🌴 KERALA WORLD
+ </div>
+
  👤 <span id="hudName">Player</span><br>
  🌐 Online: <span id="online">1</span><br>
  ❤️ Health: <span id="health">100</span><br>
- 🔫 Ammo: <span id="ammo">30</span>/<span id="ammoCapacity">30</span><br>
- ⚡ Damage: <span id="weaponDamage">25</span><br>
- 🟣 Weapon Lv: <span id="weaponLevel">1</span><br>
- 🚗 Vehicle Lv: <span id="vehicleLevel">1</span><br>
- 💨 Vehicle Speed: <span id="vehicleSpeed">20</span><br>
+
+ 🔫 Ammo:
+ <span id="ammo">30</span>/
+ <span id="ammoCapacity">30</span><br>
+
+ ⚡ Damage:
+ <span id="weaponDamage">25</span><br>
+
+ 🟣 Weapon Lv:
+ <span id="weaponLevel">1</span><br>
+
+ 🚗 Vehicle Lv:
+ <span id="vehicleLevel">1</span><br>
+
+ 💨 Vehicle Speed:
+ <span id="vehicleSpeed">20</span><br>
+
  💰 ₹<span id="money">500</span><br>
- ⭐ XP: <span id="xp">0/100</span><br>
- 🏆 Level: <span id="level">1</span><br>
- 🚨 Wanted: <span id="wanted">0</span><br>
- ☠️ Kills: <span id="kills">0</span><br>
- 💀 Deaths: <span id="deaths">0</span><br>
- 💸 Fines: <span id="fines">0</span>
+
+ ⭐ XP:
+ <span id="xp">0/100</span><br>
+
+ 🏆 Level:
+ <span id="level">1</span><br>
+
+ 🚨 Wanted:
+ <span id="wanted">0</span><br>
+
+ ☠️ Kills:
+ <span id="kills">0</span><br>
+
+ 💀 Deaths:
+ <span id="deaths">0</span><br>
+
+ 💸 Fines:
+ <span id="fines">0</span>
+
 </div>
 
 <div id="mission">
- <div id="missionTitle">MISSION</div>
+
+ <div id="missionTitle">
+  MISSION
+ </div>
+
  <div id="missionText"></div>
+
 </div>
 
-<div id="policeAlert">🚔 POLICE ARE CHASING YOU!</div>
+<div id="policeAlert">
+ 🚔 POLICE ARE CHASING YOU!
+</div>
+
 <div id="damageFlash"></div>
 
 <div id="chat"></div>
-<input id="chatInput" placeholder="Type message...">
 
-<button id="talkBtn" onclick="talkToNPC()">TALK</button>
-<button id="missionBtn" onclick="startCurrentMission()">START MISSION</button>
-<button id="shopBtn" onclick="openShop()">🏪 SHOP</button>
-<button id="garageBtn" onclick="openGarage()">🚗 GARAGE</button>
+<input
+ id="chatInput"
+ placeholder="Type message..."
+>
+
+<button id="talkBtn">
+ TALK
+</button>
+
+<button id="missionBtn">
+ START MISSION
+</button>
+
+<button id="shopBtn">
+ 🏪 SHOP
+</button>
+
+<button id="garageBtn">
+ 🚗 GARAGE
+</button>
+
+
+<!-- =========================
+     MINIMAP
+     ========================= -->
+
+<canvas
+ id="miniMap"
+ width="300"
+ height="300">
+</canvas>
+
+<button id="mapButton">
+ 🗺️ MAP
+</button>
+
+
+<!-- =========================
+     BIG MAP
+     ========================= -->
+
+<div id="mapPanel">
+
+ <div id="bigMapBox">
+
+  <div id="mapTitle">
+   🗺️ KERALA WORLD MAP
+  </div>
+
+  <div id="mapLegend">
+
+   🟢 You<br>
+   🔵 Players<br>
+   🟡 NPC<br>
+   🔴 Police<br>
+   🟣 Weapon Shop<br>
+   🔷 Garage<br>
+   🟨 Temple<br>
+   🎯 Mission
+
+  </div>
+
+  <div id="compass">
+   N
+  </div>
+
+  <canvas
+   id="bigMapCanvas"
+   width="700"
+   height="700">
+  </canvas>
+
+  <button id="closeMap">
+   CLOSE
+  </button>
+
+ </div>
+
+</div>
+
 
 <!-- WEAPON SHOP -->
 
 <div id="shop">
+
  <div class="panelBox">
 
   <h2>🔫 WEAPON SHOP</h2>
 
   <div class="panelMoney">
-   Balance: ₹<span id="shopMoney">500</span>
+   Balance:
+   ₹<span id="shopMoney">500</span>
   </div>
 
   <div class="panelItem">
-   <strong>📦 Ammo +30</strong>
-   <small>Buy additional rounds.</small>
-   <button onclick="buyAmmo()">BUY • ₹50</button>
+
+   <strong>
+    📦 Ammo +30
+   </strong>
+
+   <small>
+    Buy additional rounds.
+   </small>
+
+   <button onclick="buyAmmo()">
+    BUY • ₹50
+   </button>
+
   </div>
 
   <div class="panelItem">
-   <strong>🔫 Weapon Upgrade Lv 2</strong>
-   <small>Damage 25 → 40</small>
-   <button id="upgrade2" onclick="buyWeaponUpgrade(2)">
+
+   <strong>
+    🔫 Weapon Upgrade Lv 2
+   </strong>
+
+   <small>
+    Damage 25 → 40
+   </small>
+
+   <button
+    id="upgrade2"
+    onclick="buyWeaponUpgrade(2)">
     UPGRADE • ₹500
    </button>
+
   </div>
 
   <div class="panelItem">
-   <strong>💥 Weapon Upgrade Lv 3</strong>
-   <small>Damage 40 → 65</small>
-   <button id="upgrade3" onclick="buyWeaponUpgrade(3)">
+
+   <strong>
+    💥 Weapon Upgrade Lv 3
+   </strong>
+
+   <small>
+    Damage 40 → 65
+   </small>
+
+   <button
+    id="upgrade3"
+    onclick="buyWeaponUpgrade(3)">
     UPGRADE • ₹1000
    </button>
+
   </div>
 
   <div class="panelItem">
-   <strong>⚡ Ammo Capacity</strong>
-   <small>Maximum ammo 30 → 50</small>
-   <button id="capacity2" onclick="buyCapacityUpgrade()">
+
+   <strong>
+    ⚡ Ammo Capacity
+   </strong>
+
+   <small>
+    Maximum ammo 30 → 50
+   </small>
+
+   <button
+    id="capacity2"
+    onclick="buyCapacityUpgrade()">
     UPGRADE • ₹400
    </button>
+
   </div>
 
-  <button class="closePanel" onclick="closeShop()">CLOSE SHOP</button>
+  <button
+   class="closePanel"
+   onclick="closeShop()">
+   CLOSE SHOP
+  </button>
 
  </div>
+
 </div>
+
 
 <!-- GARAGE -->
 
 <div id="garage">
+
  <div class="panelBox">
 
   <h2>🚗 VEHICLE GARAGE</h2>
 
   <div class="panelMoney">
-   Balance: ₹<span id="garageMoney">500</span>
+   Balance:
+   ₹<span id="garageMoney">500</span>
   </div>
 
   <div class="panelItem">
 
    <div class="statRow">
     <span>Vehicle Owned</span>
-    <strong id="vehicleOwnedText">YES</strong>
+    <strong id="vehicleOwnedText">
+     YES
+    </strong>
    </div>
 
    <div class="statRow">
     <span>Vehicle Level</span>
-    <strong id="vehicleLevelText">1</strong>
+    <strong id="vehicleLevelText">
+     1
+    </strong>
    </div>
 
    <div class="statRow">
     <span>Vehicle Speed</span>
-    <strong id="vehicleSpeedText">20</strong>
+    <strong id="vehicleSpeedText">
+     20
+    </strong>
    </div>
 
   </div>
 
   <div class="panelItem">
-   <strong>🚗 Vehicle Upgrade</strong>
+
+   <strong>
+    🚗 Vehicle Upgrade
+   </strong>
+
    <small>
     Level 1 → 2 → 3<br>
     Higher level = faster vehicle
    </small>
 
-   <button id="vehicleUpgrade"
-           onclick="buyVehicleUpgrade()">
+   <button
+    id="vehicleUpgrade"
+    onclick="buyVehicleUpgrade()">
     UPGRADE • ₹700
    </button>
+
   </div>
 
   <div class="panelItem">
-   <strong>🏎️ Buy Personal Vehicle</strong>
+
+   <strong>
+    🏎️ Buy Personal Vehicle
+   </strong>
+
    <small>
     Purchase your own vehicle.
    </small>
 
-   <button id="buyVehicleBtn"
-           onclick="buyVehicle()">
+   <button
+    id="buyVehicleBtn"
+    onclick="buyVehicle()">
     BUY • ₹2500
    </button>
+
   </div>
 
-  <button class="closePanel"
-          onclick="closeGarage()">
+  <button
+   class="closePanel"
+   onclick="closeGarage()">
    CLOSE GARAGE
   </button>
 
  </div>
+
 </div>
+
 
 <div id="joystick">
  <div id="stick"></div>
 </div>
 
-<button id="shootBtn">🔫<br>SHOOT</button>
-<button id="reloadBtn">RELOAD</button>
+<button id="shootBtn">
+ 🔫<br>SHOOT
+</button>
+
+<button id="reloadBtn">
+ RELOAD
+</button>
 
 <div class="controls">
- <button class="ctrl green" id="runBtn">RUN</button>
- <button class="ctrl" id="jumpBtn">JUMP</button>
- <button class="ctrl yellow" id="carBtn">CAR</button>
- <button class="ctrl purple" id="chatBtn">CHAT</button>
+
+ <button
+  class="ctrl green"
+  id="runBtn">
+  RUN
+ </button>
+
+ <button
+  class="ctrl"
+  id="jumpBtn">
+  JUMP
+ </button>
+
+ <button
+  class="ctrl yellow"
+  id="carBtn">
+  CAR
+ </button>
+
+ <button
+  class="ctrl purple"
+  id="chatBtn">
+  CHAT
+ </button>
+
 </div>
 
+
 <script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
+
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <script>
 
-const SUPABASE_URL="https://putlvisgkmjtiqmxkdda.supabase.co";
-const SUPABASE_KEY="sb_publishable_P_a8u-8fi3GPBplKJeKNog_lp0ElC_S";
+const SUPABASE_URL=
+ "https://putlvisgkmjtiqmxkdda.supabase.co";
 
-const sb=supabase.createClient(
- SUPABASE_URL,
- SUPABASE_KEY
-);
+const SUPABASE_KEY=
+ "sb_publishable_P_a8u-8fi3GPBplKJeKNog_lp0ElC_S";
+
+const sb=
+ supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_KEY
+ );
+
 
 let playerId=null;
 let playerName="";
@@ -430,6 +789,7 @@ let scene,camera,renderer,clock;
 let player,playerMesh;
 
 let keys={};
+
 let joyX=0;
 let joyY=0;
 let running=false;
@@ -456,17 +816,26 @@ let escapeTimer=0;
 let lastCaught=0;
 let lastShot=0;
 
-const $=id=>document.getElementById(id);
+const $=id=>
+ document.getElementById(id);
 
 
-/* LOGIN */
+/* =========================
+   START GAME
+   ========================= */
 
 async function startGame(){
 
- const name=$("playerName").value.trim();
+ const name=
+  $("playerName")
+   .value
+   .trim();
 
  if(!name){
-  $("loginMsg").textContent="Enter your name";
+
+  $("loginMsg").textContent=
+   "Enter your name";
+
   return;
  }
 
@@ -478,29 +847,37 @@ async function startGame(){
 
  try{
 
-  const r=await sb.from("players")
-   .insert({
-    name:playerName,
-    district:district,
-    score:0,
-    room:"kerala-world"
-   })
-   .select()
-   .single();
+  const r=
+   await sb
+    .from("players")
+    .insert({
 
-  playerId=r.error?
-   crypto.randomUUID():
-   r.data.id;
+     name:playerName,
+     district:district,
+     score:0,
+     room:"kerala-world"
+
+    })
+    .select()
+    .single();
+
+  playerId=
+   r.error?
+    crypto.randomUUID():
+    r.data.id;
 
   await loadStats();
   await loadVehicleStats();
 
   initThree();
+
   createWorld();
   createPlayer();
   createNPCs();
   createCars();
   createPolice();
+
+  initMap();
 
   await connectMultiplayer();
 
@@ -515,38 +892,59 @@ async function startGame(){
   console.log(e);
 
   $("loading").style.display="none";
+
   $("login").style.display="flex";
-  $("loginMsg").textContent="Connection error";
+
+  $("loginMsg").textContent=
+   "Connection error";
  }
 }
 
 
-/* STATS */
+/* =========================
+   STATS
+   ========================= */
 
 async function loadStats(){
 
- const r=await sb.from("player_stats")
-  .select("*")
-  .eq("id",playerId)
-  .maybeSingle();
+ const r=
+  await sb
+   .from("player_stats")
+   .select("*")
+   .eq("id",playerId)
+   .maybeSingle();
 
  if(r.data){
 
-  money=Number(r.data.money)||0;
-  xp=Number(r.data.xp)||0;
-  level=Number(r.data.level)||1;
+  money=
+   Number(r.data.money)||0;
+
+  xp=
+   Number(r.data.xp)||0;
+
+  level=
+   Number(r.data.level)||1;
 
   missionsCompleted=
    Number(r.data.missions_completed)||0;
 
-  wanted=Number(r.data.wanted)||0;
-  finesPaid=Number(r.data.fines_paid)||0;
+  wanted=
+   Number(r.data.wanted)||0;
 
-  health=Number(r.data.health)||100;
-  ammo=Number(r.data.ammo)||30;
+  finesPaid=
+   Number(r.data.fines_paid)||0;
 
-  kills=Number(r.data.kills)||0;
-  deaths=Number(r.data.deaths)||0;
+  health=
+   Number(r.data.health)||100;
+
+  ammo=
+   Number(r.data.ammo)||30;
+
+  kills=
+   Number(r.data.kills)||0;
+
+  deaths=
+   Number(r.data.deaths)||0;
 
   weaponLevel=
    Number(r.data.weapon_level)||1;
@@ -559,27 +957,32 @@ async function loadStats(){
 
  }else{
 
-  await sb.from("player_stats").insert({
+  await sb
+   .from("player_stats")
+   .insert({
 
-   id:playerId,
-   money:500,
-   xp:0,
-   level:1,
-   missions_completed:0,
+    id:playerId,
 
-   wanted:0,
-   fines_paid:0,
+    money:500,
+    xp:0,
+    level:1,
 
-   health:100,
-   ammo:30,
+    missions_completed:0,
 
-   kills:0,
-   deaths:0,
+    wanted:0,
+    fines_paid:0,
 
-   weapon_level:1,
-   weapon_damage:25,
-   ammo_capacity:30
-  });
+    health:100,
+    ammo:30,
+
+    kills:0,
+    deaths:0,
+
+    weapon_level:1,
+    weapon_damage:25,
+    ammo_capacity:30
+
+   });
 
   money=500;
   xp=0;
@@ -602,16 +1005,20 @@ async function loadStats(){
 }
 
 
-/* VEHICLE STATS */
+/* =========================
+   VEHICLE STATS
+   ========================= */
 
 async function loadVehicleStats(){
 
- const r=await sb.from("player_stats")
-  .select(
-   "vehicle_level,vehicle_speed,vehicle_owned"
-  )
-  .eq("id",playerId)
-  .maybeSingle();
+ const r=
+  await sb
+   .from("player_stats")
+   .select(
+    "vehicle_level,vehicle_speed,vehicle_owned"
+   )
+   .eq("id",playerId)
+   .maybeSingle();
 
  if(r.data){
 
@@ -637,7 +1044,8 @@ async function saveStats(){
 
  if(!playerId)return;
 
- await sb.from("player_stats")
+ await sb
+  .from("player_stats")
   .update({
 
    money,
@@ -679,24 +1087,34 @@ async function saveStats(){
 }
 
 
-/* THREE */
+/* =========================
+   THREE
+   ========================= */
 
 function initThree(){
 
- scene=new THREE.Scene();
+ scene=
+  new THREE.Scene();
 
  scene.background=
-  new THREE.Color(0x86c9ee);
+  new THREE.Color(
+   0x86c9ee
+  );
 
  scene.fog=
-  new THREE.Fog(0x86c9ee,120,340);
+  new THREE.Fog(
+   0x86c9ee,
+   120,
+   340
+  );
 
- camera=new THREE.PerspectiveCamera(
-  65,
-  innerWidth/innerHeight,
-  .1,
-  600
- );
+ camera=
+  new THREE.PerspectiveCamera(
+   65,
+   innerWidth/innerHeight,
+   .1,
+   600
+  );
 
  renderer=
   new THREE.WebGLRenderer({
@@ -704,7 +1122,10 @@ function initThree(){
   });
 
  renderer.setPixelRatio(
-  Math.min(devicePixelRatio,1.5)
+  Math.min(
+   devicePixelRatio,
+   1.5
+  )
  );
 
  renderer.setSize(
@@ -718,7 +1139,8 @@ function initThree(){
   renderer.domElement
  );
 
- clock=new THREE.Clock();
+ clock=
+  new THREE.Clock();
 
  scene.add(
   new THREE.HemisphereLight(
@@ -735,48 +1157,64 @@ function initThree(){
   );
 
  sun.position.set(
-  100,180,80
+  100,
+  180,
+  80
  );
 
  sun.castShadow=true;
 
  scene.add(sun);
 
- addEventListener("resize",()=>{
+ addEventListener(
+  "resize",
+  ()=>{
 
-  camera.aspect=
-   innerWidth/innerHeight;
+   camera.aspect=
+    innerWidth/innerHeight;
 
-  camera.updateProjectionMatrix();
+   camera.updateProjectionMatrix();
 
-  renderer.setSize(
-   innerWidth,
-   innerHeight
-  );
- });
+   renderer.setSize(
+    innerWidth,
+    innerHeight
+   );
+
+   resizeMapCanvases();
+  }
+ );
 }
 
 
-/* WORLD */
+/* =========================
+   WORLD
+   ========================= */
 
 function createWorld(){
 
  const ground=
   new THREE.Mesh(
    new THREE.PlaneGeometry(
-    260,260
+    260,
+    260
    ),
    new THREE.MeshLambertMaterial({
     color:0x459447
    })
   );
 
- ground.rotation.x=-Math.PI/2;
+ ground.rotation.x=
+  -Math.PI/2;
 
  scene.add(ground);
 
- createRoad(0,0,260,14,0);
- createRoad(0,0,260,12,Math.PI/2);
+ createRoad(
+  0,0,260,14,0
+ );
+
+ createRoad(
+  0,0,260,12,Math.PI/2
+ );
 
  createRiver();
 
@@ -791,7 +1229,8 @@ function createWorld(){
   if(
    Math.abs(x)<14||
    Math.abs(z)<14
-  )continue;
+  )
+   continue;
 
   createHouse(x,z);
  }
@@ -804,18 +1243,35 @@ function createWorld(){
   );
  }
 
- createShop(35,18,"TEA SHOP");
- createShop(-35,-18,"KERALA STORE");
- createShop(55,-40,"HOTEL");
+ createShop(
+  35,18,"TEA SHOP"
+ );
 
- createWeaponShop(-15,45);
- createGarage(65,20);
+ createShop(
+  -35,-18,"KERALA STORE"
+ );
 
- createTemple(-65,55);
+ createShop(
+  55,-40,"HOTEL"
+ );
+
+ createWeaponShop(
+  -15,45
+ );
+
+ createGarage(
+  65,20
+ );
+
+ createTemple(
+  -65,55
+ );
 }
 
 
-/* ROAD */
+/* =========================
+   ROAD
+   ========================= */
 
 function createRoad(
  x,z,length,width,rotation
@@ -831,8 +1287,12 @@ function createRoad(
    })
   );
 
- road.position.set(x,.06,z);
- road.rotation.y=rotation;
+ road.position.set(
+  x,.06,z
+ );
+
+ road.rotation.y=
+  rotation;
 
  scene.add(road);
 
@@ -852,17 +1312,27 @@ function createRoad(
     })
    );
 
-  if(rotation===0)
-   line.position.set(x+i,.14,z);
-  else
-   line.position.set(x,.14,z+i);
+  if(rotation===0){
+
+   line.position.set(
+    x+i,.14,z
+   );
+
+  }else{
+
+   line.position.set(
+    x,.14,z+i
+   );
+  }
 
   scene.add(line);
  }
 }
 
 
-/* RIVER */
+/* =========================
+   RIVER
+   ========================= */
 
 function createRiver(){
 
@@ -878,18 +1348,25 @@ function createRiver(){
    })
   );
 
- river.rotation.x=-Math.PI/2;
- river.position.set(0,.08,95);
+ river.rotation.x=
+  -Math.PI/2;
+
+ river.position.set(
+  0,.08,95
+ );
 
  scene.add(river);
 }
 
 
-/* HOUSE */
+/* =========================
+   HOUSE
+   ========================= */
 
 function createHouse(x,z){
 
- const g=new THREE.Group();
+ const g=
+  new THREE.Group();
 
  const body=
   new THREE.Mesh(
@@ -902,6 +1379,7 @@ function createHouse(x,z){
   );
 
  body.position.y=3;
+
  g.add(body);
 
  const roof=
@@ -915,21 +1393,27 @@ function createHouse(x,z){
   );
 
  roof.position.y=8;
- roof.rotation.y=Math.PI/4;
+ roof.rotation.y=
+  Math.PI/4;
 
  g.add(roof);
 
- g.position.set(x,0,z);
+ g.position.set(
+  x,0,z
+ );
 
  scene.add(g);
 }
 
 
-/* PALM */
+/* =========================
+   PALM
+   ========================= */
 
 function createPalm(x,z){
 
- const g=new THREE.Group();
+ const g=
+  new THREE.Group();
 
  const trunk=
   new THREE.Mesh(
@@ -942,6 +1426,7 @@ function createPalm(x,z){
   );
 
  trunk.position.y=3.5;
+
  g.add(trunk);
 
  for(let i=0;i<7;i++){
@@ -957,24 +1442,33 @@ function createPalm(x,z){
    );
 
   leaf.position.y=7;
+
   leaf.rotation.z=.5;
+
   leaf.rotation.y=
    i*Math.PI*2/7;
 
   g.add(leaf);
  }
 
- g.position.set(x,0,z);
+ g.position.set(
+  x,0,z
+ );
 
  scene.add(g);
 }
 
 
-/* SHOP BUILDING */
+/* =========================
+   SHOP
+   ========================= */
 
-function createShop(x,z,text){
+function createShop(
+ x,z,text
+){
 
- const g=new THREE.Group();
+ const g=
+  new THREE.Group();
 
  const body=
   new THREE.Mesh(
@@ -987,23 +1481,40 @@ function createShop(x,z,text){
   );
 
  body.position.y=3.5;
+
  g.add(body);
 
- const c=document.createElement("canvas");
+ const c=
+  document.createElement(
+   "canvas"
+  );
 
  c.width=512;
  c.height=128;
 
- const ctx=c.getContext("2d");
+ const ctx=
+  c.getContext("2d");
 
- ctx.fillStyle="#063b24";
- ctx.fillRect(0,0,512,128);
+ ctx.fillStyle=
+  "#063b24";
+
+ ctx.fillRect(
+  0,0,512,128
+ );
 
  ctx.fillStyle="#fff";
- ctx.font="bold 45px Arial";
- ctx.textAlign="center";
 
- ctx.fillText(text,256,82);
+ ctx.font=
+  "bold 45px Arial";
+
+ ctx.textAlign=
+  "center";
+
+ ctx.fillText(
+  text,
+  256,
+  82
+ );
 
  const sign=
   new THREE.Mesh(
@@ -1015,21 +1526,30 @@ function createShop(x,z,text){
    })
   );
 
- sign.position.set(0,7,4.55);
+ sign.position.set(
+  0,7,4.55
+ );
 
  g.add(sign);
 
- g.position.set(x,0,z);
+ g.position.set(
+  x,0,z
+ );
 
  scene.add(g);
 }
 
 
-/* WEAPON SHOP */
+/* =========================
+   WEAPON SHOP
+   ========================= */
 
-function createWeaponShop(x,z){
+function createWeaponShop(
+ x,z
+){
 
- const g=new THREE.Group();
+ const g=
+  new THREE.Group();
 
  const body=
   new THREE.Mesh(
@@ -1042,21 +1562,34 @@ function createWeaponShop(x,z){
   );
 
  body.position.y=3.5;
+
  g.add(body);
 
- const c=document.createElement("canvas");
+ const c=
+  document.createElement(
+   "canvas"
+  );
 
  c.width=512;
  c.height=128;
 
- const ctx=c.getContext("2d");
+ const ctx=
+  c.getContext("2d");
 
- ctx.fillStyle="#351342";
- ctx.fillRect(0,0,512,128);
+ ctx.fillStyle=
+  "#351342";
+
+ ctx.fillRect(
+  0,0,512,128
+ );
 
  ctx.fillStyle="#fff";
- ctx.font="bold 44px Arial";
- ctx.textAlign="center";
+
+ ctx.font=
+  "bold 44px Arial";
+
+ ctx.textAlign=
+  "center";
 
  ctx.fillText(
   "WEAPON SHOP",
@@ -1080,17 +1613,24 @@ function createWeaponShop(x,z){
 
  g.add(sign);
 
- g.position.set(x,0,z);
+ g.position.set(
+  x,0,z
+ );
 
  scene.add(g);
 }
 
 
-/* GARAGE */
+/* =========================
+   GARAGE
+   ========================= */
 
-function createGarage(x,z){
+function createGarage(
+ x,z
+){
 
- const g=new THREE.Group();
+ const g=
+  new THREE.Group();
 
  const body=
   new THREE.Mesh(
@@ -1103,21 +1643,34 @@ function createGarage(x,z){
   );
 
  body.position.y=3.5;
+
  g.add(body);
 
- const c=document.createElement("canvas");
+ const c=
+  document.createElement(
+   "canvas"
+  );
 
  c.width=512;
  c.height=128;
 
- const ctx=c.getContext("2d");
+ const ctx=
+  c.getContext("2d");
 
- ctx.fillStyle="#102f4d";
- ctx.fillRect(0,0,512,128);
+ ctx.fillStyle=
+  "#102f4d";
+
+ ctx.fillRect(
+  0,0,512,128
+ );
 
  ctx.fillStyle="#fff";
- ctx.font="bold 48px Arial";
- ctx.textAlign="center";
+
+ ctx.font=
+  "bold 48px Arial";
+
+ ctx.textAlign=
+  "center";
 
  ctx.fillText(
   "GARAGE",
@@ -1141,17 +1694,24 @@ function createGarage(x,z){
 
  g.add(sign);
 
- g.position.set(x,0,z);
+ g.position.set(
+  x,0,z
+ );
 
  scene.add(g);
 }
 
 
-/* TEMPLE */
+/* =========================
+   TEMPLE
+   ========================= */
 
-function createTemple(x,z){
+function createTemple(
+ x,z
+){
 
- const g=new THREE.Group();
+ const g=
+  new THREE.Group();
 
  const base=
   new THREE.Mesh(
@@ -1164,6 +1724,7 @@ function createTemple(x,z){
   );
 
  base.position.y=3;
+
  g.add(base);
 
  const roof=
@@ -1177,17 +1738,23 @@ function createTemple(x,z){
   );
 
  roof.position.y=9;
- roof.rotation.y=Math.PI/4;
+
+ roof.rotation.y=
+  Math.PI/4;
 
  g.add(roof);
 
- g.position.set(x,0,z);
+ g.position.set(
+  x,0,z
+ );
 
  scene.add(g);
 }
 
 
-/* PLAYER */
+/* =========================
+   PLAYER
+   ========================= */
 
 function createPlayer(){
 
@@ -1200,7 +1767,8 @@ function createPlayer(){
   onGround:true
  };
 
- const g=new THREE.Group();
+ const g=
+  new THREE.Group();
 
  const body=
   new THREE.Mesh(
@@ -1213,6 +1781,7 @@ function createPlayer(){
   );
 
  body.position.y=1.5;
+
  g.add(body);
 
  const head=
@@ -1226,9 +1795,12 @@ function createPlayer(){
   );
 
  head.position.y=2.8;
+
  g.add(head);
 
- g.position.set(0,0,35);
+ g.position.set(
+  0,0,35
+ );
 
  playerMesh=g;
 
@@ -1236,13 +1808,32 @@ function createPlayer(){
 }
 
 
-/* NPC */
+/* =========================
+   NPC
+   ========================= */
 
 function createNPCs(){
 
- createNPC("Rajan","Tea Shop",35,70,100);
- createNPC("Anu","Kerala Store",-40,-70,200);
- createNPC("Shafi","Hotel",80,70,300);
+ createNPC(
+  "Rajan",
+  "Tea Shop",
+  35,70,
+  100
+ );
+
+ createNPC(
+  "Anu",
+  "Kerala Store",
+  -40,-70,
+  200
+ );
+
+ createNPC(
+  "Shafi",
+  "Hotel",
+  80,70,
+  300
+ );
 }
 
 
@@ -1250,7 +1841,8 @@ function createNPC(
  name,job,x,z,reward
 ){
 
- const g=new THREE.Group();
+ const g=
+  new THREE.Group();
 
  const body=
   new THREE.Mesh(
@@ -1263,6 +1855,7 @@ function createNPC(
   );
 
  body.position.y=1.5;
+
  g.add(body);
 
  const head=
@@ -1276,45 +1869,73 @@ function createNPC(
   );
 
  head.position.y=2.8;
+
  g.add(head);
 
- g.position.set(x,0,z);
+ g.position.set(
+  x,0,z
+ );
 
  scene.add(g);
 
  npcs.push({
-  name,job,x,z,reward,mesh:g
+  name,
+  job,
+  x,
+  z,
+  reward,
+  mesh:g
  });
 }
 
 
-/* CARS */
+/* =========================
+   CARS
+   ========================= */
 
 function createCars(){
 
- createCar(10,5,0,false);
- createCar(-18,5,Math.PI,false);
- createCar(35,-8,Math.PI/2,false);
- createCar(-40,18,Math.PI/2,false);
+ createCar(
+  10,5,0,false
+ );
 
- /* extra vehicles */
+ createCar(
+  -18,5,Math.PI,false
+ );
 
- createCar(75,35,0,false);
- createCar(-70,-25,Math.PI/2,false);
+ createCar(
+  35,-8,Math.PI/2,false
+ );
+
+ createCar(
+  -40,18,Math.PI/2,false
+ );
+
+ createCar(
+  75,35,0,false
+ );
+
+ createCar(
+  -70,-25,Math.PI/2,false
+ );
 }
 
 
 function randomCarColor(){
 
  return [
+
   0xd62828,
   0x1565c0,
   0xf9c74f,
   0xeeeeee,
   0x222222,
   0x00897b
+
  ][
-  Math.floor(Math.random()*6)
+  Math.floor(
+   Math.random()*6
+  )
  ];
 }
 
@@ -1323,7 +1944,8 @@ function createCar(
  x,z,rot,isPolice
 ){
 
- const g=new THREE.Group();
+ const g=
+  new THREE.Group();
 
  const body=
   new THREE.Mesh(
@@ -1339,6 +1961,7 @@ function createCar(
   );
 
  body.position.y=1.2;
+
  g.add(body);
 
  const roof=
@@ -1355,11 +1978,16 @@ function createCar(
   );
 
  roof.position.y=2;
+
  g.add(roof);
 
- for(const sx of [-1.8,1.8]){
+ for(
+  const sx of [-1.8,1.8]
+ ){
 
-  for(const sz of [-1.1,1.1]){
+  for(
+   const sz of [-1.1,1.1]
+  ){
 
    const w=
     new THREE.Mesh(
@@ -1371,8 +1999,12 @@ function createCar(
      })
     );
 
-   w.rotation.z=Math.PI/2;
-   w.position.set(sx,.55,sz);
+   w.rotation.z=
+    Math.PI/2;
+
+   w.position.set(
+    sx,.55,sz
+   );
 
    g.add(w);
   }
@@ -1390,7 +2022,10 @@ function createCar(
     })
    );
 
-  a.position.set(-.45,2.6,0);
+  a.position.set(
+   -.45,2.6,0
+  );
+
   g.add(a);
 
   const b=a.clone();
@@ -1405,14 +2040,20 @@ function createCar(
   g.add(b);
  }
 
- g.position.set(x,0,z);
- g.rotation.y=rot;
+ g.position.set(
+  x,0,z
+ );
+
+ g.rotation.y=
+  rot;
 
  scene.add(g);
 
  const car={
   mesh:g,
-  x,z,rot,
+  x,
+  z,
+  rot,
   speed:0,
   police:!!isPolice,
   occupied:false
@@ -1424,7 +2065,9 @@ function createCar(
 }
 
 
-/* POLICE */
+/* =========================
+   POLICE
+   ========================= */
 
 function createPolice(){
 
@@ -1432,6 +2075,7 @@ function createPolice(){
   [90,90],
   [-90,40],
   [70,-80]
+
  ].forEach(p=>{
 
   const car=
@@ -1451,40 +2095,75 @@ function createPolice(){
 }
 
 
-/* MOVEMENT */
+/* =========================
+   MOVEMENT
+   ========================= */
 
 function updateMovement(dt){
 
- if(!player||inCar)return;
+ if(!player||inCar)
+  return;
 
  let dx=joyX;
  let dz=joyY;
 
- if(keys.w||keys.ArrowUp)dz-=1;
- if(keys.s||keys.ArrowDown)dz+=1;
- if(keys.a||keys.ArrowLeft)dx-=1;
- if(keys.d||keys.ArrowRight)dx+=1;
+ if(
+  keys.w||
+  keys.ArrowUp
+ )
+  dz-=1;
 
- const len=Math.hypot(dx,dz);
+ if(
+  keys.s||
+  keys.ArrowDown
+ )
+  dz+=1;
+
+ if(
+  keys.a||
+  keys.ArrowLeft
+ )
+  dx-=1;
+
+ if(
+  keys.d||
+  keys.ArrowRight
+ )
+  dx+=1;
+
+ const len=
+  Math.hypot(dx,dz);
 
  if(len>0){
 
   dx/=len;
   dz/=len;
 
-  const speed=running?13:7;
+  const speed=
+   running?13:7;
 
-  player.x+=dx*speed*dt;
-  player.z+=dz*speed*dt;
+  player.x+=
+   dx*speed*dt;
 
-  player.rot=Math.atan2(dx,dz);
-  playerMesh.rotation.y=player.rot;
+  player.z+=
+   dz*speed*dt;
+
+  player.rot=
+   Math.atan2(dx,dz);
+
+  playerMesh.rotation.y=
+   player.rot;
  }
 
- if(player.y>0||!player.onGround){
+ if(
+  player.y>0||
+  !player.onGround
+ ){
 
   player.vy-=20*dt;
-  player.y+=player.vy*dt;
+
+  player.y+=
+   player.vy*dt;
 
   if(player.y<=0){
 
@@ -1496,12 +2175,16 @@ function updateMovement(dt){
 
  player.x=
   THREE.MathUtils.clamp(
-   player.x,-125,125
+   player.x,
+   -125,
+   125
   );
 
  player.z=
   THREE.MathUtils.clamp(
-   player.z,-125,125
+   player.z,
+   -125,
+   125
   );
 
  playerMesh.position.set(
@@ -1533,11 +2216,14 @@ function jump(){
 }
 
 
-/* CAMERA */
+/* =========================
+   CAMERA
+   ========================= */
 
 function updateCamera(){
 
- if(!player)return;
+ if(!player)
+  return;
 
  const x=
   inCar&&currentCar?
@@ -1562,13 +2248,16 @@ function updateCamera(){
 }
 
 
-/* VEHICLE */
+/* =========================
+   VEHICLE
+   ========================= */
 
 function toggleVehicle(){
 
  if(inCar){
 
   exitCar();
+
   return;
  }
 
@@ -1577,7 +2266,8 @@ function toggleVehicle(){
 
  cars.forEach(car=>{
 
-  if(car.police)return;
+  if(car.police)
+   return;
 
   const d=
    Math.hypot(
@@ -1618,7 +2308,8 @@ function enterCar(car){
 
  addWanted(1);
 
- $("carBtn").textContent="EXIT";
+ $("carBtn").textContent=
+  "EXIT";
 
  addChat(
   "SYSTEM",
@@ -1629,7 +2320,8 @@ function enterCar(car){
 
 function exitCar(){
 
- if(!currentCar)return;
+ if(!currentCar)
+  return;
 
  player.x=
   currentCar.mesh.position.x+3;
@@ -1638,37 +2330,58 @@ function exitCar(){
   currentCar.mesh.position.z+3;
 
  currentCar.occupied=false;
+
  currentCar=null;
  inCar=false;
 
- $("carBtn").textContent="CAR";
+ $("carBtn").textContent=
+  "CAR";
 }
 
 
 function updateCar(dt){
 
- if(!inCar||!currentCar)return;
+ if(
+  !inCar||
+  !currentCar
+ )
+  return;
 
  let throttle=0;
  let steer=0;
 
- if(keys.w||keys.ArrowUp)
+ if(
+  keys.w||
+  keys.ArrowUp
+ )
   throttle=1;
 
- if(keys.s||keys.ArrowDown)
+ if(
+  keys.s||
+  keys.ArrowDown
+ )
   throttle=-1;
 
- if(keys.a||keys.ArrowLeft)
+ if(
+  keys.a||
+  keys.ArrowLeft
+ )
   steer=1;
 
- if(keys.d||keys.ArrowRight)
+ if(
+  keys.d||
+  keys.ArrowRight
+ )
   steer=-1;
 
  currentCar.speed+=
   throttle*25*dt;
 
  currentCar.speed*=
-  Math.pow(.12,dt);
+  Math.pow(
+   .12,
+   dt
+  );
 
  const maxSpeed=
   running?
@@ -1684,7 +2397,11 @@ function updateCar(dt){
 
  currentCar.mesh.rotation.y+=
   steer*.8*dt*
-  (Math.abs(currentCar.speed)/10);
+  (
+   Math.abs(
+    currentCar.speed
+   )/10
+  );
 
  const dir=
   new THREE.Vector3(
@@ -1706,13 +2423,15 @@ function updateCar(dt){
  currentCar.mesh.position.x=
   THREE.MathUtils.clamp(
    currentCar.mesh.position.x,
-   -125,125
+   -125,
+   125
   );
 
  currentCar.mesh.position.z=
   THREE.MathUtils.clamp(
    currentCar.mesh.position.z,
-   -125,125
+   -125,
+   125
   );
 
  player.x=
@@ -1725,7 +2444,9 @@ function updateCar(dt){
 }
 
 
-/* MISSIONS */
+/* =========================
+   MISSIONS
+   ========================= */
 
 function checkNPC(){
 
@@ -1760,10 +2481,14 @@ function checkNPC(){
 
 function talkToNPC(){
 
- if(!currentNPC)return;
+ if(!currentNPC)
+  return;
 
- $("talkBtn").style.display="none";
- $("missionBtn").style.display="block";
+ $("talkBtn").style.display=
+  "none";
+
+ $("missionBtn").style.display=
+  "block";
 
  $("missionTitle").textContent=
   currentNPC.name+
@@ -1774,34 +2499,56 @@ function talkToNPC(){
   "Mission reward ₹"+
   currentNPC.reward;
 
- $("mission").style.display="block";
+ $("mission").style.display=
+  "block";
 }
 
 
 function startCurrentMission(){
 
- if(!currentNPC)return;
+ if(!currentNPC)
+  return;
 
  const map={
-  Rajan:{x:40,z:70},
-  Anu:{x:-40,z:-70},
-  Shafi:{x:80,z:70}
+
+  Rajan:{
+   x:40,
+   z:70
+  },
+
+  Anu:{
+   x:-40,
+   z:-70
+  },
+
+  Shafi:{
+   x:80,
+   z:70
+  }
+
  };
 
- const t=map[currentNPC.name];
+ const t=
+  map[currentNPC.name];
 
  activeMission={
+
   npc:currentNPC,
+
   targetX:t.x,
   targetZ:t.z,
-  reward:currentNPC.reward
+
+  reward:
+   currentNPC.reward
  };
 
  createMissionMarker(
-  t.x,t.z
+  t.x,
+  t.z
  );
 
- $("missionBtn").style.display="none";
+ $("missionBtn").style.display=
+  "none";
 
  $("missionTitle").textContent=
   "📍 "+
@@ -1812,10 +2559,14 @@ function startCurrentMission(){
 }
 
 
-function createMissionMarker(x,z){
+function createMissionMarker(
+ x,z
+){
 
  if(missionMarker)
-  scene.remove(missionMarker);
+  scene.remove(
+   missionMarker
+  );
 
  missionMarker=
   new THREE.Mesh(
@@ -1833,13 +2584,16 @@ function createMissionMarker(x,z){
   x,.2,z
  );
 
- scene.add(missionMarker);
+ scene.add(
+  missionMarker
+ );
 }
 
 
 function checkMission(){
 
- if(!activeMission)return;
+ if(!activeMission)
+  return;
 
  const d=
   Math.hypot(
@@ -1856,16 +2610,19 @@ function checkMission(){
 
 function updateMissionText(){
 
- if(!activeMission)return;
+ if(!activeMission)
+  return;
 
- const d=Math.round(
-  Math.hypot(
-   activeMission.targetX-player.x,
-   activeMission.targetZ-player.z
-  )
- );
+ const d=
+  Math.round(
+   Math.hypot(
+    activeMission.targetX-player.x,
+    activeMission.targetZ-player.z
+   )
+  );
 
- $("mission").style.display="block";
+ $("mission").style.display=
+  "block";
 
  $("missionText").textContent=
   "Go to destination • "+
@@ -1881,15 +2638,19 @@ async function completeMission(){
   activeMission.reward;
 
  money+=reward;
+
  missionsCompleted++;
 
  await addXP(
-  Math.floor(reward/2)
+  Math.floor(
+   reward/2
+  )
  );
 
  addChat(
   "MISSION",
-  "Completed! +₹"+reward
+  "Completed! +₹"+
+  reward
  );
 
  activeMission=null;
@@ -1903,7 +2664,8 @@ async function completeMission(){
   missionMarker=null;
  }
 
- $("mission").style.display="none";
+ $("mission").style.display=
+  "none";
 
  updateHUD();
 
@@ -1920,6 +2682,7 @@ async function addXP(amount){
  ){
 
   xp-=level*100;
+
   level++;
 
   addChat(
@@ -1936,11 +2699,14 @@ async function addXP(amount){
 }
 
 
-/* WEAPON SHOP */
+/* =========================
+   WEAPON SHOP
+   ========================= */
 
 function checkWeaponShop(){
 
- if(!player)return;
+ if(!player)
+  return;
 
  const d=
   Math.hypot(
@@ -1948,7 +2714,8 @@ function checkWeaponShop(){
    player.z-45
   );
 
- nearWeaponShop=d<10;
+ nearWeaponShop=
+  d<10;
 
  $("shopBtn").style.display=
   nearWeaponShop&&!inCar?
@@ -1959,17 +2726,20 @@ function checkWeaponShop(){
 
 function openShop(){
 
- if(!nearWeaponShop)return;
+ if(!nearWeaponShop)
+  return;
 
  updateShop();
 
- $("shop").style.display="flex";
+ $("shop").style.display=
+  "flex";
 }
 
 
 function closeShop(){
 
- $("shop").style.display="none";
+ $("shop").style.display=
+  "none";
 }
 
 
@@ -1989,13 +2759,19 @@ function updateShop(){
   ammoCapacity>=50;
 
  if(weaponLevel>=2)
-  $("upgrade2").textContent="✓ PURCHASED";
+
+  $("upgrade2").textContent=
+   "✓ PURCHASED";
 
  if(weaponLevel>=3)
-  $("upgrade3").textContent="✓ PURCHASED";
+
+  $("upgrade3").textContent=
+   "✓ PURCHASED";
 
  if(ammoCapacity>=50)
-  $("capacity2").textContent="✓ PURCHASED";
+
+  $("capacity2").textContent=
+   "✓ PURCHASED";
 }
 
 
@@ -2033,7 +2809,9 @@ async function buyAmmo(){
 }
 
 
-async function buyWeaponUpgrade(targetLevel){
+async function buyWeaponUpgrade(
+ targetLevel
+){
 
  if(
   targetLevel!==2&&
@@ -2041,7 +2819,9 @@ async function buyWeaponUpgrade(targetLevel){
  )
   return;
 
- if(weaponLevel>=targetLevel)
+ if(
+  weaponLevel>=targetLevel
+ )
   return;
 
  let price=0;
@@ -2081,13 +2861,17 @@ async function buyWeaponUpgrade(targetLevel){
 
  money-=price;
 
- weaponLevel=targetLevel;
- weaponDamage=damage;
+ weaponLevel=
+  targetLevel;
+
+ weaponDamage=
+  damage;
 
  addChat(
   "SHOP",
   "🔫 Weapon upgraded to Level "+
-  weaponLevel+"!"
+  weaponLevel+
+  "!"
  );
 
  updateHUD();
@@ -2136,11 +2920,14 @@ async function buyCapacityUpgrade(){
 }
 
 
-/* GARAGE */
+/* =========================
+   GARAGE
+   ========================= */
 
 function checkGarage(){
 
- if(!player)return;
+ if(!player)
+  return;
 
  const d=
   Math.hypot(
@@ -2148,7 +2935,8 @@ function checkGarage(){
    player.z-20
   );
 
- nearGarage=d<11;
+ nearGarage=
+  d<11;
 
  $("garageBtn").style.display=
   nearGarage&&!inCar?
@@ -2159,17 +2947,20 @@ function checkGarage(){
 
 function openGarage(){
 
- if(!nearGarage)return;
+ if(!nearGarage)
+  return;
 
  updateGarage();
 
- $("garage").style.display="flex";
+ $("garage").style.display=
+  "flex";
 }
 
 
 function closeGarage(){
 
- $("garage").style.display="none";
+ $("garage").style.display=
+  "none";
 }
 
 
@@ -2196,6 +2987,7 @@ function updateGarage(){
 
   $("vehicleUpgrade").textContent=
    "✓ MAX LEVEL";
+
  }else{
 
   $("vehicleUpgrade").textContent=
@@ -2208,6 +3000,7 @@ function updateGarage(){
   vehicleOwned===1;
 
  if(vehicleOwned)
+
   $("buyVehicleBtn").textContent=
    "✓ OWNED";
 }
@@ -2238,6 +3031,7 @@ async function buyVehicle(){
  }
 
  money-=price;
+
  vehicleOwned=1;
 
  addChat(
@@ -2295,7 +3089,8 @@ async function buyVehicleUpgrade(){
  addChat(
   "GARAGE",
   "🚗 Vehicle upgraded to Level "+
-  vehicleLevel+"!"
+  vehicleLevel+
+  "!"
  );
 
  updateHUD();
@@ -2305,18 +3100,23 @@ async function buyVehicleUpgrade(){
 }
 
 
-/* WANTED */
+/* =========================
+   WANTED
+   ========================= */
 
 async function addWanted(amount){
 
  wanted=
   THREE.MathUtils.clamp(
    wanted+amount,
-   0,5
+   0,
+   5
   );
 
  if(wanted>0)
-  $("policeAlert").style.display="block";
+
+  $("policeAlert").style.display=
+   "block";
 
  updateHUD();
 
@@ -2326,13 +3126,15 @@ async function addWanted(amount){
 
 async function reduceWanted(){
 
- if(wanted<=0)return;
+ if(wanted<=0)
+  return;
 
  wanted--;
 
  if(wanted===0){
 
-  $("policeAlert").style.display="none";
+  $("policeAlert").style.display=
+   "none";
 
   addChat(
    "POLICE",
@@ -2346,60 +3148,73 @@ async function reduceWanted(){
 }
 
 
-/* POLICE */
+/* =========================
+   POLICE
+   ========================= */
 
 function updatePolice(dt){
 
- if(!player)return;
+ if(!player)
+  return;
 
- policeUnits.forEach(unit=>{
+ policeUnits.forEach(
+  unit=>{
 
-  if(wanted<=0)return;
+   if(wanted<=0)
+    return;
 
-  const car=unit.car;
+   const car=
+    unit.car;
 
-  const dx=
-   player.x-car.mesh.position.x;
+   const dx=
+    player.x-
+    car.mesh.position.x;
 
-  const dz=
-   player.z-car.mesh.position.z;
+   const dz=
+    player.z-
+    car.mesh.position.z;
 
-  const dist=
-   Math.hypot(dx,dz);
+   const dist=
+    Math.hypot(dx,dz);
 
-  if(
-   dist<unit.caughtDistance
-  ){
+   if(
+    dist<
+    unit.caughtDistance
+   ){
 
-   caughtByPolice();
+    caughtByPolice();
 
-   return;
+    return;
+   }
+
+   const angle=
+    Math.atan2(
+     dx,dz
+    );
+
+   car.mesh.rotation.y=
+    angle;
+
+   const speed=
+    unit.speed+
+    wanted*1.2;
+
+   car.mesh.position.x+=
+    Math.sin(angle)*
+    speed*dt;
+
+   car.mesh.position.z+=
+    Math.cos(angle)*
+    speed*dt;
   }
-
-  const angle=
-   Math.atan2(dx,dz);
-
-  car.mesh.rotation.y=
-   angle;
-
-  const speed=
-   unit.speed+
-   wanted*1.2;
-
-  car.mesh.position.x+=
-   Math.sin(angle)*
-   speed*dt;
-
-  car.mesh.position.z+=
-   Math.cos(angle)*
-   speed*dt;
- });
+ );
 }
 
 
 async function caughtByPolice(){
 
- const now=performance.now();
+ const now=
+  performance.now();
 
  if(
   now-lastCaught<4000
@@ -2415,10 +3230,13 @@ async function caughtByPolice(){
   );
 
  money-=fine;
+
  finesPaid++;
+
  wanted=0;
 
- $("policeAlert").style.display="none";
+ $("policeAlert").style.display=
+  "none";
 
  addChat(
   "POLICE",
@@ -2453,13 +3271,17 @@ function respawnPlayer(){
 }
 
 
-/* COMBAT */
+/* =========================
+   COMBAT
+   ========================= */
 
 function shoot(){
 
- if(!player)return;
+ if(!player)
+  return;
 
- const now=performance.now();
+ const now=
+  performance.now();
 
  if(
   now-lastShot<350
@@ -2492,44 +3314,52 @@ function shoot(){
    Math.cos(player.rot)
   );
 
- policeUnits.forEach(unit=>{
+ policeUnits.forEach(
+  unit=>{
 
-  const car=unit.car;
+   const car=
+    unit.car;
 
-  if(!car.mesh.visible)return;
+   if(!car.mesh.visible)
+    return;
 
-  const dx=
-   car.mesh.position.x-player.x;
+   const dx=
+    car.mesh.position.x-
+    player.x;
 
-  const dz=
-   car.mesh.position.z-player.z;
+   const dz=
+    car.mesh.position.z-
+    player.z;
 
-  const distance=
-   Math.hypot(dx,dz);
+   const distance=
+    Math.hypot(dx,dz);
 
-  if(distance>45)return;
+   if(distance>45)
+    return;
 
-  const dir=
-   new THREE.Vector3(
-    dx,0,dz
-   ).normalize();
+   const dir=
+    new THREE.Vector3(
+     dx,0,dz
+    ).normalize();
 
-  const dot=
-   forward.dot(dir);
+   const dot=
+    forward.dot(dir);
 
-  if(
-   dot>.55&&
-   distance<best
-  ){
+   if(
+    dot>.55&&
+    distance<best
+   ){
 
-   best=distance;
-   target=unit;
+    best=distance;
+    target=unit;
+   }
   }
- });
+ );
 
  if(target){
 
   damagePolice(target);
+
   addWanted(1);
 
  }else{
@@ -2546,21 +3376,25 @@ function shoot(){
 
 function damagePolice(unit){
 
- const car=unit.car;
+ const car=
+  unit.car;
 
  car.mesh.visible=false;
 
- setTimeout(()=>{
+ setTimeout(
+  ()=>{
 
-  car.mesh.visible=true;
+   car.mesh.visible=true;
 
-  car.mesh.position.set(
-   (Math.random()-.5)*180,
-   0,
-   (Math.random()-.5)*180
-  );
+   car.mesh.position.set(
+    (Math.random()-.5)*180,
+    0,
+    (Math.random()-.5)*180
+   );
 
- },5000);
+  },
+  5000
+ );
 
  kills++;
 
@@ -2575,14 +3409,21 @@ function damagePolice(unit){
 }
 
 
-/* PLAYER DAMAGE */
+/* =========================
+   PLAYER DAMAGE
+   ========================= */
 
-async function takeDamage(amount){
+async function takeDamage(
+ amount
+){
 
  health-=amount;
 
  health=
-  Math.max(0,health);
+  Math.max(
+   0,
+   health
+  );
 
  showDamage();
 
@@ -2595,13 +3436,19 @@ async function takeDamage(amount){
 
 function showDamage(){
 
- const f=$("damageFlash");
+ const f=
+  $("damageFlash");
 
- f.style.display="block";
+ f.style.display=
+  "block";
 
- setTimeout(()=>{
-  f.style.display="none";
- },120);
+ setTimeout(
+  ()=>{
+   f.style.display=
+    "none";
+  },
+  120
+ );
 }
 
 
@@ -2628,9 +3475,12 @@ async function playerDeath(){
 
  await saveStats();
 
- setTimeout(()=>{
-  respawnPlayer();
- },900);
+ setTimeout(
+  ()=>{
+   respawnPlayer();
+  },
+  900
+ );
 }
 
 
@@ -2651,25 +3501,35 @@ function reloadAmmo(){
 }
 
 
-/* ESCAPE */
+/* =========================
+   ESCAPE
+   ========================= */
 
 function updateWantedEscape(dt){
 
- if(wanted<=0)return;
+ if(wanted<=0)
+  return;
 
  let nearest=999;
 
- policeUnits.forEach(unit=>{
+ policeUnits.forEach(
+  unit=>{
 
-  const d=
-   Math.hypot(
-    unit.car.mesh.position.x-player.x,
-    unit.car.mesh.position.z-player.z
-   );
+   const d=
+    Math.hypot(
+     unit.car.mesh.position.x-
+      player.x,
+     unit.car.mesh.position.z-
+      player.z
+    );
 
-  nearest=
-   Math.min(nearest,d);
- });
+   nearest=
+    Math.min(
+     nearest,
+     d
+    );
+  }
+ );
 
  if(nearest>45){
 
@@ -2678,6 +3538,7 @@ function updateWantedEscape(dt){
   if(escapeTimer>8){
 
    escapeTimer=0;
+
    reduceWanted();
   }
 
@@ -2688,7 +3549,9 @@ function updateWantedEscape(dt){
 }
 
 
-/* MULTIPLAYER */
+/* =========================
+   MULTIPLAYER
+   ========================= */
 
 async function connectMultiplayer(){
 
@@ -2707,13 +3570,17 @@ async function connectMultiplayer(){
  channel
   .on(
    "presence",
-   {event:"sync"},
+   {
+    event:"sync"
+   },
    updatePresence
   )
 
   .on(
    "presence",
-   {event:"join"},
+   {
+    event:"join"
+   },
    ({newPresences})=>{
 
     newPresences.forEach(
@@ -2726,34 +3593,44 @@ async function connectMultiplayer(){
 
   .on(
    "presence",
-   {event:"leave"},
+   {
+    event:"leave"
+   },
    ({key})=>{
 
     removeRemotePlayer(key);
+
     updateOnline();
    }
   )
 
   .on(
    "broadcast",
-   {event:"move"},
+   {
+    event:"move"
+   },
    ({payload})=>{
 
     if(
      payload.id!==playerId
     )
-     updateRemotePlayer(payload);
+     updateRemotePlayer(
+      payload
+     );
    }
   )
 
   .on(
    "broadcast",
-   {event:"chat"},
+   {
+    event:"chat"
+   },
    ({payload})=>{
 
     if(
      payload.id!==playerId
     )
+
      addChat(
       payload.name,
       payload.message
@@ -2764,7 +3641,9 @@ async function connectMultiplayer(){
  await channel.subscribe(
   async status=>{
 
-   if(status==="SUBSCRIBED"){
+   if(
+    status==="SUBSCRIBED"
+   ){
 
     await channel.track({
 
@@ -2786,18 +3665,20 @@ function updatePresence(){
  const state=
   channel.presenceState();
 
- Object.keys(state).forEach(
-  key=>{
+ Object.keys(state)
+  .forEach(
+   key=>{
 
-   if(key===playerId)return;
+    if(key===playerId)
+     return;
 
-   const p=
-    state[key]?.[0];
+    const p=
+     state[key]?.[0];
 
-   if(p)
-    createRemotePlayer(p);
-  }
- );
+    if(p)
+     createRemotePlayer(p);
+   }
+  );
 
  updateOnline();
 }
@@ -2811,7 +3692,9 @@ function createRemotePlayer(p){
  )
   return;
 
- if(remotePlayers[p.id])
+ if(
+  remotePlayers[p.id]
+ )
   return;
 
  const g=
@@ -2828,6 +3711,7 @@ function createRemotePlayer(p){
   );
 
  body.position.y=1.5;
+
  g.add(body);
 
  const head=
@@ -2841,6 +3725,7 @@ function createRemotePlayer(p){
   );
 
  head.position.y=2.8;
+
  g.add(head);
 
  g.position.set(
@@ -2852,19 +3737,30 @@ function createRemotePlayer(p){
  scene.add(g);
 
  remotePlayers[p.id]={
+
   mesh:g,
-  name:p.name||"Player",
-  targetX:Number(p.x)||0,
-  targetZ:Number(p.z)||35
+
+  name:
+   p.name||"Player",
+
+  targetX:
+   Number(p.x)||0,
+
+  targetZ:
+   Number(p.z)||35
+
  };
 }
 
 
 function updateRemotePlayer(p){
 
- if(!remotePlayers[p.id]){
+ if(
+  !remotePlayers[p.id]
+ ){
 
   createRemotePlayer(p);
+
   return;
  }
 
@@ -2878,7 +3774,9 @@ function updateRemotePlayer(p){
 
 function removeRemotePlayer(id){
 
- if(!remotePlayers[id])
+ if(
+  !remotePlayers[id]
+ )
   return;
 
  scene.remove(
@@ -2893,22 +3791,30 @@ function updateRemoteMovement(dt){
 
  Object.values(
   remotePlayers
- ).forEach(r=>{
+ ).forEach(
+  r=>{
 
-  r.mesh.position.x=
-   THREE.MathUtils.lerp(
-    r.mesh.position.x,
-    r.targetX,
-    Math.min(1,dt*8)
-   );
+   r.mesh.position.x=
+    THREE.MathUtils.lerp(
+     r.mesh.position.x,
+     r.targetX,
+     Math.min(
+      1,
+      dt*8
+     )
+    );
 
-  r.mesh.position.z=
-   THREE.MathUtils.lerp(
-    r.mesh.position.z,
-    r.targetZ,
-    Math.min(1,dt*8)
-   );
- });
+   r.mesh.position.z=
+    THREE.MathUtils.lerp(
+     r.mesh.position.z,
+     r.targetZ,
+     Math.min(
+      1,
+      dt*8
+     )
+    );
+  }
+ );
 }
 
 
@@ -2916,9 +3822,11 @@ let lastBroadcast=0;
 
 function broadcastPosition(){
 
- if(!channel)return;
+ if(!channel)
+  return;
 
- const now=performance.now();
+ const now=
+  performance.now();
 
  if(
   now-lastBroadcast<80
@@ -2930,11 +3838,13 @@ function broadcastPosition(){
  channel.send({
 
   type:"broadcast",
+
   event:"move",
 
   payload:{
 
    id:playerId,
+
    name:playerName,
 
    x:
@@ -2956,6 +3866,7 @@ function updateOnline(){
  if(!channel){
 
   $("online").textContent=1;
+
   return;
  }
 
@@ -2964,26 +3875,37 @@ function updateOnline(){
 
  let count=1;
 
- Object.keys(state).forEach(k=>{
+ Object.keys(state)
+  .forEach(k=>{
 
-  if(k!==playerId)
-   count++;
- });
+   if(k!==playerId)
+    count++;
+  });
 
- $("online").textContent=count;
+ $("online").textContent=
+  count;
 }
 
 
-/* CHAT */
+/* =========================
+   CHAT
+   ========================= */
 
-function addChat(name,message){
+function addChat(
+ name,
+ message
+){
 
- const box=$("chat");
+ const box=
+  $("chat");
 
  const div=
-  document.createElement("div");
+  document.createElement(
+   "div"
+  );
 
- div.className="chatLine";
+ div.className=
+  "chatLine";
 
  div.textContent=
   name+": "+message;
@@ -2997,12 +3919,15 @@ function addChat(name,message){
    box.firstChild
   );
 
- setTimeout(()=>{
+ setTimeout(
+  ()=>{
 
-  if(div.parentNode)
-   div.remove();
+   if(div.parentNode)
+    div.remove();
 
- },7000);
+  },
+  7000
+ );
 }
 
 
@@ -3014,7 +3939,8 @@ function sendChat(){
  const message=
   input.value.trim();
 
- if(!message)return;
+ if(!message)
+  return;
 
  addChat(
   playerName,
@@ -3026,6 +3952,7 @@ function sendChat(){
   channel.send({
 
    type:"broadcast",
+
    event:"chat",
 
    payload:{
@@ -3033,15 +3960,20 @@ function sendChat(){
     name:playerName,
     message
    }
+
   });
  }
 
  input.value="";
- input.style.display="none";
+
+ input.style.display=
+  "none";
 }
 
 
-/* HUD */
+/* =========================
+   HUD
+   ========================= */
 
 function updateHUD(){
 
@@ -3097,7 +4029,9 @@ function updateHUD(){
 }
 
 
-/* JOYSTICK */
+/* =========================
+   JOYSTICK
+   ========================= */
 
 const joystick=
  $("joystick");
@@ -3107,16 +4041,19 @@ const stick=
 
 let joyActive=false;
 
+
 function handleJoy(e){
 
  const r=
   joystick.getBoundingClientRect();
 
  const cx=
-  r.left+r.width/2;
+  r.left+
+  r.width/2;
 
  const cy=
-  r.top+r.height/2;
+  r.top+
+  r.height/2;
 
  let x=
   e.clientX-cx;
@@ -3191,41 +4128,66 @@ joystick.addEventListener(
 );
 
 
-/* BUTTONS */
+/* =========================
+   BUTTONS
+   ========================= */
 
 $("runBtn").addEventListener(
  "pointerdown",
- ()=>running=true
+ ()=>{
+  running=true;
+ }
 );
 
 $("runBtn").addEventListener(
  "pointerup",
- ()=>running=false
+ ()=>{
+  running=false;
+ }
 );
 
 $("runBtn").addEventListener(
  "pointercancel",
- ()=>running=false
+ ()=>{
+  running=false;
+ }
 );
 
-$("jumpBtn").onclick=jump;
-$("carBtn").onclick=toggleVehicle;
-$("shootBtn").onclick=shoot;
-$("reloadBtn").onclick=reloadAmmo;
+$("jumpBtn").onclick=
+ jump;
+
+$("carBtn").onclick=
+ toggleVehicle;
+
+$("shootBtn").onclick=
+ shoot;
+
+$("reloadBtn").onclick=
+ reloadAmmo;
+
+$("talkBtn").onclick=
+ talkToNPC;
+
+$("missionBtn").onclick=
+ startCurrentMission;
 
 
-$("chatBtn").onclick=()=>{
+$("chatBtn").onclick=
+ ()=>{
 
- const i=$("chatInput");
+  const i=
+   $("chatInput");
 
- i.style.display=
-  i.style.display==="block"?
-   "none":
-   "block";
+  i.style.display=
+   i.style.display==="block"?
+    "none":
+    "block";
 
- if(i.style.display==="block")
-  i.focus();
-};
+  if(
+   i.style.display==="block"
+  )
+   i.focus();
+ };
 
 
 $("chatInput").addEventListener(
@@ -3238,7 +4200,9 @@ $("chatInput").addEventListener(
 );
 
 
-/* KEYBOARD */
+/* =========================
+   KEYBOARD
+   ========================= */
 
 addEventListener(
  "keydown",
@@ -3249,16 +4213,24 @@ addEventListener(
   if(e.key===" ")
    jump();
 
-  if(e.key.toLowerCase()==="e")
+  if(
+   e.key.toLowerCase()==="e"
+  )
    toggleVehicle();
 
-  if(e.key.toLowerCase()==="f")
+  if(
+   e.key.toLowerCase()==="f"
+  )
    shoot();
 
-  if(e.key.toLowerCase()==="r")
+  if(
+   e.key.toLowerCase()==="r"
+  )
    reloadAmmo();
 
-  if(e.key.toLowerCase()==="t"){
+  if(
+   e.key.toLowerCase()==="t"
+  ){
 
    $("chatInput").style.display=
     "block";
@@ -3266,13 +4238,25 @@ addEventListener(
    $("chatInput").focus();
   }
 
-  if(e.key.toLowerCase()==="g"){
+  if(
+   e.key.toLowerCase()==="g"
+  ){
 
    if(nearGarage)
     openGarage();
 
    else if(nearWeaponShop)
     openShop();
+  }
+
+  if(
+   e.key.toLowerCase()==="m"
+  ){
+
+   if(mapOpen)
+    closeMap();
+   else
+    openMap();
   }
  });
 
@@ -3284,11 +4268,14 @@ addEventListener(
  });
 
 
-/* MISSION MARKER */
+/* =========================
+   MISSION MARKER
+   ========================= */
 
 function updateMissionMarker(){
 
- if(!missionMarker)return;
+ if(!missionMarker)
+  return;
 
  missionMarker.rotation.y+=.03;
 
@@ -3300,7 +4287,946 @@ function updateMissionMarker(){
 }
 
 
-/* MAIN LOOP */
+/* =====================================================
+   STEP 10B — MAP / GPS SYSTEM
+   ===================================================== */
+
+const WORLD_MIN=-130;
+const WORLD_MAX=130;
+const WORLD_SIZE=260;
+
+let mapOpen=false;
+
+const mapCanvas=
+ $("mapCanvas");
+
+const mapCtx=
+ mapCanvas.getContext("2d");
+
+const bigMapCanvas=
+ $("bigMapCanvas");
+
+const bigMapCtx=
+ bigMapCanvas.getContext("2d");
+
+
+/* MAP RESIZE */
+
+function resizeMapCanvases(){
+
+ const miniSize=
+  Math.max(
+   100,
+   mapCanvas.clientWidth*
+    Math.min(
+     devicePixelRatio||1,
+     2
+    )
+  );
+
+ const miniW=
+  Math.floor(
+   mapCanvas.clientWidth*
+   Math.min(
+    devicePixelRatio||1,
+    2
+   )
+  );
+
+ const miniH=
+  Math.floor(
+   mapCanvas.clientHeight*
+   Math.min(
+    devicePixelRatio||1,
+    2
+   )
+  );
+
+ if(
+  mapCanvas.width!==miniW||
+  mapCanvas.height!==miniH
+ ){
+
+  mapCanvas.width=miniW;
+  mapCanvas.height=miniH;
+ }
+
+ const bigW=
+  Math.floor(
+   bigMapCanvas.clientWidth*
+   Math.min(
+    devicePixelRatio||1,
+    2
+   )
+  );
+
+ const bigH=
+  Math.floor(
+   bigMapCanvas.clientHeight*
+   Math.min(
+    devicePixelRatio||1,
+    2
+   )
+  );
+
+ if(
+  bigMapCanvas.width!==bigW||
+  bigMapCanvas.height!==bigH
+ ){
+
+  bigMapCanvas.width=bigW;
+  bigMapCanvas.height=bigH;
+ }
+}
+
+
+/* WORLD TO MAP */
+
+function worldToMap(
+ x,
+ z,
+ width,
+ height
+){
+
+ return {
+
+  x:
+   ((x-WORLD_MIN)/
+    WORLD_SIZE)*width,
+
+  y:
+   ((z-WORLD_MIN)/
+    WORLD_SIZE)*height
+
+ };
+}
+
+
+/* DRAW MAP */
+
+function drawMap(
+ canvas,
+ ctx,
+ big=false
+){
+
+ if(
+  !canvas||
+  !ctx
+ )
+  return;
+
+ const width=
+  canvas.width;
+
+ const height=
+  canvas.height;
+
+ ctx.clearRect(
+  0,
+  0,
+  width,
+  height
+ );
+
+ /* WORLD BACKGROUND */
+
+ ctx.fillStyle=
+  "#173d25";
+
+ ctx.fillRect(
+  0,
+  0,
+  width,
+  height
+ );
+
+
+ /* GRID */
+
+ ctx.strokeStyle=
+  "rgba(255,255,255,.07)";
+
+ ctx.lineWidth=
+  Math.max(
+   1,
+   width/700
+  );
+
+ for(
+  let i=0;
+  i<=10;
+  i++
+ ){
+
+  const p=
+   i/10;
+
+  ctx.beginPath();
+
+  ctx.moveTo(
+   width*p,
+   0
+  );
+
+  ctx.lineTo(
+   width*p,
+   height
+  );
+
+  ctx.stroke();
+
+  ctx.beginPath();
+
+  ctx.moveTo(
+   0,
+   height*p
+  );
+
+  ctx.lineTo(
+   width,
+   height*p
+  );
+
+  ctx.stroke();
+ }
+
+
+ /* RIVER */
+
+ const riverTop=
+  worldToMap(
+   0,
+   82.5,
+   width,
+   height
+  ).y;
+
+ const riverBottom=
+  worldToMap(
+   0,
+   107.5,
+   width,
+   height
+  ).y;
+
+ ctx.fillStyle=
+  "#168bc9";
+
+ ctx.fillRect(
+  0,
+  riverTop,
+  width,
+  riverBottom-riverTop
+ );
+
+
+ /* HORIZONTAL ROAD */
+
+ const roadTop=
+  worldToMap(
+   0,
+   -7,
+   width,
+   height
+  ).y;
+
+ const roadBottom=
+  worldToMap(
+   0,
+   7,
+   width,
+   height
+  ).y;
+
+ ctx.fillStyle=
+  "#454545";
+
+ ctx.fillRect(
+  0,
+  roadTop,
+  width,
+  roadBottom-roadTop
+ );
+
+
+ /* VERTICAL ROAD */
+
+ const roadLeft=
+  worldToMap(
+   -6,
+   0,
+   width,
+   height
+  ).x;
+
+ const roadRight=
+  worldToMap(
+   6,
+   0,
+   width,
+   height
+  ).x;
+
+ ctx.fillRect(
+  roadLeft,
+  0,
+  roadRight-roadLeft,
+  height
+ );
+
+
+ /* ROAD LINES */
+
+ ctx.strokeStyle=
+  "rgba(255,220,70,.65)";
+
+ ctx.lineWidth=
+  Math.max(
+   1,
+   width/350
+  );
+
+ ctx.setLineDash([
+  Math.max(4,width/35),
+  Math.max(4,width/35)
+ ]);
+
+ ctx.beginPath();
+
+ ctx.moveTo(
+  0,
+  worldToMap(
+   0,0,width,height
+  ).y
+ );
+
+ ctx.lineTo(
+  width,
+  worldToMap(
+   0,0,width,height
+  ).y
+ );
+
+ ctx.stroke();
+
+ ctx.beginPath();
+
+ ctx.moveTo(
+  worldToMap(
+   0,0,width,height
+  ).x,
+  0
+ );
+
+ ctx.lineTo(
+  worldToMap(
+   0,0,width,height
+  ).x,
+  height
+ );
+
+ ctx.stroke();
+
+ ctx.setLineDash([]);
+
+
+ /* MISSION GPS ROUTE */
+
+ if(
+  player&&
+  activeMission
+ ){
+
+  const p=
+   worldToMap(
+    player.x,
+    player.z,
+    width,
+    height
+   );
+
+  const t=
+   worldToMap(
+    activeMission.targetX,
+    activeMission.targetZ,
+    width,
+    height
+   );
+
+  ctx.save();
+
+  ctx.strokeStyle=
+   "#20ff72";
+
+  ctx.lineWidth=
+   Math.max(
+    3,
+    width/180
+   );
+
+  ctx.setLineDash([
+   Math.max(7,width/45),
+   Math.max(5,width/60)
+  ]);
+
+  ctx.beginPath();
+
+  ctx.moveTo(
+   p.x,
+   p.y
+  );
+
+  ctx.lineTo(
+   t.x,
+   t.y
+  );
+
+  ctx.stroke();
+
+  ctx.restore();
+ }
+
+
+ /* STATIC LOCATION MARKERS */
+
+ drawMapPoint(
+  ctx,
+  worldToMap(
+   -15,
+   45,
+   width,
+   height
+  ),
+  "#b44cff",
+  big?10:7,
+  "S",
+  big
+ );
+
+ drawMapPoint(
+  ctx,
+  worldToMap(
+   65,
+   20,
+   width,
+   height
+  ),
+  "#29a9ff",
+  big?10:7,
+  "G",
+  big
+ );
+
+ drawMapPoint(
+  ctx,
+  worldToMap(
+   -65,
+   55,
+   width,
+   height
+  ),
+  "#ffd447",
+  big?9:6,
+  "T",
+  big
+ );
+
+
+ /* NPC MARKERS */
+
+ if(npcs){
+
+  npcs.forEach(
+   n=>{
+
+    const p=
+     worldToMap(
+      n.x,
+      n.z,
+      width,
+      height
+     );
+
+    drawMapPoint(
+     ctx,
+     p,
+     "#ffd447",
+     big?7:5,
+     big?
+      n.name:
+      "",
+     big
+    );
+   }
+  );
+ }
+
+
+ /* POLICE MARKERS */
+
+ if(policeUnits){
+
+  policeUnits.forEach(
+   unit=>{
+
+    if(
+     !unit.car.mesh.visible
+    )
+     return;
+
+    const p=
+     worldToMap(
+      unit.car.mesh.position.x,
+      unit.car.mesh.position.z,
+      width,
+      height
+     );
+
+    drawMapPoint(
+     ctx,
+     p,
+     "#ff3030",
+     big?7:5,
+     "",
+     big
+    );
+   }
+  );
+ }
+
+
+ /* REMOTE PLAYER MARKERS */
+
+ Object.values(
+  remotePlayers
+ ).forEach(
+  r=>{
+
+   const p=
+    worldToMap(
+     r.mesh.position.x,
+     r.mesh.position.z,
+     width,
+     height
+    );
+
+   drawMapPoint(
+    ctx,
+    p,
+    "#30a8ff",
+    big?7:5,
+    big?
+     r.name:
+     "",
+    big
+   );
+  }
+ );
+
+
+ /* MISSION TARGET */
+
+ if(
+  activeMission
+ ){
+
+  const p=
+   worldToMap(
+    activeMission.targetX,
+    activeMission.targetZ,
+    width,
+    height
+   );
+
+  const pulse=
+   (big?10:6)+
+   Math.sin(
+    performance.now()*.006
+   )*(big?4:3);
+
+  ctx.beginPath();
+
+  ctx.arc(
+   p.x,
+   p.y,
+   pulse,
+   0,
+   Math.PI*2
+  );
+
+  ctx.strokeStyle=
+   "#20ff72";
+
+  ctx.lineWidth=2;
+
+  ctx.stroke();
+
+  ctx.fillStyle=
+   "#20ff72";
+
+  ctx.font=
+   (big?18:12)+
+   "px Arial";
+
+  ctx.textAlign=
+   "center";
+
+  ctx.fillText(
+   "🎯",
+   p.x,
+   p.y-10
+  );
+ }
+
+
+ /* LOCAL PLAYER */
+
+ if(player){
+
+  const p=
+   worldToMap(
+    player.x,
+    player.z,
+    width,
+    height
+   );
+
+  drawPlayerArrow(
+   ctx,
+   p.x,
+   p.y,
+   player.rot,
+   big
+  );
+ }
+
+
+ /* BIG MAP BORDER */
+
+ if(big){
+
+  ctx.strokeStyle=
+   "rgba(255,255,255,.35)";
+
+  ctx.lineWidth=3;
+
+  ctx.strokeRect(
+   1.5,
+   1.5,
+   width-3,
+   height-3
+  );
+
+  /* WORLD LABELS */
+
+  drawWorldLabel(
+   ctx,
+   "NORTH",
+   0,
+   -115,
+   width,
+   height
+  );
+
+  drawWorldLabel(
+   ctx,
+   "RIVER",
+   0,
+   95,
+   width,
+   height
+  );
+
+  drawWorldLabel(
+   ctx,
+   "TEMPLE",
+   -65,
+   55,
+   width,
+   height
+  );
+
+  drawWorldLabel(
+   ctx,
+   "GARAGE",
+   65,
+   20,
+   width,
+   height
+  );
+
+  drawWorldLabel(
+   ctx,
+   "WEAPON SHOP",
+   -15,
+   45,
+   width,
+   height
+  );
+ }
+}
+
+
+/* MAP POINT */
+
+function drawMapPoint(
+ ctx,
+ p,
+ color,
+ radius,
+ label,
+ big
+){
+
+ ctx.save();
+
+ ctx.beginPath();
+
+ ctx.arc(
+  p.x,
+  p.y,
+  radius,
+  0,
+  Math.PI*2
+ );
+
+ ctx.fillStyle=
+  color;
+
+ ctx.shadowColor=
+  color;
+
+ ctx.shadowBlur=
+  big?10:5;
+
+ ctx.fill();
+
+ ctx.shadowBlur=0;
+
+ if(label){
+
+  ctx.fillStyle=
+   "#fff";
+
+  ctx.font=
+   (big?10:8)+
+   "px Arial";
+
+  ctx.textAlign=
+   "center";
+
+  ctx.fillText(
+   label,
+   p.x,
+   p.y-radius-4
+  );
+ }
+
+ ctx.restore();
+}
+
+
+/* PLAYER ARROW */
+
+function drawPlayerArrow(
+ ctx,
+ x,
+ y,
+ rot,
+ big
+){
+
+ ctx.save();
+
+ ctx.translate(
+  x,
+  y
+ );
+
+ /*
+  Player forward:
+  X = sin(rot)
+  Z = cos(rot)
+
+  Map Y follows world Z.
+ */
+
+ ctx.rotate(rot);
+
+ const s=
+  big?1.35:1;
+
+ ctx.beginPath();
+
+ ctx.moveTo(
+  0,
+  -11*s
+ );
+
+ ctx.lineTo(
+  -7*s,
+  8*s
+ );
+
+ ctx.lineTo(
+  0,
+  4*s
+ );
+
+ ctx.lineTo(
+  7*s,
+  8*s
+ );
+
+ ctx.closePath();
+
+ ctx.fillStyle=
+  "#20ff72";
+
+ ctx.shadowColor=
+  "#20ff72";
+
+ ctx.shadowBlur=
+  big?14:8;
+
+ ctx.fill();
+
+ ctx.shadowBlur=0;
+
+ ctx.strokeStyle=
+  "#ffffff";
+
+ ctx.lineWidth=
+  big?2:1.5;
+
+ ctx.stroke();
+
+ ctx.restore();
+}
+
+
+/* WORLD LABEL */
+
+function drawWorldLabel(
+ ctx,
+ text,
+ x,
+ z,
+ width,
+ height
+){
+
+ const p=
+  worldToMap(
+   x,
+   z,
+   width,
+   height
+  );
+
+ ctx.save();
+
+ ctx.fillStyle=
+  "rgba(255,255,255,.45)";
+
+ ctx.font=
+  "10px Arial";
+
+ ctx.textAlign=
+  "center";
+
+ ctx.fillText(
+  text,
+  p.x,
+  p.y
+ );
+
+ ctx.restore();
+}
+
+
+/* MAP UPDATE */
+
+function updateMap(){
+
+ resizeMapCanvases();
+
+ drawMap(
+  mapCanvas,
+  mapCtx,
+  false
+ );
+
+ if(mapOpen){
+
+  drawMap(
+   bigMapCanvas,
+   bigMapCtx,
+   true
+  );
+ }
+}
+
+
+/* INITIALIZE MAP */
+
+function initMap(){
+
+ resizeMapCanvases();
+
+ drawMap(
+  mapCanvas,
+  mapCtx,
+  false
+ );
+}
+
+
+/* OPEN MAP */
+
+function openMap(){
+
+ mapOpen=true;
+
+ $("mapPanel").style.display=
+  "flex";
+
+ updateMap();
+}
+
+
+/* CLOSE MAP */
+
+function closeMap(){
+
+ mapOpen=false;
+
+ $("mapPanel").style.display=
+  "none";
+}
+
+
+/* MAP BUTTON */
+
+$("mapButton").onclick=
+ ()=>{
+
+  if(mapOpen)
+   closeMap();
+  else
+   openMap();
+ };
+
+
+$("closeMap").onclick=
+ closeMap;
+
+
+/* =========================
+   MAIN LOOP
+   ========================= */
 
 function animate(){
 
@@ -3315,12 +5241,20 @@ function animate(){
   );
 
  updateMovement(dt);
+
  updateCar(dt);
+
  updatePolice(dt);
+
  updateWantedEscape(dt);
+
  updateRemoteMovement(dt);
+
  updateMissionMarker();
+
  updateCamera();
+
+ updateMap();
 
  renderer.render(
   scene,
@@ -3329,5 +5263,6 @@ function animate(){
 }
 
 </script>
+
 </body>
-</html>
+ </html>
