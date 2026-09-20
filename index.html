@@ -11,8 +11,14 @@ html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#111;color:
 #game{position:fixed;inset:0}
 canvas{display:block}
 
-#login{position:fixed;inset:0;z-index:50;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#063b24,#075e38,#10251d)}
-.loginBox{width:min(92%,380px);padding:28px;border-radius:20px;background:rgba(0,0,0,.75);text-align:center}
+#login{
+ position:fixed;inset:0;z-index:50;display:flex;align-items:center;
+ justify-content:center;background:linear-gradient(135deg,#063b24,#075e38,#10251d)
+}
+.loginBox{
+ width:min(92%,380px);padding:28px;border-radius:20px;
+ background:rgba(0,0,0,.75);text-align:center
+}
 .loginBox h1{margin:0 0 8px;font-size:29px}
 .loginBox p{color:#bbb}
 input,select,button{border:0;border-radius:12px;padding:13px;font-size:16px}
@@ -20,17 +26,21 @@ input,select,button{border:0;border-radius:12px;padding:13px;font-size:16px}
 button{font-weight:bold;color:#fff;background:#19c37d}
 #loginMsg{margin-top:10px;color:#ffcc66}
 
-#loading{position:fixed;inset:0;z-index:40;background:#111;display:none;align-items:center;justify-content:center;font-size:20px}
+#loading{
+ position:fixed;inset:0;z-index:40;background:#111;display:none;
+ align-items:center;justify-content:center;font-size:20px
+}
 
 #hud{
- position:fixed;top:10px;left:10px;z-index:10;min-width:190px;
+ position:fixed;top:10px;left:10px;z-index:10;min-width:205px;
  padding:10px 12px;border-radius:14px;background:rgba(0,0,0,.65);
- font-size:13px;line-height:1.65
+ font-size:13px;line-height:1.55
 }
 .hudTitle{font-weight:bold;font-size:15px}
 #health{color:#55ff72}
 #ammo{color:#ffd43b}
 #wanted{color:#ffd43b}
+#weaponLevel{color:#ff8c42}
 
 #mission{
  position:fixed;top:10px;left:50%;transform:translateX(-50%);
@@ -46,8 +56,14 @@ button{font-weight:bold;color:#fff;background:#19c37d}
  background:#a40000;font-weight:bold
 }
 
-#chat{position:fixed;left:10px;bottom:115px;z-index:12;width:min(75%,330px);pointer-events:none}
-.chatLine{background:rgba(0,0,0,.55);padding:5px 8px;border-radius:7px;margin-top:4px;font-size:12px}
+#chat{
+ position:fixed;left:10px;bottom:115px;z-index:12;
+ width:min(75%,330px);pointer-events:none
+}
+.chatLine{
+ background:rgba(0,0,0,.55);padding:5px 8px;border-radius:7px;
+ margin-top:4px;font-size:12px
+}
 
 #chatInput{
  position:fixed;left:50%;bottom:65px;transform:translateX(-50%);
@@ -70,13 +86,15 @@ button{font-weight:bold;color:#fff;background:#19c37d}
 }
 .ctrl{
  width:70px;height:46px;border-radius:15px;
- background:rgba(0,0,0,.65);border:1px solid rgba(255,255,255,.2);
+ background:rgba(0,0,0,.65);
+ border:1px solid rgba(255,255,255,.2);
  color:#fff;font-size:11px
 }
 .ctrl.green{background:rgba(0,150,80,.75)}
 .ctrl.red{background:rgba(190,30,30,.8)}
 .ctrl.yellow{background:rgba(180,130,0,.8)}
 .ctrl.blue{background:rgba(20,90,210,.8)}
+.ctrl.purple{background:rgba(120,40,190,.85)}
 
 #shootBtn{
  position:fixed;right:105px;bottom:30px;z-index:21;
@@ -84,21 +102,89 @@ button{font-weight:bold;color:#fff;background:#19c37d}
  background:rgba(210,25,25,.82);font-size:13px;
  border:3px solid rgba(255,255,255,.35)
 }
+
 #reloadBtn{
  position:fixed;right:108px;bottom:120px;z-index:21;
  width:76px;height:42px;background:rgba(0,0,0,.7);font-size:11px
 }
 
-#talkBtn,#missionBtn{
+#talkBtn,#missionBtn,#shopBtn{
  position:fixed;left:50%;transform:translateX(-50%);
- z-index:22;display:none;width:180px
+ z-index:22;display:none;width:190px
 }
 #talkBtn{bottom:145px;background:#157efb}
 #missionBtn{bottom:200px;background:#19c37d}
+#shopBtn{bottom:255px;background:#8e44ad}
 
 #damageFlash{
  position:fixed;inset:0;z-index:29;pointer-events:none;
  background:rgba(255,0,0,.28);display:none
+}
+
+/* SHOP */
+
+#shop{
+ position:fixed;inset:0;z-index:45;display:none;
+ align-items:center;justify-content:center;
+ background:rgba(0,0,0,.72)
+}
+
+.shopBox{
+ width:min(92%,390px);
+ max-height:90vh;
+ overflow:auto;
+ padding:20px;
+ border-radius:20px;
+ background:linear-gradient(160deg,#18251f,#101512);
+ box-shadow:0 10px 40px rgba(0,0,0,.6)
+}
+
+.shopBox h2{
+ margin:0 0 5px;
+ text-align:center;
+ color:#61ff9a
+}
+
+.shopMoney{
+ text-align:center;
+ color:#ffd43b;
+ margin-bottom:12px
+}
+
+.shopItem{
+ background:rgba(255,255,255,.07);
+ border:1px solid rgba(255,255,255,.12);
+ border-radius:14px;
+ padding:12px;
+ margin-top:9px
+}
+
+.shopItem strong{
+ display:block;
+ font-size:15px;
+ margin-bottom:4px
+}
+
+.shopItem small{
+ color:#aaa;
+ display:block;
+ margin-bottom:8px
+}
+
+.shopItem button{
+ width:100%;
+ background:#19c37d
+}
+
+.shopItem button:disabled{
+ background:#555;
+ color:#aaa
+}
+
+#closeShop{
+ width:100%;
+ margin-top:14px;
+ background:#a52b2b
 }
 </style>
 </head>
@@ -112,13 +198,24 @@ button{font-weight:bold;color:#fff;background:#19c37d}
   <h1>🌴 Kerala Open World</h1>
   <p>Enter the world</p>
   <input id="playerName" placeholder="Your name" maxlength="18">
+
   <select id="district">
-   <option>Ernakulam</option><option>Kozhikode</option><option>Malappuram</option>
-   <option>Thrissur</option><option>Kollam</option><option>Thiruvananthapuram</option>
-   <option>Kannur</option><option>Alappuzha</option><option>Palakkad</option>
-   <option>Kottayam</option><option>Idukki</option><option>Wayanad</option>
-   <option>Pathanamthitta</option><option>Kasaragod</option>
+   <option>Ernakulam</option>
+   <option>Kozhikode</option>
+   <option>Malappuram</option>
+   <option>Thrissur</option>
+   <option>Kollam</option>
+   <option>Thiruvananthapuram</option>
+   <option>Kannur</option>
+   <option>Alappuzha</option>
+   <option>Palakkad</option>
+   <option>Kottayam</option>
+   <option>Idukki</option>
+   <option>Wayanad</option>
+   <option>Pathanamthitta</option>
+   <option>Kasaragod</option>
   </select>
+
   <button onclick="startGame()">ENTER WORLD</button>
   <div id="loginMsg"></div>
  </div>
@@ -131,7 +228,9 @@ button{font-weight:bold;color:#fff;background:#19c37d}
  👤 <span id="hudName">Player</span><br>
  🌐 Online: <span id="online">1</span><br>
  ❤️ Health: <span id="health">100</span><br>
- 🔫 Ammo: <span id="ammo">30</span><br>
+ 🔫 Ammo: <span id="ammo">30</span>/<span id="ammoCapacity">30</span><br>
+ ⚡ Damage: <span id="weaponDamage">25</span><br>
+ 🟣 Weapon Lv: <span id="weaponLevel">1</span><br>
  💰 ₹<span id="money">500</span><br>
  ⭐ XP: <span id="xp">0/100</span><br>
  🏆 Level: <span id="level">1</span><br>
@@ -154,17 +253,66 @@ button{font-weight:bold;color:#fff;background:#19c37d}
 
 <button id="talkBtn" onclick="talkToNPC()">TALK</button>
 <button id="missionBtn" onclick="startCurrentMission()">START MISSION</button>
+<button id="shopBtn" onclick="openShop()">🏪 SHOP</button>
 
-<div id="joystick"><div id="stick"></div></div>
+<!-- SHOP WINDOW -->
 
-<button id="shootBtn" onclick="shoot()">🔫<br>SHOOT</button>
-<button id="reloadBtn" onclick="reloadAmmo()">RELOAD</button>
+<div id="shop">
+ <div class="shopBox">
+
+  <h2>🔫 WEAPON SHOP</h2>
+
+  <div class="shopMoney">
+   Balance: ₹<span id="shopMoney">500</span>
+  </div>
+
+  <div class="shopItem">
+   <strong>📦 Ammo +30</strong>
+   <small>Buy 30 additional rounds.</small>
+   <button onclick="buyAmmo()">BUY • ₹50</button>
+  </div>
+
+  <div class="shopItem">
+   <strong>🔫 Weapon Upgrade Lv 2</strong>
+   <small>Damage 25 → 40</small>
+   <button id="upgrade2" onclick="buyWeaponUpgrade(2)">
+    UPGRADE • ₹500
+   </button>
+  </div>
+
+  <div class="shopItem">
+   <strong>💥 Weapon Upgrade Lv 3</strong>
+   <small>Damage 40 → 65</small>
+   <button id="upgrade3" onclick="buyWeaponUpgrade(3)">
+    UPGRADE • ₹1000
+   </button>
+  </div>
+
+  <div class="shopItem">
+   <strong>⚡ Ammo Capacity Lv 2</strong>
+   <small>Maximum ammo 30 → 50</small>
+   <button id="capacity2" onclick="buyCapacityUpgrade()">
+    UPGRADE • ₹400
+   </button>
+  </div>
+
+  <button id="closeShop" onclick="closeShop()">CLOSE SHOP</button>
+
+ </div>
+</div>
+
+<div id="joystick">
+ <div id="stick"></div>
+</div>
+
+<button id="shootBtn">🔫<br>SHOOT</button>
+<button id="reloadBtn">RELOAD</button>
 
 <div class="controls">
  <button class="ctrl green" id="runBtn">RUN</button>
  <button class="ctrl" id="jumpBtn">JUMP</button>
  <button class="ctrl yellow" id="carBtn">CAR</button>
- <button class="ctrl blue" id="chatBtn">CHAT</button>
+ <button class="ctrl purple" id="chatBtn">CHAT</button>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
@@ -174,20 +322,58 @@ button{font-weight:bold;color:#fff;background:#19c37d}
 
 const SUPABASE_URL="https://putlvisgkmjtiqmxkdda.supabase.co";
 const SUPABASE_KEY="sb_publishable_P_a8u-8fi3GPBplKJeKNog_lp0ElC_S";
-const sb=supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
 
-let playerId=null,playerName="",district="";
-let money=500,xp=0,level=1,missionsCompleted=0;
-let wanted=0,finesPaid=0,health=100,ammo=30,kills=0,deaths=0;
+const sb=supabase.createClient(
+ SUPABASE_URL,
+ SUPABASE_KEY
+);
 
-let scene,camera,renderer,clock,player,playerMesh;
-let keys={},joyX=0,joyY=0,running=false;
-let remotePlayers={},channel=null;
-let cars=[],currentCar=null,inCar=false;
-let npcs=[],currentNPC=null;
+let playerId=null;
+let playerName="";
+let district="";
+
+let money=500;
+let xp=0;
+let level=1;
+let missionsCompleted=0;
+
+let wanted=0;
+let finesPaid=0;
+let health=100;
+let ammo=30;
+let kills=0;
+let deaths=0;
+
+let weaponLevel=1;
+let weaponDamage=25;
+let ammoCapacity=30;
+
+let scene,camera,renderer,clock;
+let player,playerMesh;
+
+let keys={};
+let joyX=0;
+let joyY=0;
+let running=false;
+
+let remotePlayers={};
+let channel=null;
+
+let cars=[];
+let currentCar=null;
+let inCar=false;
+
+let npcs=[];
+let currentNPC=null;
+
 let policeUnits=[];
-let activeMission=null,missionMarker=null;
-let escapeTimer=0,lastCaught=0,lastShot=0;
+
+let activeMission=null;
+let missionMarker=null;
+
+let escapeTimer=0;
+let lastCaught=0;
+let lastShot=0;
 
 const $=id=>document.getElementById(id);
 
@@ -205,14 +391,21 @@ async function startGame(){
 
  playerName=name;
  district=$("district").value;
+
  $("login").style.display="none";
  $("loading").style.display="flex";
 
  try{
 
-  const r=await sb.from("players").insert({
-   name:playerName,district:district,score:0,room:"kerala-world"
-  }).select().single();
+  const r=await sb.from("players")
+   .insert({
+    name:playerName,
+    district:district,
+    score:0,
+    room:"kerala-world"
+   })
+   .select()
+   .single();
 
   playerId=r.error?crypto.randomUUID():r.data.id;
 
@@ -224,15 +417,19 @@ async function startGame(){
   createNPCs();
   createCars();
   createPolice();
+
   await connectMultiplayer();
 
   updateHUD();
+
   $("loading").style.display="none";
+
   animate();
 
  }catch(e){
 
   console.log(e);
+
   $("loading").style.display="none";
   $("login").style.display="flex";
   $("loginMsg").textContent="Connection error";
@@ -245,42 +442,122 @@ async function startGame(){
 async function loadStats(){
 
  const r=await sb.from("player_stats")
-  .select("*").eq("id",playerId).maybeSingle();
+  .select("*")
+  .eq("id",playerId)
+  .maybeSingle();
 
  if(r.data){
 
   money=Number(r.data.money)||0;
   xp=Number(r.data.xp)||0;
   level=Number(r.data.level)||1;
-  missionsCompleted=Number(r.data.missions_completed)||0;
+
+  missionsCompleted=
+   Number(r.data.missions_completed)||0;
+
   wanted=Number(r.data.wanted)||0;
   finesPaid=Number(r.data.fines_paid)||0;
+
   health=Number(r.data.health)||100;
   ammo=Number(r.data.ammo)||30;
+
   kills=Number(r.data.kills)||0;
   deaths=Number(r.data.deaths)||0;
+
+  weaponLevel=
+   Number(r.data.weapon_level)||1;
+
+  weaponDamage=
+   Number(r.data.weapon_damage)||25;
+
+  ammoCapacity=
+   Number(r.data.ammo_capacity)||30;
 
  }else{
 
   await sb.from("player_stats").insert({
-   id:playerId,money:500,xp:0,level:1,
-   missions_completed:0,wanted:0,fines_paid:0,
-   health:100,ammo:30,kills:0,deaths:0
+
+   id:playerId,
+
+   money:500,
+   xp:0,
+   level:1,
+
+   missions_completed:0,
+
+   wanted:0,
+   fines_paid:0,
+
+   health:100,
+   ammo:30,
+
+   kills:0,
+   deaths:0,
+
+   weapon_level:1,
+   weapon_damage:25,
+   ammo_capacity:30
   });
 
-  money=500;xp=0;level=1;missionsCompleted=0;
-  wanted=0;finesPaid=0;health=100;ammo=30;kills=0;deaths=0;
+  money=500;
+  xp=0;
+  level=1;
+
+  missionsCompleted=0;
+
+  wanted=0;
+  finesPaid=0;
+
+  health=100;
+  ammo=30;
+
+  kills=0;
+  deaths=0;
+
+  weaponLevel=1;
+  weaponDamage=25;
+  ammoCapacity=30;
  }
 }
 
+
+/* SAVE */
+
 async function saveStats(){
 
- await sb.from("player_stats").update({
-  money,xp,level,
-  missions_completed:missionsCompleted,
-  wanted,fines_paid:finesPaid,
-  health,ammo,kills,deaths
- }).eq("id",playerId);
+ if(!playerId)return;
+
+ await sb.from("player_stats")
+  .update({
+
+   money,
+   xp,
+   level,
+
+   missions_completed:
+    missionsCompleted,
+
+   wanted,
+   fines_paid:
+    finesPaid,
+
+   health,
+   ammo,
+
+   kills,
+   deaths,
+
+   weapon_level:
+    weaponLevel,
+
+   weapon_damage:
+    weaponDamage,
+
+   ammo_capacity:
+    ammoCapacity
+
+  })
+  .eq("id",playerId);
 }
 
 
@@ -289,32 +566,77 @@ async function saveStats(){
 function initThree(){
 
  scene=new THREE.Scene();
- scene.background=new THREE.Color(0x86c9ee);
- scene.fog=new THREE.Fog(0x86c9ee,120,340);
+
+ scene.background=
+  new THREE.Color(0x86c9ee);
+
+ scene.fog=
+  new THREE.Fog(0x86c9ee,120,340);
 
  camera=new THREE.PerspectiveCamera(
-  65,innerWidth/innerHeight,.1,600
+  65,
+  innerWidth/innerHeight,
+  .1,
+  600
  );
 
- renderer=new THREE.WebGLRenderer({antialias:true});
- renderer.setPixelRatio(Math.min(devicePixelRatio,1.5));
- renderer.setSize(innerWidth,innerHeight);
+ renderer=
+  new THREE.WebGLRenderer({
+   antialias:true
+  });
+
+ renderer.setPixelRatio(
+  Math.min(devicePixelRatio,1.5)
+ );
+
+ renderer.setSize(
+  innerWidth,
+  innerHeight
+ );
+
  renderer.shadowMap.enabled=true;
- $("game").appendChild(renderer.domElement);
+
+ $("game").appendChild(
+  renderer.domElement
+ );
 
  clock=new THREE.Clock();
 
- scene.add(new THREE.HemisphereLight(0xbfeaff,0x426044,2));
+ scene.add(
+  new THREE.HemisphereLight(
+   0xbfeaff,
+   0x426044,
+   2
+  )
+ );
 
- const sun=new THREE.DirectionalLight(0xffffff,2.5);
- sun.position.set(100,180,80);
+ const sun=
+  new THREE.DirectionalLight(
+   0xffffff,
+   2.5
+  );
+
+ sun.position.set(
+  100,
+  180,
+  80
+ );
+
  sun.castShadow=true;
+
  scene.add(sun);
 
  addEventListener("resize",()=>{
-  camera.aspect=innerWidth/innerHeight;
+
+  camera.aspect=
+   innerWidth/innerHeight;
+
   camera.updateProjectionMatrix();
-  renderer.setSize(innerWidth,innerHeight);
+
+  renderer.setSize(
+   innerWidth,
+   innerHeight
+  );
  });
 }
 
@@ -323,174 +645,409 @@ function initThree(){
 
 function createWorld(){
 
- const ground=new THREE.Mesh(
-  new THREE.PlaneGeometry(260,260),
-  new THREE.MeshLambertMaterial({color:0x459447})
- );
+ const ground=
+  new THREE.Mesh(
+   new THREE.PlaneGeometry(
+    260,
+    260
+   ),
+   new THREE.MeshLambertMaterial({
+    color:0x459447
+   })
+  );
+
  ground.rotation.x=-Math.PI/2;
+
  scene.add(ground);
 
- createRoad(0,0,260,14,0);
- createRoad(0,0,260,12,Math.PI/2);
+ createRoad(
+  0,0,260,14,0
+ );
+
+ createRoad(
+  0,0,260,12,Math.PI/2
+ );
+
  createRiver();
 
  for(let i=0;i<30;i++){
-  const x=(Math.random()-.5)*220;
-  const z=(Math.random()-.5)*220;
-  if(Math.abs(x)<14||Math.abs(z)<14)continue;
+
+  const x=
+   (Math.random()-.5)*220;
+
+  const z=
+   (Math.random()-.5)*220;
+
+  if(
+   Math.abs(x)<14||
+   Math.abs(z)<14
+  )continue;
+
   createHouse(x,z);
  }
 
  for(let i=0;i<35;i++){
-  createPalm((Math.random()-.5)*230,(Math.random()-.5)*230);
+
+  createPalm(
+   (Math.random()-.5)*230,
+   (Math.random()-.5)*230
+  );
  }
 
- createShop(35,18,"TEA SHOP");
- createShop(-35,-18,"KERALA STORE");
- createShop(55,-40,"HOTEL");
- createTemple(-65,55);
+ createShop(
+  35,18,
+  "TEA SHOP"
+ );
+
+ createShop(
+  -35,-18,
+  "KERALA STORE"
+ );
+
+ createShop(
+  55,-40,
+  "HOTEL"
+ );
+
+ createWeaponShop(
+  -15,45
+ );
+
+ createTemple(
+  -65,55
+ );
 }
 
-function createRoad(x,z,length,width,rotation){
 
- const road=new THREE.Mesh(
-  new THREE.BoxGeometry(length,.12,width),
-  new THREE.MeshLambertMaterial({color:0x333333})
- );
- road.position.set(x,.06,z);
- road.rotation.y=rotation;
- scene.add(road);
+/* WEAPON SHOP BUILDING */
 
- for(let i=-length/2;i<length/2;i+=12){
+function createWeaponShop(x,z){
 
-  const line=new THREE.Mesh(
-   new THREE.BoxGeometry(5,.14,.35),
-   new THREE.MeshBasicMaterial({color:0xffdf4d})
+ const g=new THREE.Group();
+
+ const body=
+  new THREE.Mesh(
+   new THREE.BoxGeometry(
+    13,7,10
+   ),
+   new THREE.MeshLambertMaterial({
+    color:0x6b4b7a
+   })
   );
 
-  if(rotation===0)line.position.set(x+i,.14,z);
-  else line.position.set(x,.14,z+i);
+ body.position.y=3.5;
+
+ g.add(body);
+
+ const c=
+  document.createElement("canvas");
+
+ c.width=512;
+ c.height=128;
+
+ const ctx=c.getContext("2d");
+
+ ctx.fillStyle="#351342";
+ ctx.fillRect(
+  0,0,512,128
+ );
+
+ ctx.fillStyle="#ffffff";
+
+ ctx.font=
+  "bold 44px Arial";
+
+ ctx.textAlign="center";
+
+ ctx.fillText(
+  "WEAPON SHOP",
+  256,
+  82
+ );
+
+ const sign=
+  new THREE.Mesh(
+   new THREE.PlaneGeometry(
+    11,2.5
+   ),
+   new THREE.MeshBasicMaterial({
+    map:new THREE.CanvasTexture(c)
+   })
+  );
+
+ sign.position.set(
+  0,7.2,5.05
+ );
+
+ g.add(sign);
+
+ g.position.set(x,0,z);
+
+ scene.add(g);
+}
+
+
+function createRoad(
+ x,z,length,width,rotation
+){
+
+ const road=
+  new THREE.Mesh(
+   new THREE.BoxGeometry(
+    length,.12,width
+   ),
+   new THREE.MeshLambertMaterial({
+    color:0x333333
+   })
+  );
+
+ road.position.set(
+  x,.06,z
+ );
+
+ road.rotation.y=rotation;
+
+ scene.add(road);
+
+ for(
+  let i=-length/2;
+  i<length/2;
+  i+=12
+ ){
+
+  const line=
+   new THREE.Mesh(
+    new THREE.BoxGeometry(
+     5,.14,.35
+    ),
+    new THREE.MeshBasicMaterial({
+     color:0xffdf4d
+    })
+   );
+
+  if(rotation===0)
+   line.position.set(
+    x+i,.14,z
+   );
+  else
+   line.position.set(
+    x,.14,z+i
+   );
 
   scene.add(line);
  }
 }
 
+
 function createRiver(){
 
- const river=new THREE.Mesh(
-  new THREE.PlaneGeometry(220,25),
-  new THREE.MeshLambertMaterial({
-   color:0x238bd0,transparent:true,opacity:.8
-  })
- );
+ const river=
+  new THREE.Mesh(
+   new THREE.PlaneGeometry(
+    220,25
+   ),
+   new THREE.MeshLambertMaterial({
+    color:0x238bd0,
+    transparent:true,
+    opacity:.8
+   })
+  );
+
  river.rotation.x=-Math.PI/2;
- river.position.set(0,.08,95);
+
+ river.position.set(
+  0,.08,95
+ );
+
  scene.add(river);
 }
+
 
 function createHouse(x,z){
 
  const g=new THREE.Group();
 
- const body=new THREE.Mesh(
-  new THREE.BoxGeometry(10,6,8),
-  new THREE.MeshLambertMaterial({color:0xe9d7b4})
- );
+ const body=
+  new THREE.Mesh(
+   new THREE.BoxGeometry(
+    10,6,8
+   ),
+   new THREE.MeshLambertMaterial({
+    color:0xe9d7b4
+   })
+  );
+
  body.position.y=3;
+
  g.add(body);
 
- const roof=new THREE.Mesh(
-  new THREE.ConeGeometry(7,4,4),
-  new THREE.MeshLambertMaterial({color:0x9c3b2f})
- );
+ const roof=
+  new THREE.Mesh(
+   new THREE.ConeGeometry(
+    7,4,4
+   ),
+   new THREE.MeshLambertMaterial({
+    color:0x9c3b2f
+   })
+  );
+
  roof.position.y=8;
  roof.rotation.y=Math.PI/4;
+
  g.add(roof);
 
  g.position.set(x,0,z);
+
  scene.add(g);
 }
+
 
 function createPalm(x,z){
 
  const g=new THREE.Group();
 
- const trunk=new THREE.Mesh(
-  new THREE.CylinderGeometry(.35,.55,7,8),
-  new THREE.MeshLambertMaterial({color:0x704b2a})
- );
+ const trunk=
+  new THREE.Mesh(
+   new THREE.CylinderGeometry(
+    .35,.55,7,8
+   ),
+   new THREE.MeshLambertMaterial({
+    color:0x704b2a
+   })
+  );
+
  trunk.position.y=3.5;
+
  g.add(trunk);
 
  for(let i=0;i<7;i++){
 
-  const leaf=new THREE.Mesh(
-   new THREE.BoxGeometry(.35,5,.7),
-   new THREE.MeshLambertMaterial({color:0x18752b})
-  );
+  const leaf=
+   new THREE.Mesh(
+    new THREE.BoxGeometry(
+     .35,5,.7
+    ),
+    new THREE.MeshLambertMaterial({
+     color:0x18752b
+    })
+   );
 
   leaf.position.y=7;
   leaf.rotation.z=.5;
-  leaf.rotation.y=i*Math.PI*2/7;
+  leaf.rotation.y=
+   i*Math.PI*2/7;
+
   g.add(leaf);
  }
 
  g.position.set(x,0,z);
+
  scene.add(g);
 }
+
 
 function createShop(x,z,text){
 
  const g=new THREE.Group();
 
- const body=new THREE.Mesh(
-  new THREE.BoxGeometry(12,7,9),
-  new THREE.MeshLambertMaterial({color:0xd9d1ad})
- );
+ const body=
+  new THREE.Mesh(
+   new THREE.BoxGeometry(
+    12,7,9
+   ),
+   new THREE.MeshLambertMaterial({
+    color:0xd9d1ad
+   })
+  );
+
  body.position.y=3.5;
+
  g.add(body);
 
- const c=document.createElement("canvas");
- c.width=512;c.height=128;
- const ctx=c.getContext("2d");
- ctx.fillStyle="#063b24";
- ctx.fillRect(0,0,512,128);
- ctx.fillStyle="#fff";
- ctx.font="bold 45px Arial";
- ctx.textAlign="center";
- ctx.fillText(text,256,82);
+ const c=
+  document.createElement("canvas");
 
- const sign=new THREE.Mesh(
-  new THREE.PlaneGeometry(10,2.5),
-  new THREE.MeshBasicMaterial({map:new THREE.CanvasTexture(c)})
+ c.width=512;
+ c.height=128;
+
+ const ctx=c.getContext("2d");
+
+ ctx.fillStyle="#063b24";
+
+ ctx.fillRect(
+  0,0,512,128
  );
- sign.position.set(0,7,4.55);
+
+ ctx.fillStyle="#fff";
+
+ ctx.font=
+  "bold 45px Arial";
+
+ ctx.textAlign="center";
+
+ ctx.fillText(
+  text,
+  256,
+  82
+ );
+
+ const sign=
+  new THREE.Mesh(
+   new THREE.PlaneGeometry(
+    10,2.5
+   ),
+   new THREE.MeshBasicMaterial({
+    map:new THREE.CanvasTexture(c)
+   })
+  );
+
+ sign.position.set(
+  0,7,4.55
+ );
+
  g.add(sign);
 
  g.position.set(x,0,z);
+
  scene.add(g);
 }
+
 
 function createTemple(x,z){
 
  const g=new THREE.Group();
 
- const base=new THREE.Mesh(
-  new THREE.BoxGeometry(14,6,12),
-  new THREE.MeshLambertMaterial({color:0xf0c75e})
- );
+ const base=
+  new THREE.Mesh(
+   new THREE.BoxGeometry(
+    14,6,12
+   ),
+   new THREE.MeshLambertMaterial({
+    color:0xf0c75e
+   })
+  );
+
  base.position.y=3;
+
  g.add(base);
 
- const roof=new THREE.Mesh(
-  new THREE.ConeGeometry(9,7,4),
-  new THREE.MeshLambertMaterial({color:0xb52c1f})
- );
+ const roof=
+  new THREE.Mesh(
+   new THREE.ConeGeometry(
+    9,7,4
+   ),
+   new THREE.MeshLambertMaterial({
+    color:0xb52c1f
+   })
+  );
+
  roof.position.y=9;
  roof.rotation.y=Math.PI/4;
+
  g.add(roof);
 
  g.position.set(x,0,z);
+
  scene.add(g);
 }
 
@@ -499,26 +1056,51 @@ function createTemple(x,z){
 
 function createPlayer(){
 
- player={x:0,y:0,z:35,rot:0,vy:0,onGround:true};
+ player={
+  x:0,
+  y:0,
+  z:35,
+  rot:0,
+  vy:0,
+  onGround:true
+ };
 
  const g=new THREE.Group();
 
- const body=new THREE.Mesh(
-  new THREE.CylinderGeometry(.65,.8,1.8,10),
-  new THREE.MeshLambertMaterial({color:0x1769aa})
- );
+ const body=
+  new THREE.Mesh(
+   new THREE.CylinderGeometry(
+    .65,.8,1.8,10
+   ),
+   new THREE.MeshLambertMaterial({
+    color:0x1769aa
+   })
+  );
+
  body.position.y=1.5;
+
  g.add(body);
 
- const head=new THREE.Mesh(
-  new THREE.SphereGeometry(.65,16,16),
-  new THREE.MeshLambertMaterial({color:0xb8794c})
- );
+ const head=
+  new THREE.Mesh(
+   new THREE.SphereGeometry(
+    .65,16,16
+   ),
+   new THREE.MeshLambertMaterial({
+    color:0xb8794c
+   })
+  );
+
  head.position.y=2.8;
+
  g.add(head);
 
- g.position.set(0,0,35);
+ g.position.set(
+  0,0,35
+ );
+
  playerMesh=g;
+
  scene.add(g);
 }
 
@@ -527,111 +1109,228 @@ function createPlayer(){
 
 function createNPCs(){
 
- createNPC("Rajan","Tea Shop",35,70,100);
- createNPC("Anu","Kerala Store",-40,-70,200);
- createNPC("Shafi","Hotel",80,70,300);
+ createNPC(
+  "Rajan",
+  "Tea Shop",
+  35,70,100
+ );
+
+ createNPC(
+  "Anu",
+  "Kerala Store",
+  -40,-70,200
+ );
+
+ createNPC(
+  "Shafi",
+  "Hotel",
+  80,70,300
+ );
 }
 
-function createNPC(name,job,x,z,reward){
+
+function createNPC(
+ name,job,x,z,reward
+){
 
  const g=new THREE.Group();
 
- const body=new THREE.Mesh(
-  new THREE.CylinderGeometry(.6,.7,1.8,10),
-  new THREE.MeshLambertMaterial({color:Math.random()*0xffffff})
- );
+ const body=
+  new THREE.Mesh(
+   new THREE.CylinderGeometry(
+    .6,.7,1.8,10
+   ),
+   new THREE.MeshLambertMaterial({
+    color:Math.random()*0xffffff
+   })
+  );
+
  body.position.y=1.5;
+
  g.add(body);
 
- const head=new THREE.Mesh(
-  new THREE.SphereGeometry(.6,12,12),
-  new THREE.MeshLambertMaterial({color:0xb8794c})
- );
+ const head=
+  new THREE.Mesh(
+   new THREE.SphereGeometry(
+    .6,12,12
+   ),
+   new THREE.MeshLambertMaterial({
+    color:0xb8794c
+   })
+  );
+
  head.position.y=2.8;
+
  g.add(head);
 
  g.position.set(x,0,z);
+
  scene.add(g);
 
- npcs.push({name,job,x,z,reward,mesh:g});
+ npcs.push({
+  name,
+  job,
+  x,
+  z,
+  reward,
+  mesh:g
+ });
 }
 
 
 /* CARS */
 
 function createCars(){
- createCar(10,5,0,false);
- createCar(-18,5,Math.PI,false);
- createCar(35,-8,Math.PI/2,false);
- createCar(-40,18,Math.PI/2,false);
+
+ createCar(
+  10,5,0,false
+ );
+
+ createCar(
+  -18,5,Math.PI,false
+ );
+
+ createCar(
+  35,-8,Math.PI/2,false
+ );
+
+ createCar(
+  -40,18,Math.PI/2,false
+ );
 }
+
 
 function randomCarColor(){
- return [0xd62828,0x1565c0,0xf9c74f,0xeeeeee,0x222222,0x00897b]
- [Math.floor(Math.random()*6)];
+
+ return [
+  0xd62828,
+  0x1565c0,
+  0xf9c74f,
+  0xeeeeee,
+  0x222222,
+  0x00897b
+ ][
+  Math.floor(Math.random()*6)
+ ];
 }
 
-function createCar(x,z,rot,isPolice){
+
+function createCar(
+ x,z,rot,isPolice
+){
 
  const g=new THREE.Group();
 
- const body=new THREE.Mesh(
-  new THREE.BoxGeometry(5.2,1.2,2.5),
-  new THREE.MeshLambertMaterial({
-   color:isPolice?0xffffff:randomCarColor()
-  })
- );
+ const body=
+  new THREE.Mesh(
+   new THREE.BoxGeometry(
+    5.2,1.2,2.5
+   ),
+   new THREE.MeshLambertMaterial({
+    color:
+     isPolice?
+      0xffffff:
+      randomCarColor()
+   })
+  );
+
  body.position.y=1.2;
+
  g.add(body);
 
- const roof=new THREE.Mesh(
-  new THREE.BoxGeometry(2.8,1,2),
-  new THREE.MeshLambertMaterial({
-   color:isPolice?0xeeeeee:0x222222
-  })
- );
+ const roof=
+  new THREE.Mesh(
+   new THREE.BoxGeometry(
+    2.8,1,2
+   ),
+   new THREE.MeshLambertMaterial({
+    color:
+     isPolice?
+      0xeeeeee:
+      0x222222
+   })
+  );
+
  roof.position.y=2;
+
  g.add(roof);
 
- for(const sx of [-1.8,1.8]){
-  for(const sz of [-1.1,1.1]){
+ for(
+  const sx of [-1.8,1.8]
+ ){
 
-   const w=new THREE.Mesh(
-    new THREE.CylinderGeometry(.45,.45,.35,12),
-    new THREE.MeshLambertMaterial({color:0x111111})
-   );
+  for(
+   const sz of [-1.1,1.1]
+  ){
+
+   const w=
+    new THREE.Mesh(
+     new THREE.CylinderGeometry(
+      .45,.45,.35,12
+     ),
+     new THREE.MeshLambertMaterial({
+      color:0x111111
+     })
+    );
 
    w.rotation.z=Math.PI/2;
-   w.position.set(sx,.55,sz);
+
+   w.position.set(
+    sx,.55,sz
+   );
+
    g.add(w);
   }
  }
 
  if(isPolice){
 
-  const a=new THREE.Mesh(
-   new THREE.BoxGeometry(.8,.25,.5),
-   new THREE.MeshBasicMaterial({color:0xff2222})
+  const a=
+   new THREE.Mesh(
+    new THREE.BoxGeometry(
+     .8,.25,.5
+    ),
+    new THREE.MeshBasicMaterial({
+     color:0xff2222
+    })
+   );
+
+  a.position.set(
+   -.45,2.6,0
   );
-  a.position.set(-.45,2.6,0);
+
   g.add(a);
 
   const b=a.clone();
-  b.material=new THREE.MeshBasicMaterial({color:0x2255ff});
+
+  b.material=
+   new THREE.MeshBasicMaterial({
+    color:0x2255ff
+   });
+
   b.position.x=.45;
+
   g.add(b);
  }
 
- g.position.set(x,0,z);
+ g.position.set(
+  x,0,z
+ );
+
  g.rotation.y=rot;
+
  scene.add(g);
 
  const car={
-  mesh:g,x,z,rot,speed:0,
-  police:!!isPolice,occupied:false
+  mesh:g,
+  x,z,rot,
+  speed:0,
+  police:!!isPolice,
+  occupied:false
  };
 
  cars.push(car);
+
  return car;
 }
 
@@ -640,17 +1339,27 @@ function createCar(x,z,rot,isPolice){
 
 function createPolice(){
 
- [[90,90],[-90,40],[70,-80]].forEach(p=>{
+ [
+  [90,90],
+  [-90,40],
+  [70,-80]
+ ].forEach(p=>{
 
-  const car=createCar(
-   p[0],p[1],Math.random()*Math.PI*2,true
-  );
+  const car=
+   createCar(
+    p[0],
+    p[1],
+    Math.random()*Math.PI*2,
+    true
+   );
 
   policeUnits.push({
    car,
-   speed:7+Math.random()*2,
+   speed:
+    7+Math.random()*2,
    caughtDistance:5.5
   });
+ });
 }
 
 
@@ -660,53 +1369,95 @@ function updateMovement(dt){
 
  if(!player||inCar)return;
 
- let dx=joyX,dz=joyY;
+ let dx=joyX;
+ let dz=joyY;
 
- if(keys.w||keys.ArrowUp)dz-=1;
- if(keys.s||keys.ArrowDown)dz+=1;
- if(keys.a||keys.ArrowLeft)dx-=1;
- if(keys.d||keys.ArrowRight)dx+=1;
+ if(keys.w||keys.ArrowUp)
+  dz-=1;
 
- const len=Math.hypot(dx,dz);
+ if(keys.s||keys.ArrowDown)
+  dz+=1;
+
+ if(keys.a||keys.ArrowLeft)
+  dx-=1;
+
+ if(keys.d||keys.ArrowRight)
+  dx+=1;
+
+ const len=
+  Math.hypot(dx,dz);
 
  if(len>0){
 
-  dx/=len;dz/=len;
+  dx/=len;
+  dz/=len;
 
-  const speed=running?13:7;
+  const speed=
+   running?13:7;
 
-  player.x+=dx*speed*dt;
-  player.z+=dz*speed*dt;
+  player.x+=
+   dx*speed*dt;
 
-  player.rot=Math.atan2(dx,dz);
-  playerMesh.rotation.y=player.rot;
+  player.z+=
+   dz*speed*dt;
+
+  player.rot=
+   Math.atan2(dx,dz);
+
+  playerMesh.rotation.y=
+   player.rot;
  }
 
- if(player.y>0||!player.onGround){
+ if(
+  player.y>0||
+  !player.onGround
+ ){
 
   player.vy-=20*dt;
-  player.y+=player.vy*dt;
+
+  player.y+=
+   player.vy*dt;
 
   if(player.y<=0){
+
    player.y=0;
    player.vy=0;
    player.onGround=true;
   }
  }
 
- player.x=THREE.MathUtils.clamp(player.x,-125,125);
- player.z=THREE.MathUtils.clamp(player.z,-125,125);
+ player.x=
+  THREE.MathUtils.clamp(
+   player.x,-125,125
+  );
 
- playerMesh.position.set(player.x,player.y,player.z);
+ player.z=
+  THREE.MathUtils.clamp(
+   player.z,-125,125
+  );
+
+ playerMesh.position.set(
+  player.x,
+  player.y,
+  player.z
+ );
 
  checkNPC();
+ checkWeaponShop();
  checkMission();
+
  broadcastPosition();
 }
 
+
 function jump(){
 
- if(player&&!inCar&&player.onGround){
+ if(
+  player&&
+  !inCar&&
+  player.onGround
+ ){
+
   player.vy=9;
   player.onGround=false;
  }
@@ -719,14 +1470,30 @@ function updateCamera(){
 
  if(!player)return;
 
- const x=inCar&&currentCar?currentCar.mesh.position.x:player.x;
- const z=inCar&&currentCar?currentCar.mesh.position.z:player.z;
+ const x=
+  inCar&&currentCar?
+   currentCar.mesh.position.x:
+   player.x;
+
+ const z=
+  inCar&&currentCar?
+   currentCar.mesh.position.z:
+   player.z;
 
  camera.position.lerp(
-  new THREE.Vector3(x,14,z+18),.08
+  new THREE.Vector3(
+   x,
+   14,
+   z+18
+  ),
+  .08
  );
 
- camera.lookAt(x,1.5,z);
+ camera.lookAt(
+  x,
+  1.5,
+  z
+ );
 }
 
 
@@ -735,132 +1502,228 @@ function updateCamera(){
 function toggleVehicle(){
 
  if(inCar){
+
   exitCar();
   return;
  }
 
- let nearest=null,dist=999;
+ let nearest=null;
+ let dist=999;
 
  cars.forEach(car=>{
 
   if(car.police)return;
 
-  const d=Math.hypot(
-   car.mesh.position.x-player.x,
-   car.mesh.position.z-player.z
-  );
+  const d=
+   Math.hypot(
+    car.mesh.position.x-player.x,
+    car.mesh.position.z-player.z
+   );
 
-  if(d<dist&&d<6){
-   nearest=car;dist=d;
+  if(
+   d<dist&&
+   d<6
+  ){
+
+   nearest=car;
+   dist=d;
   }
  });
 
- if(nearest)enterCar(nearest);
+ if(nearest)
+  enterCar(nearest);
 }
+
 
 function enterCar(car){
 
  currentCar=car;
+
  inCar=true;
+
  car.occupied=true;
 
  addWanted(1);
 
- $("carBtn").textContent="EXIT";
- addChat("SYSTEM","You entered a vehicle. 🚗");
+ $("carBtn").textContent=
+  "EXIT";
+
+ addChat(
+  "SYSTEM",
+  "You entered a vehicle. 🚗"
+ );
 }
+
 
 function exitCar(){
 
  if(!currentCar)return;
 
- player.x=currentCar.mesh.position.x+3;
- player.z=currentCar.mesh.position.z+3;
+ player.x=
+  currentCar.mesh.position.x+3;
+
+ player.z=
+  currentCar.mesh.position.z+3;
 
  currentCar.occupied=false;
+
  currentCar=null;
+
  inCar=false;
 
- $("carBtn").textContent="CAR";
+ $("carBtn").textContent=
+  "CAR";
 }
+
 
 function updateCar(dt){
 
- if(!inCar||!currentCar)return;
+ if(
+  !inCar||
+  !currentCar
+ )return;
 
- let throttle=0,steer=0;
+ let throttle=0;
+ let steer=0;
 
- if(keys.w||keys.ArrowUp)throttle=1;
- if(keys.s||keys.ArrowDown)throttle=-1;
- if(keys.a||keys.ArrowLeft)steer=1;
- if(keys.d||keys.ArrowRight)steer=-1;
+ if(
+  keys.w||
+  keys.ArrowUp
+ )
+  throttle=1;
 
- currentCar.speed+=throttle*25*dt;
- currentCar.speed*=Math.pow(.12,dt);
- currentCar.speed=THREE.MathUtils.clamp(
-  currentCar.speed,-10,running?28:20
- );
+ if(
+  keys.s||
+  keys.ArrowDown
+ )
+  throttle=-1;
+
+ if(
+  keys.a||
+  keys.ArrowLeft
+ )
+  steer=1;
+
+ if(
+  keys.d||
+  keys.ArrowRight
+ )
+  steer=-1;
+
+ currentCar.speed+=
+  throttle*25*dt;
+
+ currentCar.speed*=
+  Math.pow(.12,dt);
+
+ currentCar.speed=
+  THREE.MathUtils.clamp(
+   currentCar.speed,
+   -10,
+   running?28:20
+  );
 
  currentCar.mesh.rotation.y+=
-  steer*.8*dt*(Math.abs(currentCar.speed)/10);
+  steer*.8*dt*
+  (Math.abs(currentCar.speed)/10);
 
- const dir=new THREE.Vector3(
-  Math.sin(currentCar.mesh.rotation.y),0,
-  Math.cos(currentCar.mesh.rotation.y)
- );
+ const dir=
+  new THREE.Vector3(
+   Math.sin(
+    currentCar.mesh.rotation.y
+   ),
+   0,
+   Math.cos(
+    currentCar.mesh.rotation.y
+   )
+  );
 
- currentCar.mesh.position.addScaledVector(
-  dir,currentCar.speed*dt
- );
+ currentCar.mesh.position
+  .addScaledVector(
+   dir,
+   currentCar.speed*dt
+  );
 
  currentCar.mesh.position.x=
-  THREE.MathUtils.clamp(currentCar.mesh.position.x,-125,125);
- currentCar.mesh.position.z=
-  THREE.MathUtils.clamp(currentCar.mesh.position.z,-125,125);
+  THREE.MathUtils.clamp(
+   currentCar.mesh.position.x,
+   -125,
+   125
+  );
 
- player.x=currentCar.mesh.position.x;
- player.z=currentCar.mesh.position.z;
+ currentCar.mesh.position.z=
+  THREE.MathUtils.clamp(
+   currentCar.mesh.position.z,
+   -125,
+   125
+  );
+
+ player.x=
+  currentCar.mesh.position.x;
+
+ player.z=
+  currentCar.mesh.position.z;
 
  broadcastPosition();
 }
 
 
-/* MISSIONS */
+/* NPC MISSIONS */
 
 function checkNPC(){
 
  currentNPC=null;
+
  let nearest=999;
 
  npcs.forEach(n=>{
 
-  const d=Math.hypot(n.x-player.x,n.z-player.z);
+  const d=
+   Math.hypot(
+    n.x-player.x,
+    n.z-player.z
+   );
 
-  if(d<nearest&&d<8){
+  if(
+   d<nearest&&
+   d<8
+  ){
+
    nearest=d;
    currentNPC=n;
   }
  });
 
  $("talkBtn").style.display=
-  currentNPC&&!activeMission?"block":"none";
+  currentNPC&&!activeMission?
+   "block":
+   "none";
 }
+
 
 function talkToNPC(){
 
  if(!currentNPC)return;
 
- $("talkBtn").style.display="none";
- $("missionBtn").style.display="block";
+ $("talkBtn").style.display=
+  "none";
+
+ $("missionBtn").style.display=
+  "block";
 
  $("missionTitle").textContent=
-  currentNPC.name+" • "+currentNPC.job;
+  currentNPC.name+
+  " • "+
+  currentNPC.job;
 
  $("missionText").textContent=
-  "Mission reward ₹"+currentNPC.reward;
+  "Mission reward ₹"+
+  currentNPC.reward;
 
- $("mission").style.display="block";
+ $("mission").style.display=
+  "block";
 }
+
 
 function startCurrentMission(){
 
@@ -872,95 +1735,397 @@ function startCurrentMission(){
   Shafi:{x:80,z:70}
  };
 
- const t=map[currentNPC.name];
+ const t=
+  map[currentNPC.name];
 
  activeMission={
-  npc:currentNPC,targetX:t.x,targetZ:t.z,
+  npc:currentNPC,
+  targetX:t.x,
+  targetZ:t.z,
   reward:currentNPC.reward
  };
 
- createMissionMarker(t.x,t.z);
+ createMissionMarker(
+  t.x,
+  t.z
+ );
 
- $("missionBtn").style.display="none";
- $("missionTitle").textContent="📍 "+currentNPC.name+" Mission";
+ $("missionBtn").style.display=
+  "none";
+
+ $("missionTitle").textContent=
+  "📍 "+
+  currentNPC.name+
+  " Mission";
+
  updateMissionText();
 }
 
+
 function createMissionMarker(x,z){
 
- if(missionMarker)scene.remove(missionMarker);
+ if(missionMarker)
+  scene.remove(missionMarker);
 
- missionMarker=new THREE.Mesh(
-  new THREE.CylinderGeometry(3,3,.25,32),
-  new THREE.MeshBasicMaterial({
-   color:0x20ff72,transparent:true,opacity:.65
-  })
+ missionMarker=
+  new THREE.Mesh(
+   new THREE.CylinderGeometry(
+    3,3,.25,32
+   ),
+   new THREE.MeshBasicMaterial({
+    color:0x20ff72,
+    transparent:true,
+    opacity:.65
+   })
+  );
+
+ missionMarker.position.set(
+  x,.2,z
  );
 
- missionMarker.position.set(x,.2,z);
  scene.add(missionMarker);
 }
+
 
 function checkMission(){
 
  if(!activeMission)return;
 
- const d=Math.hypot(
-  activeMission.targetX-player.x,
-  activeMission.targetZ-player.z
- );
+ const d=
+  Math.hypot(
+   activeMission.targetX-player.x,
+   activeMission.targetZ-player.z
+  );
 
- if(d<7)completeMission();
- else updateMissionText();
+ if(d<7)
+  completeMission();
+ else
+  updateMissionText();
 }
+
 
 function updateMissionText(){
 
  if(!activeMission)return;
 
- const d=Math.round(Math.hypot(
-  activeMission.targetX-player.x,
-  activeMission.targetZ-player.z
- ));
+ const d=Math.round(
+  Math.hypot(
+   activeMission.targetX-player.x,
+   activeMission.targetZ-player.z
+  )
+ );
 
- $("mission").style.display="block";
+ $("mission").style.display=
+  "block";
+
  $("missionText").textContent=
-  "Go to destination • "+d+"m away • ₹"+activeMission.reward;
+  "Go to destination • "+
+  d+
+  "m away • ₹"+
+  activeMission.reward;
 }
+
 
 async function completeMission(){
 
- const reward=activeMission.reward;
+ const reward=
+  activeMission.reward;
 
  money+=reward;
- missionsCompleted++;
- await addXP(Math.floor(reward/2));
 
- addChat("MISSION","Completed! +₹"+reward);
+ missionsCompleted++;
+
+ await addXP(
+  Math.floor(reward/2)
+ );
+
+ addChat(
+  "MISSION",
+  "Completed! +₹"+reward
+ );
 
  activeMission=null;
 
  if(missionMarker){
-  scene.remove(missionMarker);
+
+  scene.remove(
+   missionMarker
+  );
+
   missionMarker=null;
  }
 
- $("mission").style.display="none";
+ $("mission").style.display=
+  "none";
+
  updateHUD();
+
  await saveStats();
 }
+
 
 async function addXP(amount){
 
  xp+=amount;
 
- while(xp>=level*100){
+ while(
+  xp>=level*100
+ ){
+
   xp-=level*100;
+
   level++;
-  addChat("LEVEL","🎉 Level "+level+" reached!");
+
+  addChat(
+   "LEVEL",
+   "🎉 Level "+
+   level+
+   " reached!"
+  );
  }
 
  updateHUD();
+
+ await saveStats();
+}
+
+
+/* WEAPON SHOP DETECTION */
+
+let nearWeaponShop=false;
+
+function checkWeaponShop(){
+
+ if(!player)return;
+
+ const d=
+  Math.hypot(
+   player.x-(-15),
+   player.z-45
+  );
+
+ nearWeaponShop=
+  d<10;
+
+ $("shopBtn").style.display=
+  nearWeaponShop&&!inCar?
+   "block":
+   "none";
+}
+
+
+/* SHOP */
+
+function openShop(){
+
+ if(!nearWeaponShop)return;
+
+ updateShop();
+
+ $("shop").style.display=
+  "flex";
+}
+
+
+function closeShop(){
+
+ $("shop").style.display=
+  "none";
+}
+
+
+function updateShop(){
+
+ $("shopMoney").textContent=
+  Math.floor(money);
+
+ $("upgrade2").disabled=
+  weaponLevel>=2;
+
+ $("upgrade3").disabled=
+  weaponLevel<2||
+  weaponLevel>=3;
+
+ $("capacity2").disabled=
+  ammoCapacity>=50;
+
+ if(weaponLevel>=2){
+
+  $("upgrade2").textContent=
+   "✓ PURCHASED";
+ }
+
+ if(weaponLevel>=3){
+
+  $("upgrade3").textContent=
+   "✓ PURCHASED";
+ }
+
+ if(ammoCapacity>=50){
+
+  $("capacity2").textContent=
+   "✓ PURCHASED";
+ }
+}
+
+
+/* BUY AMMO */
+
+async function buyAmmo(){
+
+ const price=50;
+
+ if(money<price){
+
+  addChat(
+   "SHOP",
+   "❌ Not enough money."
+  );
+
+  return;
+ }
+
+ money-=price;
+
+ ammo=
+  Math.min(
+   ammo+30,
+   ammoCapacity
+  );
+
+ addChat(
+  "SHOP",
+  "📦 +30 ammo purchased."
+ );
+
+ updateHUD();
+ updateShop();
+
+ await saveStats();
+}
+
+
+/* WEAPON UPGRADE */
+
+async function buyWeaponUpgrade(targetLevel){
+
+ if(
+  targetLevel!==2&&
+  targetLevel!==3
+ )
+  return;
+
+ if(weaponLevel>=targetLevel){
+
+  addChat(
+   "SHOP",
+   "Already upgraded."
+  );
+
+  return;
+ }
+
+ let price=0;
+ let damage=weaponDamage;
+
+ if(targetLevel===2){
+
+  price=500;
+  damage=40;
+ }
+
+ if(targetLevel===3){
+
+  if(weaponLevel<2){
+
+   addChat(
+    "SHOP",
+    "Buy Weapon Level 2 first."
+   );
+
+   return;
+  }
+
+  price=1000;
+  damage=65;
+ }
+
+ if(money<price){
+
+  addChat(
+   "SHOP",
+   "❌ Not enough money."
+  );
+
+  return;
+ }
+
+ money-=price;
+
+ weaponLevel=
+  targetLevel;
+
+ weaponDamage=
+  damage;
+
+ addChat(
+  "SHOP",
+  "🔫 Weapon upgraded to Level "+
+  weaponLevel+
+  "!"
+ );
+
+ updateHUD();
+ updateShop();
+
+ await saveStats();
+}
+
+
+/* AMMO CAPACITY */
+
+async function buyCapacityUpgrade(){
+
+ const price=400;
+
+ if(ammoCapacity>=50){
+
+  addChat(
+   "SHOP",
+   "Already upgraded."
+  );
+
+  return;
+ }
+
+ if(money<price){
+
+  addChat(
+   "SHOP",
+   "❌ Not enough money."
+  );
+
+  return;
+ }
+
+ money-=price;
+
+ ammoCapacity=50;
+
+ ammo=
+  Math.min(
+   ammo+20,
+   ammoCapacity
+  );
+
+ addChat(
+  "SHOP",
+  "⚡ Ammo capacity increased to 50."
+ );
+
+ updateHUD();
+ updateShop();
+
  await saveStats();
 }
 
@@ -969,14 +2134,22 @@ async function addXP(amount){
 
 async function addWanted(amount){
 
- wanted=THREE.MathUtils.clamp(wanted+amount,0,5);
+ wanted=
+  THREE.MathUtils.clamp(
+   wanted+amount,
+   0,
+   5
+  );
 
  if(wanted>0)
-  $("policeAlert").style.display="block";
+  $("policeAlert").style.display=
+   "block";
 
  updateHUD();
+
  await saveStats();
 }
+
 
 async function reduceWanted(){
 
@@ -985,11 +2158,18 @@ async function reduceWanted(){
  wanted--;
 
  if(wanted===0){
-  $("policeAlert").style.display="none";
-  addChat("POLICE","You escaped the police.");
+
+  $("policeAlert").style.display=
+   "none";
+
+  addChat(
+   "POLICE",
+   "You escaped the police."
+  );
  }
 
  updateHUD();
+
  await saveStats();
 }
 
@@ -1006,82 +2186,135 @@ function updatePolice(dt){
 
   const car=unit.car;
 
-  const dx=player.x-car.mesh.position.x;
-  const dz=player.z-car.mesh.position.z;
-  const dist=Math.hypot(dx,dz);
+  const dx=
+   player.x-
+   car.mesh.position.x;
 
-  if(dist<unit.caughtDistance){
+  const dz=
+   player.z-
+   car.mesh.position.z;
+
+  const dist=
+   Math.hypot(dx,dz);
+
+  if(
+   dist<
+   unit.caughtDistance
+  ){
+
    caughtByPolice();
+
    return;
   }
 
-  const angle=Math.atan2(dx,dz);
+  const angle=
+   Math.atan2(dx,dz);
 
-  car.mesh.rotation.y=angle;
+  car.mesh.rotation.y=
+   angle;
 
-  const speed=unit.speed+wanted*1.2;
+  const speed=
+   unit.speed+
+   wanted*1.2;
 
-  car.mesh.position.x+=Math.sin(angle)*speed*dt;
-  car.mesh.position.z+=Math.cos(angle)*speed*dt;
+  car.mesh.position.x+=
+   Math.sin(angle)*
+   speed*
+   dt;
+
+  car.mesh.position.z+=
+   Math.cos(angle)*
+   speed*
+   dt;
  });
 }
 
+
 async function caughtByPolice(){
 
- const now=performance.now();
+ const now=
+  performance.now();
 
- if(now-lastCaught<4000)return;
+ if(
+  now-lastCaught<
+  4000
+ )
+  return;
 
  lastCaught=now;
 
- const fine=Math.min(money,100*wanted);
+ const fine=
+  Math.min(
+   money,
+   100*wanted
+  );
 
  money-=fine;
+
  finesPaid++;
+
  wanted=0;
 
- $("policeAlert").style.display="none";
+ $("policeAlert").style.display=
+  "none";
 
- addChat("POLICE","🚔 Caught! Fine paid: ₹"+fine);
+ addChat(
+  "POLICE",
+  "🚔 Caught! Fine paid: ₹"+
+  fine
+ );
 
  updateHUD();
+
  await saveStats();
 
  respawnPlayer();
 }
 
+
 function respawnPlayer(){
 
- if(inCar)exitCar();
+ if(inCar)
+  exitCar();
 
  player.x=0;
  player.z=35;
  player.y=0;
+
  health=100;
 
- playerMesh.position.set(0,0,35);
+ playerMesh.position.set(
+  0,0,35
+ );
 
  updateHUD();
 }
 
 
-/* =========================
-   COMBAT SYSTEM
-========================= */
+/* COMBAT */
 
 function shoot(){
 
  if(!player)return;
 
- const now=performance.now();
+ const now=
+  performance.now();
 
- if(now-lastShot<350)return;
+ if(
+  now-lastShot<
+  350
+ )
+  return;
 
  lastShot=now;
 
  if(ammo<=0){
 
-  addChat("WEAPON","Out of ammo! Reload.");
+  addChat(
+   "WEAPON",
+   "Out of ammo! Reload."
+  );
+
   return;
  }
 
@@ -1089,37 +2322,48 @@ function shoot(){
 
  updateHUD();
 
- /*
-  Find nearest police vehicle in front
-  of the player.
- */
  let target=null;
  let best=999;
 
- const forward=new THREE.Vector3(
-  Math.sin(player.rot),
-  0,
-  Math.cos(player.rot)
- );
+ const forward=
+  new THREE.Vector3(
+   Math.sin(player.rot),
+   0,
+   Math.cos(player.rot)
+  );
 
  policeUnits.forEach(unit=>{
 
   const car=unit.car;
 
-  const dx=car.mesh.position.x-player.x;
-  const dz=car.mesh.position.z-player.z;
+  if(!car.mesh.visible)
+   return;
 
-  const distance=Math.hypot(dx,dz);
+  const dx=
+   car.mesh.position.x-
+   player.x;
+
+  const dz=
+   car.mesh.position.z-
+   player.z;
+
+  const distance=
+   Math.hypot(dx,dz);
 
   if(distance>45)return;
 
-  const dir=new THREE.Vector3(
-   dx,0,dz
-  ).normalize();
+  const dir=
+   new THREE.Vector3(
+    dx,0,dz
+   ).normalize();
 
-  const dot=forward.dot(dir);
+  const dot=
+   forward.dot(dir);
 
-  if(dot>.55&&distance<best){
+  if(
+   dot>.55&&
+   distance<best
+  ){
 
    best=distance;
    target=unit;
@@ -1134,19 +2378,20 @@ function shoot(){
 
  }else{
 
-  addChat("WEAPON","Shot fired.");
+  addChat(
+   "WEAPON",
+   "Shot fired."
+  );
  }
 
  saveStats();
 }
 
+
 function damagePolice(unit){
 
  const car=unit.car;
 
- /*
-  Remove police temporarily when destroyed.
- */
  car.mesh.visible=false;
 
  setTimeout(()=>{
@@ -1169,6 +2414,7 @@ function damagePolice(unit){
  );
 
  updateHUD();
+
  saveStats();
 }
 
@@ -1179,27 +2425,35 @@ async function takeDamage(amount){
 
  health-=amount;
 
- health=Math.max(0,health);
+ health=
+  Math.max(
+   0,
+   health
+  );
 
  showDamage();
 
  updateHUD();
 
- if(health<=0){
+ if(health<=0)
   await playerDeath();
- }
 }
+
 
 function showDamage(){
 
- const f=$("damageFlash");
+ const f=
+  $("damageFlash");
 
- f.style.display="block";
+ f.style.display=
+  "block";
 
  setTimeout(()=>{
-  f.style.display="none";
+  f.style.display=
+   "none";
  },120);
 }
+
 
 async function playerDeath(){
 
@@ -1211,12 +2465,15 @@ async function playerDeath(){
  );
 
  health=100;
- ammo=30;
 
- wanted=Math.max(
-  0,
-  wanted-1
- );
+ ammo=
+  ammoCapacity;
+
+ wanted=
+  Math.max(
+   0,
+   wanted-1
+  );
 
  updateHUD();
 
@@ -1227,16 +2484,23 @@ async function playerDeath(){
  },900);
 }
 
+
+/* RELOAD */
+
 function reloadAmmo(){
 
- ammo=30;
+ ammo=
+  ammoCapacity;
 
  addChat(
   "WEAPON",
-  "🔄 Reloaded: 30 rounds"
+  "🔄 Reloaded: "+
+  ammoCapacity+
+  " rounds"
  );
 
  updateHUD();
+
  saveStats();
 }
 
@@ -1251,12 +2515,20 @@ function updateWantedEscape(dt){
 
  policeUnits.forEach(unit=>{
 
-  const d=Math.hypot(
-   unit.car.mesh.position.x-player.x,
-   unit.car.mesh.position.z-player.z
-  );
+  const d=
+   Math.hypot(
+    unit.car.mesh.position.x-
+    player.x,
 
-  nearest=Math.min(nearest,d);
+    unit.car.mesh.position.z-
+    player.z
+   );
+
+  nearest=
+   Math.min(
+    nearest,
+    d
+   );
  });
 
  if(nearest>45){
@@ -1264,11 +2536,14 @@ function updateWantedEscape(dt){
   escapeTimer+=dt;
 
   if(escapeTimer>8){
+
    escapeTimer=0;
+
    reduceWanted();
   }
 
  }else{
+
   escapeTimer=0;
  }
 }
@@ -1278,80 +2553,182 @@ function updateWantedEscape(dt){
 
 async function connectMultiplayer(){
 
- channel=sb.channel("kerala-world",{
-  config:{presence:{key:playerId}}
- });
+ channel=
+  sb.channel(
+   "kerala-world",
+   {
+    config:{
+     presence:{
+      key:playerId
+     }
+    }
+   }
+  );
 
  channel
- .on("presence",{event:"sync"},updatePresence)
- .on("presence",{event:"join"},({newPresences})=>{
-  newPresences.forEach(createRemotePlayer);
-  updateOnline();
- })
- .on("presence",{event:"leave"},({key})=>{
-  removeRemotePlayer(key);
-  updateOnline();
- })
- .on("broadcast",{event:"move"},({payload})=>{
-  if(payload.id!==playerId)updateRemotePlayer(payload);
- })
- .on("broadcast",{event:"chat"},({payload})=>{
-  if(payload.id!==playerId)addChat(payload.name,payload.message);
- });
+  .on(
+   "presence",
+   {
+    event:"sync"
+   },
+   updatePresence
+  )
 
- await channel.subscribe(async status=>{
+  .on(
+   "presence",
+   {
+    event:"join"
+   },
+   ({newPresences})=>{
 
-  if(status==="SUBSCRIBED"){
+    newPresences.forEach(
+     createRemotePlayer
+    );
 
-   await channel.track({
-    id:playerId,
-    name:playerName,
-    district,
-    x:0,
-    z:35
-   });
+    updateOnline();
+   }
+  )
+
+  .on(
+   "presence",
+   {
+    event:"leave"
+   },
+   ({key})=>{
+
+    removeRemotePlayer(key);
+
+    updateOnline();
+   }
+  )
+
+  .on(
+   "broadcast",
+   {
+    event:"move"
+   },
+   ({payload})=>{
+
+    if(
+     payload.id!==playerId
+    )
+     updateRemotePlayer(
+      payload
+     );
+   }
+  )
+
+  .on(
+   "broadcast",
+   {
+    event:"chat"
+   },
+   ({payload})=>{
+
+    if(
+     payload.id!==playerId
+    )
+     addChat(
+      payload.name,
+      payload.message
+     );
+   }
+  );
+
+ await channel.subscribe(
+  async status=>{
+
+   if(
+    status==="SUBSCRIBED"
+   ){
+
+    await channel.track({
+
+     id:playerId,
+     name:playerName,
+     district,
+
+     x:0,
+     z:35
+    });
+   }
   }
- });
+ );
 }
+
 
 function updatePresence(){
 
- const state=channel.presenceState();
+ const state=
+  channel.presenceState();
 
- Object.keys(state).forEach(key=>{
+ Object.keys(state).forEach(
+  key=>{
 
-  if(key===playerId)return;
+   if(key===playerId)
+    return;
 
-  const p=state[key]?.[0];
+   const p=
+    state[key]?.[0];
 
-  if(p)createRemotePlayer(p);
- });
+   if(p)
+    createRemotePlayer(p);
+  }
+ );
 
  updateOnline();
 }
 
+
 function createRemotePlayer(p){
 
- if(!p||p.id===playerId)return;
- if(remotePlayers[p.id])return;
+ if(
+  !p||
+  p.id===playerId
+ )
+  return;
 
- const g=new THREE.Group();
+ if(
+  remotePlayers[p.id]
+ )
+  return;
 
- const body=new THREE.Mesh(
-  new THREE.CylinderGeometry(.6,.7,1.8,10),
-  new THREE.MeshLambertMaterial({color:0xff7a18})
- );
+ const g=
+  new THREE.Group();
+
+ const body=
+  new THREE.Mesh(
+   new THREE.CylinderGeometry(
+    .6,.7,1.8,10
+   ),
+   new THREE.MeshLambertMaterial({
+    color:0xff7a18
+   })
+  );
+
  body.position.y=1.5;
+
  g.add(body);
 
- const head=new THREE.Mesh(
-  new THREE.SphereGeometry(.6,12,12),
-  new THREE.MeshLambertMaterial({color:0xb8794c})
- );
+ const head=
+  new THREE.Mesh(
+   new THREE.SphereGeometry(
+    .6,12,12
+   ),
+   new THREE.MeshLambertMaterial({
+    color:0xb8794c
+   })
+  );
+
  head.position.y=2.8;
+
  g.add(head);
 
- g.position.set(Number(p.x)||0,0,Number(p.z)||35);
+ g.position.set(
+  Number(p.x)||0,
+  0,
+  Number(p.z)||35
+ );
 
  scene.add(g);
 
@@ -1363,42 +2740,63 @@ function createRemotePlayer(p){
  };
 }
 
+
 function updateRemotePlayer(p){
 
- if(!remotePlayers[p.id]){
+ if(
+  !remotePlayers[p.id]
+ ){
+
   createRemotePlayer(p);
+
   return;
  }
 
- remotePlayers[p.id].targetX=Number(p.x)||0;
- remotePlayers[p.id].targetZ=Number(p.z)||0;
+ remotePlayers[p.id].targetX=
+  Number(p.x)||0;
+
+ remotePlayers[p.id].targetZ=
+  Number(p.z)||0;
 }
+
 
 function removeRemotePlayer(id){
 
- if(!remotePlayers[id])return;
+ if(
+  !remotePlayers[id]
+ )
+  return;
 
- scene.remove(remotePlayers[id].mesh);
+ scene.remove(
+  remotePlayers[id].mesh
+ );
+
  delete remotePlayers[id];
 }
 
+
 function updateRemoteMovement(dt){
 
- Object.values(remotePlayers).forEach(r=>{
+ Object.values(
+  remotePlayers
+ ).forEach(r=>{
 
   r.mesh.position.x=
    THREE.MathUtils.lerp(
-    r.mesh.position.x,r.targetX,
+    r.mesh.position.x,
+    r.targetX,
     Math.min(1,dt*8)
    );
 
   r.mesh.position.z=
    THREE.MathUtils.lerp(
-    r.mesh.position.z,r.targetZ,
+    r.mesh.position.z,
+    r.targetZ,
     Math.min(1,dt*8)
    );
  });
 }
+
 
 let lastBroadcast=0;
 
@@ -1406,78 +2804,131 @@ function broadcastPosition(){
 
  if(!channel)return;
 
- const now=performance.now();
+ const now=
+  performance.now();
 
- if(now-lastBroadcast<80)return;
+ if(
+  now-lastBroadcast<
+  80
+ )
+  return;
 
  lastBroadcast=now;
 
  channel.send({
+
   type:"broadcast",
+
   event:"move",
+
   payload:{
+
    id:playerId,
    name:playerName,
-   x:inCar&&currentCar?
-    currentCar.mesh.position.x:player.x,
-   z:inCar&&currentCar?
-    currentCar.mesh.position.z:player.z
+
+   x:
+    inCar&&currentCar?
+     currentCar.mesh.position.x:
+     player.x,
+
+   z:
+    inCar&&currentCar?
+     currentCar.mesh.position.z:
+     player.z
   }
  });
 }
 
+
 function updateOnline(){
 
  if(!channel){
+
   $("online").textContent=1;
+
   return;
  }
 
- const state=channel.presenceState();
+ const state=
+  channel.presenceState();
+
  let count=1;
 
- Object.keys(state).forEach(k=>{
-  if(k!==playerId)count++;
- });
+ Object.keys(state).forEach(
+  k=>{
 
- $("online").textContent=count;
+   if(k!==playerId)
+    count++;
+  }
+ );
+
+ $("online").textContent=
+  count;
 }
 
 
 /* CHAT */
 
-function addChat(name,message){
+function addChat(
+ name,
+ message
+){
 
- const box=$("chat");
- const div=document.createElement("div");
+ const box=
+  $("chat");
 
- div.className="chatLine";
- div.textContent=name+": "+message;
+ const div=
+  document.createElement(
+   "div"
+  );
+
+ div.className=
+  "chatLine";
+
+ div.textContent=
+  name+": "+message;
 
  box.appendChild(div);
 
- while(box.children.length>5)
-  box.removeChild(box.firstChild);
+ while(
+  box.children.length>5
+ )
+  box.removeChild(
+   box.firstChild
+  );
 
  setTimeout(()=>{
-  if(div.parentNode)div.remove();
+
+  if(div.parentNode)
+   div.remove();
+
  },7000);
 }
 
+
 function sendChat(){
 
- const input=$("chatInput");
- const message=input.value.trim();
+ const input=
+  $("chatInput");
+
+ const message=
+  input.value.trim();
 
  if(!message)return;
 
- addChat(playerName,message);
+ addChat(
+  playerName,
+  message
+ );
 
  if(channel){
 
   channel.send({
+
    type:"broadcast",
+
    event:"chat",
+
    payload:{
     id:playerId,
     name:playerName,
@@ -1487,7 +2938,9 @@ function sendChat(){
  }
 
  input.value="";
- input.style.display="none";
+
+ input.style.display=
+  "none";
 }
 
 
@@ -1495,135 +2948,277 @@ function sendChat(){
 
 function updateHUD(){
 
- $("hudName").textContent=playerName||"Player";
- $("health").textContent=Math.floor(health);
- $("ammo").textContent=ammo;
- $("money").textContent=Math.max(0,Math.floor(money));
- $("xp").textContent=Math.floor(xp)+"/"+(level*100);
- $("level").textContent=level;
- $("wanted").textContent=wanted;
- $("kills").textContent=kills;
- $("deaths").textContent=deaths;
- $("fines").textContent=finesPaid;
+ $("hudName").textContent=
+  playerName||"Player";
+
+ $("health").textContent=
+  Math.floor(health);
+
+ $("ammo").textContent=
+  ammo;
+
+ $("ammoCapacity").textContent=
+  ammoCapacity;
+
+ $("weaponDamage").textContent=
+  weaponDamage;
+
+ $("weaponLevel").textContent=
+  weaponLevel;
+
+ $("money").textContent=
+  Math.max(
+   0,
+   Math.floor(money)
+  );
+
+ $("xp").textContent=
+  Math.floor(xp)+
+  "/"+
+  (level*100);
+
+ $("level").textContent=
+  level;
+
+ $("wanted").textContent=
+  wanted;
+
+ $("kills").textContent=
+  kills;
+
+ $("deaths").textContent=
+  deaths;
+
+ $("fines").textContent=
+  finesPaid;
 }
 
 
 /* JOYSTICK */
 
-const joystick=$("joystick");
-const stick=$("stick");
+const joystick=
+ $("joystick");
+
+const stick=
+ $("stick");
+
 let joyActive=false;
 
 function handleJoy(e){
 
- const r=joystick.getBoundingClientRect();
+ const r=
+  joystick.getBoundingClientRect();
 
- const cx=r.left+r.width/2;
- const cy=r.top+r.height/2;
+ const cx=
+  r.left+r.width/2;
 
- let x=e.clientX-cx;
- let y=e.clientY-cy;
+ const cy=
+  r.top+r.height/2;
+
+ let x=
+  e.clientX-cx;
+
+ let y=
+  e.clientY-cy;
 
  const max=43;
- const len=Math.hypot(x,y);
+
+ const len=
+  Math.hypot(x,y);
 
  if(len>max){
-  x=x/len*max;
-  y=y/len*max;
+
+  x=
+   x/len*max;
+
+  y=
+   y/len*max;
  }
 
  joyX=x/max;
  joyY=y/max;
 
- stick.style.transform=`translate(${x}px,${y}px)`;
+ stick.style.transform=
+  `translate(${x}px,${y}px)`;
 }
 
-joystick.addEventListener("pointerdown",e=>{
- joyActive=true;
- joystick.setPointerCapture(e.pointerId);
- handleJoy(e);
-});
 
-joystick.addEventListener("pointermove",e=>{
- if(joyActive)handleJoy(e);
-});
+joystick.addEventListener(
+ "pointerdown",
+ e=>{
+
+  joyActive=true;
+
+  joystick.setPointerCapture(
+   e.pointerId
+  );
+
+  handleJoy(e);
+ }
+);
+
+
+joystick.addEventListener(
+ "pointermove",
+ e=>{
+
+  if(joyActive)
+   handleJoy(e);
+ }
+);
+
 
 function stopJoy(){
 
  joyActive=false;
+
  joyX=0;
  joyY=0;
- stick.style.transform="translate(0,0)";
+
+ stick.style.transform=
+  "translate(0,0)";
 }
 
-joystick.addEventListener("pointerup",stopJoy);
-joystick.addEventListener("pointercancel",stopJoy);
+
+joystick.addEventListener(
+ "pointerup",
+ stopJoy
+);
+
+joystick.addEventListener(
+ "pointercancel",
+ stopJoy
+);
 
 
 /* BUTTONS */
 
-$("runBtn").addEventListener("pointerdown",()=>running=true);
-$("runBtn").addEventListener("pointerup",()=>running=false);
-$("runBtn").addEventListener("pointercancel",()=>running=false);
+$("runBtn")
+ .addEventListener(
+  "pointerdown",
+  ()=>running=true
+ );
 
-$("jumpBtn").onclick=jump;
-$("carBtn").onclick=toggleVehicle;
-$("shootBtn").onclick=shoot;
-$("reloadBtn").onclick=reloadAmmo;
+$("runBtn")
+ .addEventListener(
+  "pointerup",
+  ()=>running=false
+ );
+
+$("runBtn")
+ .addEventListener(
+  "pointercancel",
+  ()=>running=false
+ );
+
+$("jumpBtn").onclick=
+ jump;
+
+$("carBtn").onclick=
+ toggleVehicle;
+
+$("shootBtn").onclick=
+ shoot;
+
+$("reloadBtn").onclick=
+ reloadAmmo;
+
 
 $("chatBtn").onclick=()=>{
 
- const i=$("chatInput");
+ const i=
+  $("chatInput");
 
  i.style.display=
-  i.style.display==="block"?"none":"block";
+  i.style.display==="block"?
+   "none":
+   "block";
 
- if(i.style.display==="block")i.focus();
+ if(
+  i.style.display==="block"
+ )
+  i.focus();
 };
 
-$("chatInput").addEventListener("keydown",e=>{
- if(e.key==="Enter")sendChat();
-});
+
+$("chatInput")
+ .addEventListener(
+  "keydown",
+  e=>{
+
+   if(e.key==="Enter")
+    sendChat();
+  }
+ );
 
 
 /* KEYBOARD */
 
-addEventListener("keydown",e=>{
+addEventListener(
+ "keydown",
+ e=>{
 
- keys[e.key]=true;
+  keys[e.key]=true;
 
- if(e.key===" ")jump();
+  if(e.key===" ")
+   jump();
 
- if(e.key.toLowerCase()==="e")
-  toggleVehicle();
+  if(
+   e.key.toLowerCase()==="e"
+  )
+   toggleVehicle();
 
- if(e.key.toLowerCase()==="f")
-  shoot();
+  if(
+   e.key.toLowerCase()==="f"
+  )
+   shoot();
 
- if(e.key.toLowerCase()==="r")
-  reloadAmmo();
+  if(
+   e.key.toLowerCase()==="r"
+  )
+   reloadAmmo();
 
- if(e.key.toLowerCase()==="t"){
-  $("chatInput").style.display="block";
-  $("chatInput").focus();
- }
-});
+  if(
+   e.key.toLowerCase()==="t"
+  ){
 
-addEventListener("keyup",e=>{
- keys[e.key]=false;
-});
+   $("chatInput").style.display=
+    "block";
+
+   $("chatInput").focus();
+  }
+
+  if(
+   e.key.toLowerCase()==="g"
+  ){
+
+   if(nearWeaponShop)
+    openShop();
+  }
+ });
+
+
+addEventListener(
+ "keyup",
+ e=>{
+  keys[e.key]=false;
+ });
 
 
 /* MISSION MARKER */
 
 function updateMissionMarker(){
 
- if(!missionMarker)return;
+ if(!missionMarker)
+  return;
 
  missionMarker.rotation.y+=.03;
 
  missionMarker.position.y=
-  .25+Math.sin(performance.now()*.004)*.15;
+  .25+
+  Math.sin(
+   performance.now()*.004
+  )*.15;
 }
 
 
@@ -1631,21 +3226,37 @@ function updateMissionMarker(){
 
 function animate(){
 
- requestAnimationFrame(animate);
+ requestAnimationFrame(
+  animate
+ );
 
- const dt=Math.min(clock.getDelta(),.05);
+ const dt=
+  Math.min(
+   clock.getDelta(),
+   .05
+  );
 
  updateMovement(dt);
+
  updateCar(dt);
+
  updatePolice(dt);
+
  updateWantedEscape(dt);
+
  updateRemoteMovement(dt);
+
  updateMissionMarker();
+
  updateCamera();
 
- renderer.render(scene,camera);
+ renderer.render(
+  scene,
+  camera
+ );
 }
 
 </script>
+
 </body>
 </html>
