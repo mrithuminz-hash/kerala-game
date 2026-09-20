@@ -2,403 +2,246 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Kerala Game</title>
+<meta name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<title>Kerala World</title>
 
+<script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
-*{
-  box-sizing:border-box;
+*{box-sizing:border-box}
+html,body{
   margin:0;
-  padding:0;
-}
-
-body{
-  font-family:Arial,sans-serif;
-  background:
-  radial-gradient(circle at top,#183b35 0,#081512 45%,#050908 100%);
-  color:#fff;
-  min-height:100vh;
-}
-
-.hidden{
-  display:none!important;
-}
-
-.header{
-  height:65px;
-  padding:0 18px;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  background:#0b1915;
-  border-bottom:1px solid #18352c;
-  position:sticky;
-  top:0;
-  z-index:10;
-}
-
-.logo{
-  font-size:20px;
-  font-weight:900;
-}
-
-.live{
-  color:#65ffc0;
-  font-size:12px;
-  font-weight:bold;
-}
-
-.container{
   width:100%;
-  max-width:520px;
-  margin:auto;
-  padding:22px 16px 40px;
+  height:100%;
+  overflow:hidden;
+  background:#07130d;
+  font-family:Arial,Helvetica,sans-serif;
+  touch-action:none;
 }
-
-.hero{
-  text-align:center;
-  padding:35px 5px 25px;
-}
-
-.badge{
-  display:inline-block;
-  padding:7px 13px;
-  border-radius:30px;
-  background:#10271f;
-  border:1px solid #20533f;
-  color:#67ffc0;
-  font-size:11px;
-  font-weight:bold;
-  margin-bottom:16px;
-}
-
-h1{
-  font-size:46px;
-  margin-bottom:12px;
-}
-
-.hero p{
-  color:#91a79e;
-  line-height:1.5;
-}
-
-.card{
-  background:#0d1b17;
-  border:1px solid #19382e;
-  border-radius:22px;
-  padding:22px;
-  box-shadow:0 15px 45px #0008;
-}
-
-label{
-  display:block;
-  font-size:12px;
-  color:#91a79e;
-  margin-bottom:8px;
-}
-
-input,select{
-  width:100%;
-  padding:15px;
-  border-radius:12px;
-  border:1px solid #23483b;
-  background:#07110e;
-  color:white;
-  font-size:16px;
-  margin-bottom:16px;
-  outline:none;
-}
-
-button{
-  width:100%;
-  padding:16px;
-  border:0;
-  border-radius:13px;
-  background:#20df91;
-  color:#03130d;
-  font-size:16px;
-  font-weight:900;
-  cursor:pointer;
-}
-
-button:active{
-  transform:scale(.98);
-}
-
-.message{
-  text-align:center;
-  margin-top:14px;
-  font-size:13px;
-  min-height:18px;
-}
-
-.stats{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:12px;
-  margin-top:14px;
-}
-
-.stat{
-  background:#0d1b17;
-  border:1px solid #19382e;
-  border-radius:16px;
-  padding:17px;
-  text-align:center;
-}
-
-.stat strong{
-  font-size:23px;
+canvas{
   display:block;
 }
-
-.stat span{
-  font-size:11px;
-  color:#71877e;
-}
-
-.leaderboard{
-  margin-top:14px;
-  background:#0d1b17;
-  border:1px solid #19382e;
-  border-radius:22px;
-  padding:20px;
-}
-
-.title{
-  display:flex;
-  justify-content:space-between;
-  margin-bottom:12px;
-}
-
-.title h2{
-  font-size:18px;
-}
-
-.title span{
-  font-size:10px;
-  color:#67ffc0;
-}
-
-.player{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  padding:13px 0;
-  border-bottom:1px solid #183229;
-}
-
-.player:last-child{
-  border-bottom:0;
-}
-
-.playerLeft{
-  display:flex;
-  align-items:center;
-  gap:11px;
-}
-
-.rank{
-  width:30px;
-  height:30px;
-  border-radius:50%;
-  background:#142a22;
+#loading{
+  position:fixed;
+  inset:0;
+  z-index:100;
   display:flex;
   align-items:center;
   justify-content:center;
-  font-weight:bold;
-  font-size:12px;
+  flex-direction:column;
+  background:#07130d;
+  color:white;
 }
-
-.playerName{
-  font-size:13px;
-  font-weight:bold;
+#loading h1{
+  font-size:30px;
+  margin:0 0 10px;
 }
-
-.playerDistrict{
-  font-size:10px;
-  color:#71877e;
-  margin-top:3px;
+#loading p{
+  opacity:.7;
 }
-
-.score{
-  color:#67ffc0;
-  font-weight:bold;
-}
-
-.footer{
-  text-align:center;
-  font-size:10px;
-  color:#465b53;
-  margin-top:25px;
-}
-
-.gameRoom{
-  min-height:calc(100vh - 65px);
-  padding:20px 16px 40px;
-  max-width:520px;
-  margin:auto;
-}
-
-.gameTop{
+#login{
+  position:fixed;
+  inset:0;
+  z-index:90;
   display:flex;
-  justify-content:space-between;
   align-items:center;
-  margin-bottom:18px;
+  justify-content:center;
+  background:linear-gradient(#07130dee,#10291fee);
+  padding:20px;
 }
-
-.back{
-  width:auto;
-  padding:10px 14px;
-  background:#10221c;
-  color:#fff;
-  font-size:12px;
+.loginbox{
+  width:min(420px,100%);
+  background:#10251a;
+  border:1px solid #31583e;
+  border-radius:24px;
+  padding:25px;
+  color:white;
+  box-shadow:0 20px 70px #0009;
 }
-
-.roomCode{
-  font-size:11px;
-  color:#71877e;
+.loginbox h1{
+  margin:0;
+  font-size:30px;
 }
-
-.playerBox{
-  background:#0d1b17;
-  border:1px solid #19382e;
-  border-radius:20px;
-  padding:18px;
-  margin-bottom:15px;
+.loginbox p{
+  color:#a9c3b0;
 }
-
-.playerInfo{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-}
-
-.playerInfo small{
-  display:block;
-  color:#71877e;
-  font-size:10px;
-  margin-bottom:4px;
-}
-
-.playerInfo strong{
-  font-size:18px;
-}
-
-.districtTag{
-  color:#67ffc0;
-  font-size:12px;
-}
-
-.arena{
-  background:
-  radial-gradient(circle at center,#123d2d,#07110e 70%);
-  border:1px solid #1c4939;
-  border-radius:25px;
-  padding:25px 18px;
-  text-align:center;
-}
-
-.arenaBadge{
-  font-size:11px;
-  color:#67ffc0;
-  margin-bottom:15px;
-}
-
-.question{
-  font-size:25px;
-  font-weight:900;
-  line-height:1.25;
-  margin-bottom:25px;
-}
-
-.answers{
+input,select{
   width:100%;
-  display:grid;
+  padding:15px;
+  margin:7px 0;
+  border:1px solid #3b6047;
+  border-radius:13px;
+  background:#07130d;
+  color:white;
+  font-size:16px;
+}
+button{
+  border:0;
+  border-radius:13px;
+  padding:14px 18px;
+  font-weight:bold;
+  cursor:pointer;
+}
+#play{
+  width:100%;
+  margin-top:10px;
+  background:#54d66d;
+  color:#07130d;
+  font-size:17px;
+}
+#hud{
+  position:fixed;
+  inset:0;
+  z-index:20;
+  pointer-events:none;
+  display:none;
+}
+.topbar{
+  position:absolute;
+  top:12px;
+  left:12px;
+  right:12px;
+  display:flex;
+  justify-content:space-between;
   gap:10px;
 }
-
-.answer{
-  background:#10231c;
+.card{
+  background:#07130dcc;
+  border:1px solid #ffffff22;
+  backdrop-filter:blur(10px);
+  border-radius:14px;
   color:white;
-  border:1px solid #275341;
-  padding:15px;
-  border-radius:13px;
-  font-weight:bold;
-  font-size:14px;
+  padding:10px 13px;
 }
-
-.timer{
-  margin-top:20px;
-  font-size:28px;
-  font-weight:900;
-  color:#67ffc0;
+#status{
+  font-size:12px;
+  color:#71ed86;
 }
-
-.gameBottom{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:12px;
-  margin-top:14px;
-}
-
-.gameStat{
-  background:#0d1b17;
-  border:1px solid #19382e;
-  border-radius:15px;
-  padding:15px;
-  text-align:center;
-}
-
-.gameStat strong{
-  display:block;
-  font-size:20px;
-}
-
-.gameStat span{
-  font-size:10px;
-  color:#71877e;
-}
-
-.onlinePlayers{
-  margin-top:14px;
-  background:#0d1b17;
-  border:1px solid #19382e;
-  border-radius:20px;
-  padding:18px;
-}
-
-.onlinePlayers h3{
-  font-size:15px;
-  margin-bottom:12px;
-}
-
-.onlineRow{
-  display:flex;
-  justify-content:space-between;
-  padding:9px 0;
-  border-bottom:1px solid #183229;
+#playerInfo{
   font-size:13px;
 }
-
-.onlineRow:last-child{
-  border-bottom:0;
+#chat{
+  pointer-events:auto;
+  position:absolute;
+  left:12px;
+  bottom:18px;
+  width:min(320px,70vw);
 }
-
-.onlineDistrict{
-  color:#67ffc0;
-  font-size:11px;
+#messages{
+  height:130px;
+  overflow:auto;
+  margin-bottom:7px;
+  font-size:12px;
 }
-
-@media(max-width:380px){
-  h1{
-    font-size:39px;
+.msg{
+  margin:4px 0;
+  color:#dceee0;
+}
+.chatrow{
+  display:flex;
+  gap:5px;
+}
+#chatInput{
+  margin:0;
+  padding:10px;
+  flex:1;
+}
+#send{
+  background:#54d66d;
+  color:#07130d;
+  padding:10px;
+}
+#players{
+  pointer-events:auto;
+  position:absolute;
+  top:70px;
+  right:12px;
+  width:190px;
+  max-height:240px;
+  overflow:auto;
+}
+.playerrow{
+  display:flex;
+  justify-content:space-between;
+  padding:6px 0;
+  border-bottom:1px solid #ffffff12;
+  font-size:12px;
+}
+#controls{
+  position:absolute;
+  left:20px;
+  bottom:25px;
+  width:130px;
+  height:130px;
+  pointer-events:auto;
+}
+#stick{
+  position:absolute;
+  width:110px;
+  height:110px;
+  left:10px;
+  top:10px;
+  border-radius:50%;
+  background:#07130d99;
+  border:2px solid #ffffff33;
+}
+#knob{
+  position:absolute;
+  width:50px;
+  height:50px;
+  left:30px;
+  top:30px;
+  border-radius:50%;
+  background:#54d66d;
+  box-shadow:0 5px 20px #0008;
+}
+#actions{
+  position:absolute;
+  right:20px;
+  bottom:28px;
+  display:flex;
+  gap:10px;
+  pointer-events:auto;
+}
+.action{
+  width:62px;
+  height:62px;
+  border-radius:50%;
+  background:#07130ddd;
+  color:white;
+  border:1px solid #ffffff33;
+}
+.action.active{
+  background:#54d66d;
+  color:#07130d;
+}
+#hint{
+  position:absolute;
+  bottom:165px;
+  left:50%;
+  transform:translateX(-50%);
+  color:#fff;
+  font-size:12px;
+  background:#07130dbb;
+  padding:7px 12px;
+  border-radius:10px;
+}
+.hidden{
+  display:none!important;
+}
+@media(max-width:600px){
+  #players{
+    width:160px;
+    max-height:180px;
   }
-
-  .question{
-    font-size:22px;
+  #chat{
+    width:230px;
+    bottom:165px;
+  }
+  #hint{
+    display:none;
   }
 }
 </style>
@@ -406,794 +249,1564 @@ button:active{
 
 <body>
 
-<header class="header">
-  <div class="logo">KERALA GAME</div>
-  <div class="live">● LIVE</div>
-</header>
-
-
-<!-- HOME -->
-
-<div id="home">
-
-<main class="container">
-
-<section class="hero">
-
-<div class="badge">
-PLAY FOR YOUR DISTRICT
+<div id="loading">
+  <h1>🌴 Kerala World</h1>
+  <p>Loading world...</p>
 </div>
 
-<h1>Ready?</h1>
+<div id="login">
+  <div class="loginbox">
+    <h1>🌴 Kerala World</h1>
+    <p>Enter the world and meet other players.</p>
 
-<p>
-Choose your district and enter the game.
-Compete with players across Kerala.
-</p>
+    <input id="name" maxlength="18" placeholder="Your player name">
 
-</section>
+    <select id="district">
+      <option value="">Select your district</option>
+      <option>Thiruvananthapuram</option>
+      <option>Kollam</option>
+      <option>Pathanamthitta</option>
+      <option>Alappuzha</option>
+      <option>Kottayam</option>
+      <option>Idukki</option>
+      <option>Ernakulam</option>
+      <option>Thrissur</option>
+      <option>Palakkad</option>
+      <option>Malappuram</option>
+      <option>Kozhikode</option>
+      <option>Wayanad</option>
+      <option>Kannur</option>
+      <option>Kasaragod</option>
+    </select>
 
-
-<section class="card">
-
-<label>PLAYER NAME</label>
-
-<input
-id="name"
-type="text"
-placeholder="Enter your name"
-autocomplete="off"
->
-
-<label>SELECT DISTRICT</label>
-
-<select id="district">
-
-<option value="">Choose your district</option>
-<option>Thiruvananthapuram</option>
-<option>Kollam</option>
-<option>Pathanamthitta</option>
-<option>Alappuzha</option>
-<option>Kottayam</option>
-<option>Idukki</option>
-<option>Ernakulam</option>
-<option>Thrissur</option>
-<option>Palakkad</option>
-<option>Malappuram</option>
-<option>Kozhikode</option>
-<option>Wayanad</option>
-<option>Kannur</option>
-<option>Kasaragod</option>
-
-</select>
-
-<button onclick="startGame()">
-PLAY NOW
-</button>
-
-<div id="message" class="message"></div>
-
-</section>
-
-
-<section class="stats">
-
-<div class="stat">
-<strong id="onlineCount">0</strong>
-<span>PLAYERS ONLINE</span>
+    <button id="play">ENTER KERALA WORLD</button>
+  </div>
 </div>
 
-<div class="stat">
-<strong>14</strong>
-<span>DISTRICTS</span>
-</div>
+<div id="hud">
 
-</section>
+  <div class="topbar">
+    <div class="card">
+      <div id="playerInfo">Player</div>
+      <div id="status">Connecting...</div>
+    </div>
 
+    <div class="card">
+      👥 <span id="online">1</span> online
+    </div>
+  </div>
 
-<section class="leaderboard">
+  <div id="players" class="card">
+    <b>Players</b>
+    <div id="playerList"></div>
+  </div>
 
-<div class="title">
-<h2>🏆 Leaderboard</h2>
-<span>LIVE</span>
-</div>
+  <div id="hint">
+    Desktop: WASD / Arrow keys · Mobile: joystick
+  </div>
 
-<div id="leaderboardList">
-Loading players...
-</div>
+  <div id="chat" class="card">
+    <div id="messages"></div>
 
-</section>
+    <div class="chatrow">
+      <input id="chatInput" placeholder="Say something..." maxlength="100">
+      <button id="send">SEND</button>
+    </div>
+  </div>
 
-<div class="footer">
-Kerala Game • Free Version
-</div>
+  <div id="controls">
+    <div id="stick">
+      <div id="knob"></div>
+    </div>
+  </div>
 
-</main>
-
-</div>
-
-
-<!-- GAME -->
-
-<div id="game" class="hidden">
-
-<div class="gameRoom">
-
-<div class="gameTop">
-
-<button class="back" onclick="goHome()">
-← HOME
-</button>
-
-<div class="roomCode">
-ROOM #7284
-</div>
+  <div id="actions">
+    <button class="action" id="jump">JUMP</button>
+    <button class="action" id="run">RUN</button>
+  </div>
 
 </div>
-
-
-<div class="playerBox">
-
-<div class="playerInfo">
-
-<div>
-<small>PLAYER</small>
-<strong id="gameName">Player</strong>
-</div>
-
-<div
-class="districtTag"
-id="gameDistrict">
-Kerala
-</div>
-
-</div>
-
-</div>
-
-
-<div class="arena">
-
-<div class="arenaBadge">
-ROUND 1 • KERALA QUIZ
-</div>
-
-<div
-class="question"
-id="question">
-Which is the capital of Kerala?
-</div>
-
-
-<div class="answers">
-
-<button
-class="answer"
-onclick="answer(this,'Thiruvananthapuram')">
-A. Thiruvananthapuram
-</button>
-
-<button
-class="answer"
-onclick="answer(this,'Kochi')">
-B. Kochi
-</button>
-
-<button
-class="answer"
-onclick="answer(this,'Kozhikode')">
-C. Kozhikode
-</button>
-
-<button
-class="answer"
-onclick="answer(this,'Thrissur')">
-D. Thrissur
-</button>
-
-</div>
-
-
-<div
-class="timer"
-id="timer">
-15
-</div>
-
-</div>
-
-
-<div class="gameBottom">
-
-<div class="gameStat">
-<strong id="points">0</strong>
-<span>YOUR POINTS</span>
-</div>
-
-<div class="gameStat">
-<strong id="playersGame">0</strong>
-<span>PLAYERS</span>
-</div>
-
-</div>
-
-
-<div class="onlinePlayers">
-
-<h3>👥 Players in Game</h3>
-
-<div id="gamePlayers">
-Loading...
-</div>
-
-</div>
-
-</div>
-
-</div>
-
 
 <script>
-
-/* ================================
+/* =========================================================
    SUPABASE
-================================ */
+========================================================= */
 
 const SUPABASE_URL =
-"https://putlvisgkmjtiqmxkdda.supabase.co";
+  "https://putlvisgkmjtiqmxkdda.supabase.co";
 
 const SUPABASE_KEY =
-"sb_publishable_P_a8u-8fi3GPBplKJeKNog_lp0ElC_S";
+  "sb_publishable_P_a8u-8fi3GPBplKJeKNog_lp0ElC_S";
 
 const supabaseClient =
-window.supabase.createClient(
-  SUPABASE_URL,
-  SUPABASE_KEY
+  window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY,
+    {
+      realtime:{
+        params:{
+          eventsPerSecond:30
+        }
+      }
+    }
+  );
+
+/* =========================================================
+   GAME STATE
+========================================================= */
+
+let player = {
+  id:null,
+  name:"",
+  district:"",
+  x:0,
+  y:1,
+  z:0,
+  rot:0,
+  score:0
+};
+
+let channel = null;
+let remotePlayers = {};
+let keys = {};
+let moveX = 0;
+let moveZ = 0;
+let running = false;
+let jumping = false;
+let jumpVelocity = 0;
+let lastBroadcast = 0;
+
+/* =========================================================
+   THREE.JS
+========================================================= */
+
+let scene;
+let camera;
+let renderer;
+let clock;
+
+let playerMesh;
+let worldGroup;
+let remoteGroup;
+
+const playerMeshes = {};
+
+/* =========================================================
+   DOM
+========================================================= */
+
+const loading = document.getElementById("loading");
+const login = document.getElementById("login");
+const hud = document.getElementById("hud");
+const nameInput = document.getElementById("name");
+const districtInput = document.getElementById("district");
+const playButton = document.getElementById("play");
+const statusEl = document.getElementById("status");
+const onlineEl = document.getElementById("online");
+const playerList = document.getElementById("playerList");
+const playerInfo = document.getElementById("playerInfo");
+const messages = document.getElementById("messages");
+const chatInput = document.getElementById("chatInput");
+const sendButton = document.getElementById("send");
+const jumpButton = document.getElementById("jump");
+const runButton = document.getElementById("run");
+
+/* =========================================================
+   BASIC THREE WORLD
+========================================================= */
+
+function initThree(){
+
+  scene = new THREE.Scene();
+
+  scene.background = new THREE.Color(0x8cc9e8);
+
+  scene.fog = new THREE.Fog(
+    0x8cc9e8,
+    45,
+    190
+  );
+
+  camera = new THREE.PerspectiveCamera(
+    60,
+    window.innerWidth / window.innerHeight,
+    0.1,
+    500
+  );
+
+  camera.position.set(0,7,10);
+
+  renderer = new THREE.WebGLRenderer({
+    antialias:true,
+    powerPreference:"high-performance"
+  });
+
+  renderer.setPixelRatio(
+    Math.min(window.devicePixelRatio,1.8)
+  );
+
+  renderer.setSize(
+    window.innerWidth,
+    window.innerHeight
+  );
+
+  renderer.shadowMap.enabled = true;
+
+  document.body.appendChild(renderer.domElement);
+
+  clock = new THREE.Clock();
+
+  const ambient =
+    new THREE.HemisphereLight(
+      0xffffff,
+      0x42634b,
+      2.2
+    );
+
+  scene.add(ambient);
+
+  const sun =
+    new THREE.DirectionalLight(
+      0xffffff,
+      2
+    );
+
+  sun.position.set(
+    30,
+    60,
+    20
+  );
+
+  sun.castShadow = true;
+
+  scene.add(sun);
+
+  worldGroup = new THREE.Group();
+  remoteGroup = new THREE.Group();
+
+  scene.add(worldGroup);
+  scene.add(remoteGroup);
+
+  createWorld();
+  createLocalPlayer();
+
+  window.addEventListener(
+    "resize",
+    resize
+  );
+
+  animate();
+}
+
+/* =========================================================
+   WORLD
+========================================================= */
+
+function createWorld(){
+
+  // Ground
+  const groundGeo =
+    new THREE.PlaneGeometry(
+      260,
+      260,
+      20,
+      20
+    );
+
+  const groundMat =
+    new THREE.MeshStandardMaterial({
+      color:0x438653,
+      roughness:1
+    });
+
+  const ground =
+    new THREE.Mesh(
+      groundGeo,
+      groundMat
+    );
+
+  ground.rotation.x =
+    -Math.PI / 2;
+
+  ground.receiveShadow = true;
+
+  worldGroup.add(ground);
+
+  // Roads
+  for(let i=-3;i<=3;i++){
+
+    const roadGeo =
+      new THREE.BoxGeometry(
+        260,
+        .05,
+        3
+      );
+
+    const roadMat =
+      new THREE.MeshStandardMaterial({
+        color:0x454545
+      });
+
+    const road =
+      new THREE.Mesh(
+        roadGeo,
+        roadMat
+      );
+
+    road.position.set(
+      0,
+      .03,
+      i*28
+    );
+
+    worldGroup.add(road);
+  }
+
+  for(let i=-3;i<=3;i++){
+
+    const roadGeo =
+      new THREE.BoxGeometry(
+        3,
+        .05,
+        260
+      );
+
+    const roadMat =
+      new THREE.MeshStandardMaterial({
+        color:0x454545
+      });
+
+    const road =
+      new THREE.Mesh(
+        roadGeo,
+        roadMat
+      );
+
+    road.position.set(
+      i*28,
+      .04,
+      0
+    );
+
+    worldGroup.add(road);
+  }
+
+  // Trees
+  for(let i=0;i<120;i++){
+
+    const x =
+      (Math.random()-.5)*230;
+
+    const z =
+      (Math.random()-.5)*230;
+
+    // Keep roads relatively clear
+    if(
+      Math.abs(x%28)<5 ||
+      Math.abs(z%28)<5
+    ) continue;
+
+    createPalm(x,z);
+  }
+
+  // Houses
+  for(let i=0;i<35;i++){
+
+    const x =
+      (Math.random()-.5)*210;
+
+    const z =
+      (Math.random()-.5)*210;
+
+    if(
+      Math.abs(x%28)<7 ||
+      Math.abs(z%28)<7
+    ) continue;
+
+    createHouse(x,z);
+  }
+
+  // Water
+  const waterGeo =
+    new THREE.BoxGeometry(
+      45,
+      .3,
+      100
+    );
+
+  const waterMat =
+    new THREE.MeshStandardMaterial({
+      color:0x2d9ed0,
+      transparent:true,
+      opacity:.82
+    });
+
+  const water =
+    new THREE.Mesh(
+      waterGeo,
+      waterMat
+    );
+
+  water.position.set(
+    -75,
+    .08,
+    20
+  );
+
+  worldGroup.add(water);
+
+  // Landmark
+  createTemple(
+    20,
+    -25
+  );
+
+  // Spawn marker
+  createSpawn(
+    0,
+    0
+  );
+}
+
+function createPalm(x,z){
+
+  const group =
+    new THREE.Group();
+
+  const trunk =
+    new THREE.Mesh(
+      new THREE.CylinderGeometry(
+        .18,
+        .28,
+        4,
+        7
+      ),
+      new THREE.MeshStandardMaterial({
+        color:0x81562f
+      })
+    );
+
+  trunk.position.y=2;
+
+  group.add(trunk);
+
+  for(let i=0;i<7;i++){
+
+    const leaf =
+      new THREE.Mesh(
+        new THREE.BoxGeometry(
+          .15,
+          .08,
+          2.8
+        ),
+        new THREE.MeshStandardMaterial({
+          color:0x176b35
+        })
+      );
+
+    leaf.position.y=4.1;
+
+    leaf.rotation.y =
+      i*Math.PI/3.5;
+
+    leaf.rotation.x=.25;
+
+    group.add(leaf);
+  }
+
+  group.position.set(
+    x,0,z
+  );
+
+  worldGroup.add(group);
+}
+
+function createHouse(x,z){
+
+  const group =
+    new THREE.Group();
+
+  const body =
+    new THREE.Mesh(
+      new THREE.BoxGeometry(
+        5,
+        3.2,
+        4
+      ),
+      new THREE.MeshStandardMaterial({
+        color:
+          [0xe5d4ad,0xd9b58a,0xbfd3c4]
+          [Math.floor(Math.random()*3)]
+      })
+    );
+
+  body.position.y=1.6;
+
+  group.add(body);
+
+  const roof =
+    new THREE.Mesh(
+      new THREE.ConeGeometry(
+        3.8,
+        2.2,
+        4
+      ),
+      new THREE.MeshStandardMaterial({
+        color:0x8b3329
+      })
+    );
+
+  roof.position.y=4.2;
+  roof.rotation.y=Math.PI/4;
+
+  group.add(roof);
+
+  group.position.set(
+    x,0,z
+  );
+
+  worldGroup.add(group);
+}
+
+function createTemple(x,z){
+
+  const group =
+    new THREE.Group();
+
+  const base =
+    new THREE.Mesh(
+      new THREE.BoxGeometry(
+        9,1,7
+      ),
+      new THREE.MeshStandardMaterial({
+        color:0xe7c36d
+      })
+    );
+
+  base.position.y=.5;
+
+  group.add(base);
+
+  for(let i=0;i<3;i++){
+
+    const tower =
+      new THREE.Mesh(
+        new THREE.ConeGeometry(
+          2.5-i*.5,
+          3-i*.5,
+          4
+        ),
+        new THREE.MeshStandardMaterial({
+          color:0xd58c2b
+        })
+      );
+
+    tower.position.set(
+      (i-1)*3,
+      2.5+i*.3,
+      0
+    );
+
+    tower.rotation.y=Math.PI/4;
+
+    group.add(tower);
+  }
+
+  group.position.set(x,0,z);
+
+  worldGroup.add(group);
+}
+
+function createSpawn(x,z){
+
+  const ring =
+    new THREE.Mesh(
+      new THREE.RingGeometry(
+        3,
+        3.2,
+        32
+      ),
+      new THREE.MeshBasicMaterial({
+        color:0x54d66d,
+        transparent:true,
+        opacity:.5,
+        side:THREE.DoubleSide
+      })
+    );
+
+  ring.rotation.x=-Math.PI/2;
+
+  ring.position.set(
+    x,.05,z
+  );
+
+  worldGroup.add(ring);
+}
+
+/* =========================================================
+   PLAYER
+========================================================= */
+
+function makeCharacter(color=0x54d66d){
+
+  const group =
+    new THREE.Group();
+
+  const body =
+    new THREE.Mesh(
+      new THREE.CapsuleGeometry(
+        .55,
+        1.25,
+        5,
+        10
+      ),
+      new THREE.MeshStandardMaterial({
+        color
+      })
+    );
+
+  body.position.y=1.15;
+  body.castShadow=true;
+
+  group.add(body);
+
+  const head =
+    new THREE.Mesh(
+      new THREE.SphereGeometry(
+        .48,
+        16,
+        16
+      ),
+      new THREE.MeshStandardMaterial({
+        color:0xc98c63
+      })
+    );
+
+  head.position.y=2.25;
+  head.castShadow=true;
+
+  group.add(head);
+
+  return group;
+}
+
+function createLocalPlayer(){
+
+  playerMesh =
+    makeCharacter(0x54d66d);
+
+  playerMesh.position.set(
+    0,0,0
+  );
+
+  scene.add(playerMesh);
+}
+
+/* =========================================================
+   PLAYER NAME LABEL
+========================================================= */
+
+function makeLabel(text){
+
+  const canvas =
+    document.createElement("canvas");
+
+  canvas.width=512;
+  canvas.height=128;
+
+  const ctx =
+    canvas.getContext("2d");
+
+  ctx.fillStyle="#ffffff";
+  ctx.font="bold 42px Arial";
+  ctx.textAlign="center";
+
+  ctx.strokeStyle="#000000";
+  ctx.lineWidth=8;
+
+  ctx.strokeText(
+    text,
+    256,
+    70
+  );
+
+  ctx.fillText(
+    text,
+    256,
+    70
+  );
+
+  const texture =
+    new THREE.CanvasTexture(canvas);
+
+  const material =
+    new THREE.SpriteMaterial({
+      map:texture,
+      transparent:true
+    });
+
+  const sprite =
+    new THREE.Sprite(material);
+
+  sprite.scale.set(
+    4,
+    1,
+    1
+  );
+
+  sprite.position.y=3.2;
+
+  return sprite;
+}
+
+/* =========================================================
+   LOGIN
+========================================================= */
+
+playButton.addEventListener(
+  "click",
+  startGame
 );
-
-
-/* ================================
-   GAME VARIABLES
-================================ */
-
-let time = 15;
-let timerInterval;
-let points = 0;
-let currentPlayerId = null;
-
-
-/* ================================
-   START GAME
-================================ */
 
 async function startGame(){
 
   const name =
-  document.getElementById("name")
-  .value.trim();
+    nameInput.value.trim();
 
   const district =
-  document.getElementById("district")
-  .value;
-
-  const message =
-  document.getElementById("message");
-
+    districtInput.value;
 
   if(!name){
 
-    message.style.color="#ff7777";
-    message.innerText=
-    "Please enter your name.";
-
+    alert("Enter your player name");
     return;
   }
-
 
   if(!district){
 
-    message.style.color="#ff7777";
-    message.innerText=
-    "Please select your district.";
-
+    alert("Select your district");
     return;
   }
 
+  playButton.disabled=true;
+  playButton.textContent="CONNECTING...";
 
-  message.style.color="#67ffc0";
-  message.innerText=
-  "Joining game...";
-
-
-  const {data,error} =
-  await supabaseClient
-  .from("players")
-  .insert([
-    {
-      name:name,
-      district:district,
-      score:0,
-      room:"main"
-    }
-  ])
-  .select()
-  .single();
-
-
-  if(error){
-
-    console.error(error);
-
-    message.style.color="#ff7777";
-
-    message.innerText=
-    "Could not connect to game.";
-
-    return;
-  }
-
-
-  currentPlayerId=data.id;
+  player.name=name;
+  player.district=district;
 
   localStorage.setItem(
-    "playerName",
+    "kerala_name",
     name
   );
 
   localStorage.setItem(
-    "district",
+    "kerala_district",
     district
   );
 
-  localStorage.setItem(
-    "playerId",
-    data.id
-  );
+  try{
 
+    const {data,error} =
+      await supabaseClient
+        .from("players")
+        .insert({
+          name:name,
+          district:district,
+          score:0,
+          room:"main"
+        })
+        .select()
+        .single();
 
-  document.getElementById(
-    "gameName"
-  ).innerText=name;
+    if(error) throw error;
 
+    player.id=data.id;
+    player.score=data.score || 0;
 
-  document.getElementById(
-    "gameDistrict"
-  ).innerText=district;
+    login.classList.add("hidden");
+    hud.style.display="block";
 
+    playerInfo.textContent =
+      `${player.name} · ${player.district}`;
 
-  document.getElementById(
-    "home"
-  ).classList.add("hidden");
+    await connectRealtime();
 
+    statusEl.textContent =
+      "🟢 Connected";
 
-  document.getElementById(
-    "game"
-  ).classList.remove("hidden");
-
-
-  startTimer();
-
-  loadPlayers();
-
-}
-
-
-/* ================================
-   LOAD PLAYERS
-================================ */
-
-async function loadPlayers(){
-
-  const {data,error} =
-  await supabaseClient
-  .from("players")
-  .select("*")
-  .eq("room","main")
-  .order("score",{ascending:false});
-
-
-  if(error){
+  }catch(error){
 
     console.error(error);
-    return;
+
+    alert(
+      "Couldn't connect to game.\n\n"+
+      (error.message || "Unknown error")
+    );
+
+    playButton.disabled=false;
+    playButton.textContent=
+      "ENTER KERALA WORLD";
   }
-
-
-  document.getElementById(
-    "onlineCount"
-  ).innerText=data.length;
-
-
-  document.getElementById(
-    "playersGame"
-  ).innerText=data.length;
-
-
-  renderLeaderboard(data);
-
-  renderGamePlayers(data);
 }
 
-
-/* ================================
-   LEADERBOARD
-================================ */
-
-function renderLeaderboard(players){
-
-  const list =
-  document.getElementById(
-    "leaderboardList"
-  );
-
-
-  if(!players.length){
-
-    list.innerHTML=
-    "<div style='color:#71877e'>No players yet</div>";
-
-    return;
-  }
-
-
-  list.innerHTML="";
-
-
-  players.slice(0,10).forEach(
-    function(player,index){
-
-      const row =
-      document.createElement("div");
-
-      row.className="player";
-
-
-      row.innerHTML=`
-
-        <div class="playerLeft">
-
-          <div class="rank">
-            ${index+1}
-          </div>
-
-          <div>
-
-            <div class="playerName">
-              ${escapeHtml(player.name)}
-            </div>
-
-            <div class="playerDistrict">
-              ${escapeHtml(player.district)}
-            </div>
-
-          </div>
-
-        </div>
-
-        <div class="score">
-          ${player.score || 0}
-        </div>
-
-      `;
-
-
-      list.appendChild(row);
-
-    }
-  );
-}
-
-
-/* ================================
-   GAME PLAYERS
-================================ */
-
-function renderGamePlayers(players){
-
-  const box =
-  document.getElementById(
-    "gamePlayers"
-  );
-
-
-  if(!players.length){
-
-    box.innerHTML=
-    "<div style='color:#71877e'>No players</div>";
-
-    return;
-  }
-
-
-  box.innerHTML="";
-
-
-  players.forEach(
-    function(player){
-
-      const row =
-      document.createElement("div");
-
-      row.className=
-      "onlineRow";
-
-
-      row.innerHTML=`
-
-        <span>
-          ${escapeHtml(player.name)}
-        </span>
-
-        <span class="onlineDistrict">
-          ${escapeHtml(player.district)}
-        </span>
-
-      `;
-
-
-      box.appendChild(row);
-
-    }
-  );
-}
-
-
-/* ================================
-   TIMER
-================================ */
-
-function startTimer(){
-
-  clearInterval(timerInterval);
-
-  time=15;
-
-  document.getElementById(
-    "timer"
-  ).innerText=time;
-
-
-  timerInterval =
-  setInterval(function(){
-
-    time--;
-
-    document.getElementById(
-      "timer"
-    ).innerText=time;
-
-
-    if(time<=0){
-
-      clearInterval(timerInterval);
-
-      document.getElementById(
-        "timer"
-      ).innerText="TIME!";
-
-    }
-
-  },1000);
-}
-
-
-/* ================================
-   ANSWER
-================================ */
-
-async function answer(button,value){
-
-  clearInterval(timerInterval);
-
-
-  const buttons =
-  document.querySelectorAll(
-    ".answer"
-  );
-
-
-  buttons.forEach(
-    function(btn){
-      btn.disabled=true;
-    }
-  );
-
-
-  if(value==="Thiruvananthapuram"){
-
-    points += 100;
-
-    button.innerText=
-    "✓ Correct! +100";
-
-    button.style.background=
-    "#145d40";
-
-
-    if(currentPlayerId){
-
-      await supabaseClient
-      .from("players")
-      .update({
-        score:points
-      })
-      .eq("id",currentPlayerId);
-
-    }
-
-  }else{
-
-    button.innerText=
-    "✕ Wrong";
-
-    button.style.background=
-    "#5d2222";
-
-  }
-
-
-  document.getElementById(
-    "points"
-  ).innerText=points;
-
-
-  await loadPlayers();
-
-
-  setTimeout(function(){
-
-    buttons.forEach(
-      function(btn){
-
-        btn.disabled=false;
-        btn.style.background="";
-
+/* =========================================================
+   REALTIME
+========================================================= */
+
+async function connectRealtime(){
+
+  channel =
+    supabaseClient.channel(
+      "kerala-world-main",
+      {
+        config:{
+          presence:{
+            key:player.id
+          },
+          broadcast:{
+            self:false
+          }
+        }
       }
     );
 
+  channel
+    .on(
+      "presence",
+      {
+        event:"sync"
+      },
+      handlePresence
+    )
+    .on(
+      "presence",
+      {
+        event:"join"
+      },
+      handlePresence
+    )
+    .on(
+      "presence",
+      {
+        event:"leave"
+      },
+      handlePresence
+    )
+    .on(
+      "broadcast",
+      {
+        event:"position"
+      },
+      payload=>{
+        if(
+          payload.payload &&
+          payload.payload.id !== player.id
+        ){
+          remotePlayers[
+            payload.payload.id
+          ] =
+            payload.payload;
 
-    nextQuestion();
+          updateRemotePlayers();
+        }
+      }
+    )
+    .on(
+      "broadcast",
+      {
+        event:"chat"
+      },
+      payload=>{
 
-  },1200);
+        if(
+          payload.payload &&
+          payload.payload.id !== player.id
+        ){
+
+          addMessage(
+            payload.payload.name,
+            payload.payload.text
+          );
+        }
+      }
+    );
+
+  await new Promise(
+    (resolve,reject)=>{
+
+      channel.subscribe(
+        async status=>{
+
+          if(status==="SUBSCRIBED"){
+
+            await channel.track({
+              id:player.id,
+              name:player.name,
+              district:player.district,
+              x:player.x,
+              y:player.y,
+              z:player.z,
+              rot:player.rot,
+              score:player.score
+            });
+
+            resolve();
+          }
+
+          if(status==="CHANNEL_ERROR"){
+
+            reject(
+              new Error(
+                "Realtime channel error"
+              )
+            );
+          }
+        }
+      );
+
+    }
+  );
 }
 
+function handlePresence(){
 
-/* ================================
-   NEXT QUESTION
-================================ */
+  if(!channel) return;
 
-function nextQuestion(){
+  const state =
+    channel.presenceState();
 
-  document.getElementById(
-    "question"
-  ).innerText=
-  "Which district is known as the Queen of Arabian Sea?";
+  remotePlayers={};
 
+  Object.keys(state).forEach(key=>{
 
-  const buttons =
-  document.querySelectorAll(
-    ".answer"
+    const list=state[key];
+
+    if(!list || !list.length) return;
+
+    const p=list[list.length-1];
+
+    if(p.id !== player.id){
+
+      remotePlayers[p.id]=p;
+    }
+  });
+
+  updateRemotePlayers();
+}
+
+/* =========================================================
+   REMOTE PLAYERS
+========================================================= */
+
+function updateRemotePlayers(){
+
+  Object.keys(playerMeshes).forEach(id=>{
+
+    if(!remotePlayers[id]){
+
+      remoteGroup.remove(
+        playerMeshes[id]
+      );
+
+      delete playerMeshes[id];
+    }
+  });
+
+  Object.keys(remotePlayers).forEach(id=>{
+
+    const p =
+      remotePlayers[id];
+
+    if(!playerMeshes[id]){
+
+      const colors=[
+        0xff6b6b,
+        0x5da9ff,
+        0xffcf5c,
+        0xc77dff,
+        0xff8fab
+      ];
+
+      const mesh =
+        makeCharacter(
+          colors[
+            Math.floor(
+              Math.random()*colors.length
+            )
+          ]
+        );
+
+      mesh.position.set(
+        p.x||0,
+        p.y||0,
+        p.z||0
+      );
+
+      mesh.rotation.y=
+        p.rot||0;
+
+      mesh.add(
+        makeLabel(
+          p.name || "Player"
+        )
+      );
+
+      remoteGroup.add(mesh);
+
+      playerMeshes[id]=mesh;
+
+    }else{
+
+      const mesh =
+        playerMeshes[id];
+
+      mesh.position.lerp(
+        new THREE.Vector3(
+          p.x||0,
+          p.y||0,
+          p.z||0
+        ),
+        .35
+      );
+
+      mesh.rotation.y =
+        p.rot||0;
+    }
+  });
+
+  renderPlayerList();
+}
+
+/* =========================================================
+   PLAYER LIST
+========================================================= */
+
+function renderPlayerList(){
+
+  const all=[
+    {
+      id:player.id,
+      name:player.name,
+      district:player.district,
+      score:player.score
+    },
+    ...Object.values(remotePlayers)
+  ];
+
+  onlineEl.textContent=
+    all.length;
+
+  playerList.innerHTML=
+    all.map(p=>`
+      <div class="playerrow">
+        <span>
+          ${escapeHtml(p.name||"Player")}
+        </span>
+        <span>
+          ${Number(p.score||0)}
+        </span>
+      </div>
+    `).join("");
+}
+
+/* =========================================================
+   MOVEMENT
+========================================================= */
+
+function animate(){
+
+  requestAnimationFrame(
+    animate
   );
 
+  const dt =
+    Math.min(
+      clock.getDelta(),
+      .05
+    );
 
-  buttons[0].innerText=
-  "A. Ernakulam";
+  updateMovement(dt);
 
-  buttons[1].innerText=
-  "B. Kollam";
+  updateCamera();
 
-  buttons[2].innerText=
-  "C. Kannur";
-
-  buttons[3].innerText=
-  "D. Idukki";
-
-
-  buttons[0].onclick=function(){
-    answer(buttons[0],"Ernakulam");
-  };
-
-  buttons[1].onclick=function(){
-    answer(buttons[1],"Kollam");
-  };
-
-  buttons[2].onclick=function(){
-    answer(buttons[2],"Kannur");
-  };
-
-  buttons[3].onclick=function(){
-    answer(buttons[3],"Idukki");
-  };
-
-
-  startTimer();
+  renderer.render(
+    scene,
+    camera
+  );
 }
 
+function updateMovement(dt){
 
-/* ================================
-   HOME
-================================ */
+  let x=moveX;
+  let z=moveZ;
 
-function goHome(){
+  if(keys["w"] || keys["ArrowUp"])
+    z-=1;
 
-  clearInterval(timerInterval);
+  if(keys["s"] || keys["ArrowDown"])
+    z+=1;
 
-  document.getElementById(
-    "game"
-  ).classList.add("hidden");
+  if(keys["a"] || keys["ArrowLeft"])
+    x-=1;
 
+  if(keys["d"] || keys["ArrowRight"])
+    x+=1;
 
-  document.getElementById(
-    "home"
-  ).classList.remove("hidden");
+  const length =
+    Math.hypot(x,z);
 
+  if(length>0){
 
-  loadPlayers();
+    x/=length;
+    z/=length;
+
+    const speed =
+      running ? 9 : 5;
+
+    player.x +=
+      x*speed*dt;
+
+    player.z +=
+      z*speed*dt;
+
+    player.rot =
+      Math.atan2(
+        x,
+        z
+      );
+
+    playerMesh.rotation.y=
+      player.rot;
+
+    playerMesh.position.x=
+      player.x;
+
+    playerMesh.position.z=
+      player.z;
+  }
+
+  if(jumping){
+
+    player.y +=
+      jumpVelocity*dt;
+
+    jumpVelocity -=
+      18*dt;
+
+    if(player.y<=0){
+
+      player.y=0;
+      jumping=false;
+      jumpVelocity=0;
+    }
+
+    playerMesh.position.y=
+      player.y;
+  }
+
+  broadcastPosition();
 }
 
+function broadcastPosition(){
 
-/* ================================
-   SECURITY
-================================ */
+  if(!channel) return;
+
+  const now=
+    performance.now();
+
+  if(now-lastBroadcast<50)
+    return;
+
+  lastBroadcast=now;
+
+  channel.send({
+    type:"broadcast",
+    event:"position",
+    payload:{
+      id:player.id,
+      name:player.name,
+      district:player.district,
+      x:player.x,
+      y:player.y,
+      z:player.z,
+      rot:player.rot,
+      score:player.score
+    }
+  });
+}
+
+/* =========================================================
+   CAMERA
+========================================================= */
+
+function updateCamera(){
+
+  if(!playerMesh) return;
+
+  const target =
+    new THREE.Vector3(
+      player.x,
+      player.y+1.5,
+      player.z
+    );
+
+  const desired =
+    new THREE.Vector3(
+      player.x,
+      player.y+6,
+      player.z+9
+    );
+
+  camera.position.lerp(
+    desired,
+    .08
+  );
+
+  camera.lookAt(target);
+}
+
+/* =========================================================
+   KEYBOARD
+========================================================= */
+
+window.addEventListener(
+  "keydown",
+  e=>{
+
+    keys[e.key]=true;
+
+    if(e.key==="Shift")
+      running=true;
+
+    if(
+      e.code==="Space" &&
+      !jumping
+    ){
+      jump();
+    }
+  }
+);
+
+window.addEventListener(
+  "keyup",
+  e=>{
+
+    keys[e.key]=false;
+
+    if(e.key==="Shift")
+      running=false;
+  }
+);
+
+/* =========================================================
+   MOBILE JOYSTICK
+========================================================= */
+
+const stick =
+  document.getElementById("stick");
+
+const knob =
+  document.getElementById("knob");
+
+let joystickActive=false;
+
+function joystickMove(e){
+
+  const rect =
+    stick.getBoundingClientRect();
+
+  const cx =
+    rect.left+rect.width/2;
+
+  const cy =
+    rect.top+rect.height/2;
+
+  let dx=
+    e.clientX-cx;
+
+  let dy=
+    e.clientY-cy;
+
+  const max=40;
+
+  const dist=
+    Math.hypot(dx,dy);
+
+  if(dist>max){
+
+    dx=
+      dx/dist*max;
+
+    dy=
+      dy/dist*max;
+  }
+
+  knob.style.transform=
+    `translate(${dx}px,${dy}px)`;
+
+  moveX=
+    dx/max;
+
+  moveZ=
+    dy/max;
+}
+
+stick.addEventListener(
+  "pointerdown",
+  e=>{
+
+    joystickActive=true;
+
+    stick.setPointerCapture(
+      e.pointerId
+    );
+
+    joystickMove(e);
+  }
+);
+
+stick.addEventListener(
+  "pointermove",
+  e=>{
+
+    if(
+      joystickActive
+    ){
+      joystickMove(e);
+    }
+  }
+);
+
+stick.addEventListener(
+  "pointerup",
+  ()=>{
+    joystickActive=false;
+    moveX=0;
+    moveZ=0;
+    knob.style.transform=
+      "translate(0,0)";
+  }
+);
+
+stick.addEventListener(
+  "pointercancel",
+  ()=>{
+    joystickActive=false;
+    moveX=0;
+    moveZ=0;
+    knob.style.transform=
+      "translate(0,0)";
+  }
+);
+
+/* =========================================================
+   ACTIONS
+========================================================= */
+
+runButton.addEventListener(
+  "pointerdown",
+  ()=>{
+    running=true;
+    runButton.classList.add("active");
+  }
+);
+
+runButton.addEventListener(
+  "pointerup",
+  ()=>{
+    running=false;
+    runButton.classList.remove("active");
+  }
+);
+
+runButton.addEventListener(
+  "pointercancel",
+  ()=>{
+    running=false;
+    runButton.classList.remove("active");
+  }
+);
+
+jumpButton.addEventListener(
+  "click",
+  jump
+);
+
+function jump(){
+
+  if(jumping) return;
+
+  jumping=true;
+  jumpVelocity=8;
+}
+
+/* =========================================================
+   CHAT
+========================================================= */
+
+sendButton.addEventListener(
+  "click",
+  sendChat
+);
+
+chatInput.addEventListener(
+  "keydown",
+  e=>{
+
+    if(e.key==="Enter")
+      sendChat();
+  }
+);
+
+function sendChat(){
+
+  const text =
+    chatInput.value.trim();
+
+  if(!text || !channel)
+    return;
+
+  addMessage(
+    "You",
+    text
+  );
+
+  channel.send({
+    type:"broadcast",
+    event:"chat",
+    payload:{
+      id:player.id,
+      name:player.name,
+      text:text
+    }
+  });
+
+  chatInput.value="";
+}
+
+function addMessage(
+  name,
+  text
+){
+
+  const div =
+    document.createElement("div");
+
+  div.className="msg";
+
+  div.textContent=
+    `${name}: ${text}`;
+
+  messages.appendChild(div);
+
+  while(
+    messages.children.length>30
+  ){
+
+    messages.removeChild(
+      messages.firstChild
+    );
+  }
+
+  messages.scrollTop=
+    messages.scrollHeight;
+}
+
+/* =========================================================
+   DATABASE SCORE
+========================================================= */
+
+async function saveScore(){
+
+  if(!player.id) return;
+
+  await supabaseClient
+    .from("players")
+    .update({
+      score:player.score
+    })
+    .eq(
+      "id",
+      player.id
+    );
+}
+
+/* =========================================================
+   CLEANUP
+========================================================= */
+
+window.addEventListener(
+  "beforeunload",
+  async ()=>{
+    try{
+
+      if(channel)
+        await channel.untrack();
+
+    }catch(e){}
+  }
+);
+
+/* =========================================================
+   RESIZE
+========================================================= */
+
+function resize(){
+
+  camera.aspect =
+    window.innerWidth /
+    window.innerHeight;
+
+  camera.updateProjectionMatrix();
+
+  renderer.setSize(
+    window.innerWidth,
+    window.innerHeight
+  );
+}
+
+/* =========================================================
+   HELPERS
+========================================================= */
 
 function escapeHtml(value){
 
   return String(value)
-  .replace(/&/g,"&amp;")
-  .replace(/</g,"&lt;")
-  .replace(/>/g,"&gt;")
-  .replace(/"/g,"&quot;")
-  .replace(/'/g,"&#039;");
+    .replaceAll("&","&amp;")
+    .replaceAll("<","&lt;")
+    .replaceAll(">","&gt;")
+    .replaceAll('"',"&quot;")
+    .replaceAll("'","&#039;");
 }
 
+/* =========================================================
+   LOAD SAVED PLAYER
+========================================================= */
 
-/* ================================
-   AUTO LOAD
-================================ */
-
-window.onload=function(){
-
-  const savedName =
+const savedName =
   localStorage.getItem(
-    "playerName"
+    "kerala_name"
   );
 
-  const savedDistrict =
+const savedDistrict =
   localStorage.getItem(
-    "district"
+    "kerala_district"
   );
 
+if(savedName)
+  nameInput.value=savedName;
 
-  if(savedName){
+if(savedDistrict)
+  districtInput.value=savedDistrict;
 
-    document.getElementById(
-      "name"
-    ).value=savedName;
+/* =========================================================
+   START
+========================================================= */
 
-  }
+initThree();
 
-
-  if(savedDistrict){
-
-    document.getElementById(
-      "district"
-    ).value=savedDistrict;
-
-  }
-
-
-  loadPlayers();
-
-};
-
-
-/* ================================
-   REFRESH PLAYERS
-================================ */
-
-setInterval(
-  loadPlayers,
-  5000
+loading.classList.add(
+  "hidden"
 );
 
 </script>
